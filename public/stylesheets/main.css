@@ -172,6 +172,23 @@ textarea {
    Devotion Project custom styles
    ========================================================================== */
 
+nav.main-navigation>ul {
+    list-style-type: none;
+    padding: 0;
+}
+nav.main-navigation .nav-tile>.inner>a>img.init {
+    display: block;
+}
+nav.main-navigation .nav-tile>.inner>a>img.hover {
+    display: none;
+}
+nav.main-navigation .nav-tile>.inner>a:hover>img.hover {
+    display: block;
+}
+nav.main-navigation .nav-tile>.inner>a:hover>img.init {
+    display: none;
+}
+
 
 
 
