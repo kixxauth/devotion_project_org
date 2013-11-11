@@ -77,9 +77,48 @@ window.getPositionOfTile = function (layout, id) {
   return window.TILE_GRID[id][layout];
 };
 
+window.getLayout = function (containerWidth) {
+  containerWidth = containerWidth || $(window).innerWidth();
+  if (containerWidth < 768) {
+    return 'small';
+    }
+  if (containerWidth < 1025) {
+    return 'tablet';
+  }
+  return 'full';
+};
+
+window.computeBaseUnit = function () {
+  var containerWidth = $('#site-container').innerWidth()
+    , layout = window.getLayout(containerWidth)
+    , width
+    , height
+    , q
+
+  if (layout === 'small') {
+    width = containerWidth / 2;
+  } else if (layout === 'tablet') {
+    width = containerWidth / 3;
+  } else {
+    width = containerWidth / 5;
+  }
+
+  q = width / 320;
+  height = q * 150;
+
+  return {
+    containerWidth: containerWidth,
+    width: width,
+    height: height,
+    layout: layout
+  };
+};
+
 // jQuery extensions
 (function (window, jQuery, undefined) {
   var $ = jQuery
+    , getLayout = window.getLayout
+    , getPositionOfTile = window.getPositionOfTile
 
   jQuery.fn.aspectRatio = function () {
     if (this._aspectRatio) {
@@ -117,7 +156,7 @@ window.getPositionOfTile = function (layout, id) {
   };
 
   function computePosition(baseUnit, id) {
-    var position = window.getPositionOfTile(baseUnit.layout, id);
+    var position = getPositionOfTile(baseUnit.layout, id);
     return {
       top: Math.floor(position.top * baseUnit.height)
     , left: Math.floor(position.left * baseUnit.width)
@@ -139,13 +178,11 @@ window.getPositionOfTile = function (layout, id) {
     return false;
   });
 
-  // options.animation - String ('fade', 'fadeAndPop', 'none')
-  // options.animationSpeed - Number miliseconds
+  // options.animationspeed - Number miliseconds
   // closeonbackgroundclick - Boolean (default: true)
   // dismissmodalclass - String class name of element that will close modal.
   $.fn.reveal = function(options) {
     var defaults = {  
-      animation: 'fadeAndPop',
       animationspeed: 300,
       closeonbackgroundclick: true,
       dismissmodalclass: 'close-reveal-modal'
@@ -155,6 +192,7 @@ window.getPositionOfTile = function (layout, id) {
 
     return this.each(function() {
       var modal = $(this),
+          inner = modal.find('.inner')
           topMeasure  = parseInt(modal.css('top')),
           topOffset = modal.height() + topMeasure,
           locked = false,
@@ -170,25 +208,21 @@ window.getPositionOfTile = function (layout, id) {
         $('.' + options.dismissmodalclass).off('click.modalEvent');
         if(!locked) {
           lockModal();
-          if(options.animation == "fadeAndPop") {
-            modal.css({'top': $(document).scrollTop()-topOffset, 'opacity' : 0, 'visibility' : 'visible'});
+
+          if (getLayout() === 'full') {
+            inner.height(($(window).innerHeight() - 100) * 0.5);
+            modal.css({'top': $(document).scrollTop()-topOffset, 'opacity' : 0, 'display' : 'block'});
             modalBG.fadeIn(options.animationspeed/2);
             modal.delay(options.animationspeed/2).animate({
               "top": $(document).scrollTop()+topMeasure + 'px',
               "opacity" : 1
-            }, options.animationspeed, unlockModal());         
-          }
-          if(options.animation == "fade") {
-            modal.css({'opacity' : 0, 'visibility' : 'visible', 'top': $(document).scrollTop()+topMeasure});
+            }, options.animationspeed, unlockModal);         
+          } else {
+            $('#site-header').hide();
+            $('nav.main-navigation').hide();
             modalBG.fadeIn(options.animationspeed/2);
-            modal.delay(options.animationspeed/2).animate({
-              "opacity" : 1
-            }, options.animationspeed, unlockModal());         
-          } 
-          if(options.animation == "none") {
-            modal.css({'visibility' : 'visible', 'top':$(document).scrollTop()+topMeasure});
-            modalBG.css({"display":"block"}); 
-            unlockModal()       
+            modal.delay(options.animationspeed/2)
+              .fadeIn(options.animationspeed, unlockModal);
           }
         }
         modal.off('reveal:open');
@@ -198,29 +232,23 @@ window.getPositionOfTile = function (layout, id) {
       modal.on('reveal:close', function () {
         if(!locked) {
           lockModal();
-          if(options.animation == "fadeAndPop") {
+          if (getLayout() === 'full') {
             modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
             modal.animate({
               "top":  $(document).scrollTop()-topOffset + 'px',
               "opacity" : 0
             }, options.animationspeed/2, function() {
-              modal.css({'top':topMeasure, 'opacity' : 1, 'visibility' : 'hidden'});
+              modal.css({top: topMeasure, opacity: 1, display: 'none'});
               unlockModal();
             });
-          }
-          if(options.animation == "fade") {
+          } else {
             modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
-            modal.animate({
-              "opacity" : 0
-            }, options.animationspeed, function() {
-              modal.css({'opacity' : 1, 'visibility' : 'hidden', 'top' : topMeasure});
+            modal.fadeOut(options.animationspeed/2, function () {
+              $('#site-header').show();
+              $('nav.main-navigation').show();
               unlockModal();
             });
           }
-          if(options.animation == "none") {
-            modal.css({'visibility' : 'hidden', 'top' : topMeasure});
-            modalBG.css({'display' : 'none'});  
-          }   
         }
         modal.off('reveal:close');
       });
@@ -263,6 +291,8 @@ window.getPositionOfTile = function (layout, id) {
 (function (window, jQuery, undefined) {
   var $ = jQuery
     , _navTiles
+    , computeBaseUnit = window.computeBaseUnit
+    , HEADER_BREAKPOINT = window.HEADER_BREAKPOINT
 
   jQuery(function ($) {
     renderNavTileLayout();
@@ -274,14 +304,13 @@ window.getPositionOfTile = function (layout, id) {
   }
 
   function renderNavTileLayout() {
-    var containerWidth = $('#site-container').innerWidth()
-      , baseUnit = computeBaseUnit(containerWidth)
+    var baseUnit = computeBaseUnit()
       , width1 = Math.floor(baseUnit.width)
       , width2 = Math.floor(baseUnit.width * 2)
       , height1 = Math.floor(baseUnit.height)
       , height2 = Math.floor(baseUnit.height * 2)
 
-    if (containerWidth >= window.HEADER_BREAKPOINT) {
+    if (baseUnit.containerWidth >= HEADER_BREAKPOINT) {
       $('#site-header').css({width: width2, height: height2});
     } else {
       $('#site-header').css({width: '100%', height: 'auto'});
@@ -299,24 +328,5 @@ window.getPositionOfTile = function (layout, id) {
         $el.sizeAndPosition(baseUnit, width2, height2);
       }
     });
-  }
-
-  function computeBaseUnit(containerWidth) {
-    var width, height, layout, q
-
-    if (containerWidth < 768) {
-      width = containerWidth / 2;
-      layout = 'small';
-    } else if (containerWidth < 1025) {
-      width = containerWidth / 3;
-      layout = 'tablet';
-    } else {
-      width = containerWidth / 5;
-      layout = 'full';
-    }
-
-    q = width / 320;
-    height = q * 150;
-    return {width: width, height: height, layout: layout};
   }
 }(window, jQuery));

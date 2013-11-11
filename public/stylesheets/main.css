@@ -185,34 +185,31 @@ textarea {
 }
 
 .reveal-modal {
-  visibility: hidden;
-  top: 100px; 
-  left: 50%;
-  margin-left: -300px;
-  width: 520px;
-  background-color: #eee;
-  position: absolute;
+  display: none;
+  background-color: #fff;
+  padding: 1em;
+  position: relative;
   z-index: 101;
-  padding: 30px 40px 34px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  margin: 3%;
+  /*
   -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
   -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
   -box-shadow: 0 0 10px rgba(0,0,0,.4);
+  */
 }
-    
-.reveal-modal.small     { width: 200px; margin-left: -140px;}
-.reveal-modal.medium    { width: 400px; margin-left: -240px;}
-.reveal-modal.large     { width: 600px; margin-left: -340px;}
-.reveal-modal.xlarge    { width: 800px; margin-left: -440px;}
+
+/*
+.reveal-modal>.inner {
+  overflow-y: scroll;
+}
+*/
 
 .reveal-modal .close-reveal-modal {
-  font-size: 22px;
+  font-size: 1.5em;
   line-height: .5;
   position: absolute;
-  top: 8px;
-  right: 11px;
+  top: 0.5em;
+  right: 0.5em;
   color: #aaa;
   text-shadow: 0 -1px 1px rbga(0,0,0,.6);
   font-weight: bold;
@@ -222,6 +219,11 @@ textarea {
 /* ==========================================================================
    Devotion Project custom styles
    ========================================================================== */
+
+body {
+  font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
+  color: #312a6a;
+}
 
 header.banner {
   text-align: center;
@@ -342,6 +344,23 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   nav.main-navigation>ul {
     position: static;
   }
+}
+
+section.section>h2 {
+  margin: 0;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+section.section>.subtitle {
+  margin: 0.5em 0 0;
+  text-transform: uppercase;
+}
+section.section>.inner {
+  margin-top: 1em;
+}
+section.section>.inner h3 {
+  text-transform: uppercase;
+  font-weight: normal;
 }
 
 
