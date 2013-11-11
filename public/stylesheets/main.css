@@ -190,19 +190,25 @@ textarea {
   padding: 1em;
   position: relative;
   z-index: 101;
-  margin: 3%;
-  /*
-  -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
-  -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
-  -box-shadow: 0 0 10px rgba(0,0,0,.4);
-  */
 }
 
-/*
-.reveal-modal>.inner {
-  overflow-y: scroll;
+@media only screen and (min-width: 1024px) {
+  .reveal-modal {
+    padding: 16px;
+    position: absolute;
+    margin: 0;
+    top: 100px;
+    left: 50%;
+    width: 768px;
+    margin-left: -400px;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+    -box-shadow: 0 0 10px rgba(0,0,0,.4);
+  }
+  .reveal-modal>.inner {
+    overflow-y: scroll;
+  }
 }
-*/
 
 .reveal-modal .close-reveal-modal {
   font-size: 1.5em;
@@ -210,7 +216,6 @@ textarea {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
-  color: #aaa;
   text-shadow: 0 -1px 1px rbga(0,0,0,.6);
   font-weight: bold;
   cursor: pointer;
@@ -328,9 +333,11 @@ nav.main-navigation li.nav-tile>.inner>a>img.init {
 nav.main-navigation li.nav-tile>.inner>a>img.hover {
   display: none;
 }
+nav.main-navigation li.nav-tile>.inner>a.touch-hover>img.hover,
 nav.main-navigation li.nav-tile>.inner>a:hover>img.hover {
   display: inline-block;
 }
+nav.main-navigation li.nav-tile>.inner>a.touch-hover>img.init,
 nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   display: none;
 }
@@ -357,33 +364,31 @@ section.section>.subtitle {
 }
 section.section>.inner {
   margin-top: 1em;
+  padding-right: 1em;
 }
 section.section>.inner h3 {
   text-transform: uppercase;
   font-weight: normal;
 }
 
-
-@media print,
-     (-o-min-device-pixel-ratio: 5/4),
-     (-webkit-min-device-pixel-ratio: 1.25),
-     (min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
+@media only screen and (max-width: 1025px) {
+  .videowrapper {
+    float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+  }
+  .videowrapper>iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* ==========================================================================

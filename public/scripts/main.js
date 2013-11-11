@@ -175,7 +175,6 @@ window.computeBaseUnit = function () {
     e.preventDefault();
     var modalLocation = $(this).attr('href').replace(/^#/, '');
     $('#'+modalLocation).reveal($(this).data());
-    return false;
   });
 
   // options.animationspeed - Number miliseconds
@@ -189,6 +188,15 @@ window.computeBaseUnit = function () {
     }; 
     
     options = $.extend({}, defaults, options);
+
+    function computeInnerHeight() {
+      var windowH = $(window).innerHeight()
+        , topMargin = 80
+        , bottomMargin = 90
+        , paddingAndHeader = 100
+
+      return windowH - topMargin - paddingAndHeader - bottomMargin;
+    }
 
     return this.each(function() {
       var modal = $(this),
@@ -210,7 +218,7 @@ window.computeBaseUnit = function () {
           lockModal();
 
           if (getLayout() === 'full') {
-            inner.height(($(window).innerHeight() - 100) * 0.5);
+            inner.height(computeInnerHeight());
             modal.css({'top': $(document).scrollTop()-topOffset, 'opacity' : 0, 'display' : 'block'});
             modalBG.fadeIn(options.animationspeed/2);
             modal.delay(options.animationspeed/2).animate({
@@ -297,7 +305,28 @@ window.computeBaseUnit = function () {
   jQuery(function ($) {
     renderNavTileLayout();
     $(window).resize(_.debounce(renderNavTileLayout, 200));
+    if (Modernizr.touch) {
+      setupTouchHover();
+    }
   });
+
+  function setupTouchHover() {
+    var currentHover = null
+
+    $navTiles().on('click', function (ev) {
+      var $a = $(this), id = $a.attr('href')
+
+      if (currentHover === id) {
+        currentHover = null;
+        $a.removeClass('touch-hover');
+        return;
+      }
+      $('a[href="'+ currentHover +'"]').removeClass('touch-hover');
+      currentHover = id;
+      $a.addClass('touch-hover');
+      return false;
+    });
+  }
 
   function $navTiles() {
     return _navTiles || (_navTiles = $('.nav-tile'));
