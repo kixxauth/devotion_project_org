@@ -353,6 +353,10 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   }
 }
 
+/* Devotion | Content Styles
+============================
+Begin custom content editing here: */
+
 section.section>h2 {
   margin: 0;
   font-weight: normal;
@@ -370,6 +374,10 @@ section.section>.inner h3 {
   text-transform: uppercase;
   font-weight: normal;
 }
+
+/* =============================
+   END Devotion | Content Styles
+*/
 
 @media only screen and (max-width: 1025px) {
   .videowrapper {
