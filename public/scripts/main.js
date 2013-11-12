@@ -81,7 +81,7 @@ window.getLayout = function (containerWidth) {
   containerWidth = containerWidth || $(window).innerWidth();
   if (containerWidth < 768) {
     return 'small';
-    }
+  }
   if (containerWidth < 1025) {
     return 'tablet';
   }
@@ -115,12 +115,10 @@ window.computeBaseUnit = function () {
 };
 
 // jQuery extensions
-(function (window, jQuery, undefined) {
-  var $ = jQuery
-    , getLayout = window.getLayout
-    , getPositionOfTile = window.getPositionOfTile
+(function (window, $, undefined) {
+  var getPositionOfTile = window.getPositionOfTile
 
-  jQuery.fn.aspectRatio = function () {
+  $.fn.aspectRatio = function () {
     if (this._aspectRatio) {
       return this._aspectRatio;
     }
@@ -142,7 +140,7 @@ window.computeBaseUnit = function () {
     return width +'x'+ height;
   };
 
-  jQuery.fn.sizeAndPosition = function (baseUnit, width, height) {
+  $.fn.sizeAndPosition = function (baseUnit, width, height) {
     var position = computePosition(baseUnit, this.prop('id'))
 
     this.css({
@@ -163,152 +161,251 @@ window.computeBaseUnit = function () {
     };
   }
 
-  /*
-   * jQuery Reveal Plugin 1.0
-   * www.ZURB.com
-   * Copyright 2010, ZURB
-   * Free to use under the MIT license.
-   * http://www.opensource.org/licenses/mit-license.php
-   */
+  // opts.animationspeed
+  // opts.innerHeight - Function to compute inner height of modal content.
+  // opts.open
+  // opts.close
+  // opts.callback
+  $.fn.reveal = (function () {
+    var $currentlyOpen = null
+      , $modalBG = null
+      , $closeButtons = null
+      , $body = null
 
-  $('a.section-link').on('click', function(e) {
-    e.preventDefault();
-    var modalLocation = $(this).attr('href').replace(/^#/, '');
-    $('#'+modalLocation).reveal($(this).data());
-  });
+    function reveal(opts) {
+      console.log('REVEAL', opts.close, $currentlyOpen)
+      if (opts.close && $currentlyOpen) {
+        console.log('currentlyOpen', $currentlyOpen.length)
+        $currentlyOpen.trigger('reveal.close');
+        return this;
+      }
 
-  // options.animationspeed - Number miliseconds
-  // closeonbackgroundclick - Boolean (default: true)
-  // dismissmodalclass - String class name of element that will close modal.
-  $.fn.reveal = function(options) {
-    var defaults = {  
-      animationspeed: 300,
-      closeonbackgroundclick: true,
-      dismissmodalclass: 'close-reveal-modal'
-    }; 
+      if (!$modalBG) {
+        $modalBG = $('.reveal-modal-bg')
+          .on('click.modalEvent', function () {
+            if ($currentlyOpen) {
+              $(document).trigger('reveal:doclose');
+            }
+          });
+      }
+      if (!$closeButtons) {
+        $closeButtons = $('.close-reveal-modal')
+          .on('click.modalEvent', function () {
+            if ($currentlyOpen) {
+              $(document).trigger('reveal:doclose');
+            }
+          });
+      }
+      if (!$body) {
+        $modal = $('body')
+          .on('keyup:modalEvent', function(e) {
+            // 27 is the keycode for the Escape key
+            if(e.which===27){
+              if ($currentlyOpen) {
+                $(document).trigger('reveal:doclose');
+              }
+            }
+          });
+      }
+
+      this.each(function () {
+        var $modal = $(this)
+          , $inner = $modal.children('.inner')
+          , locked = false
+
+        function open() {
+          $modal.off('reveal:open');
+
+          if (!locked) {
+            lock();
+            if ($.isFunction(opts.innerHeight)) {
+              $inner.height(opts.innerHeight());
+            }
+            $modalBG.fadeIn(opts.animationspeed/2);
+            $modal
+              .delay(opts.animationspeed/2)
+              .fadeIn(opts.animationspeed, unlock);
+            $currentlyOpen = $modal;
+            $currentlyOpen.on('reveal:close', close);
+          }
+          return;
+        }
+
+        function close() {
+          console.log('CLOSING', locked)
+          if(!locked) {
+            lock();
+            $modalBG.delay(opts.animationspeed).fadeOut(opts.animationspeed);
+            $modal.fadeOut(opts.animationspeed/2, unlock);
+            $currentlyOpen = null;
+          }
+          return;
+        }
+
+        $modal.on('reveal:open', function (ev) {
+          if ($currentlyOpen) {
+            var options = $.extend({}, opts)
+            options.callback = open;
+            options.open = false;
+            options.close = true;
+            $currentlyOpen.reveal(options);
+          } else {
+            open();
+          }
+        });
+
+        $modal.trigger('reveal:open');
     
-    options = $.extend({}, defaults, options);
-
-    function computeInnerHeight() {
-      var windowH = $(window).innerHeight()
-        , topMargin = 80
-        , bottomMargin = 90
-        , paddingAndHeader = 100
-
-      return windowH - topMargin - paddingAndHeader - bottomMargin;
+        function unlock() { 
+          locked = false;
+          if ($.isFunction(opts.callback)) {
+            opts.callback();
+          }
+        }
+        function lock() {
+          locked = true;
+        } 
+      }); // $.each
+      return this;
     }
 
-    return this.each(function() {
-      var modal = $(this),
-          inner = modal.find('.inner')
-          topMeasure  = parseInt(modal.css('top')),
-          topOffset = modal.height() + topMeasure,
-          locked = false,
-          modalBG = $('.reveal-modal-bg');
-
-      if(modalBG.length == 0) {
-        modalBG = $('<div class="reveal-modal-bg" />').insertAfter(modal);
-      }       
-   
-      //Entrance Animations
-      modal.on('reveal:open', function () {
-        modalBG.off('click.modalEvent');
-        $('.' + options.dismissmodalclass).off('click.modalEvent');
-        if(!locked) {
-          lockModal();
-
-          if (getLayout() === 'full') {
-            inner.height(computeInnerHeight());
-            modal.css({'top': $(document).scrollTop()-topOffset, 'opacity' : 0, 'display' : 'block'});
-            modalBG.fadeIn(options.animationspeed/2);
-            modal.delay(options.animationspeed/2).animate({
-              "top": $(document).scrollTop()+topMeasure + 'px',
-              "opacity" : 1
-            }, options.animationspeed, unlockModal);         
-          } else {
-            $('#site-header').hide();
-            $('nav.main-navigation').hide();
-            modalBG.fadeIn(options.animationspeed/2);
-            modal.delay(options.animationspeed/2)
-              .fadeIn(options.animationspeed, unlockModal);
-          }
-        }
-        modal.off('reveal:open');
-      });   
-
-      //Closing Animation
-      modal.on('reveal:close', function () {
-        if(!locked) {
-          lockModal();
-          if (getLayout() === 'full') {
-            modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
-            modal.animate({
-              "top":  $(document).scrollTop()-topOffset + 'px',
-              "opacity" : 0
-            }, options.animationspeed/2, function() {
-              modal.css({top: topMeasure, opacity: 1, display: 'none'});
-              unlockModal();
-            });
-          } else {
-            modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
-            modal.fadeOut(options.animationspeed/2, function () {
-              $('#site-header').show();
-              $('nav.main-navigation').show();
-              unlockModal();
-            });
-          }
-        }
-        modal.off('reveal:close');
-      });
-
-      //Open Modal Immediately
-      modal.trigger('reveal:open')
-
-      //Close Modal Listeners
-      var closeButton = $('.' + options.dismissmodalclass).on('click.modalEvent', function () {
-        modal.trigger('reveal:close');
-      });
-
-      if(options.closeonbackgroundclick) {
-        modalBG.css({"cursor":"pointer"})
-        modalBG.bind('click.modalEvent', function () {
-          modal.trigger('reveal:close')
-        });
-      }
-
-      $('body').keyup(function(e) {
-        // 27 is the keycode for the Escape key
-        if(e.which===27){
-          modal.trigger('reveal:close');
-        }
-      });
-  
-      function unlockModal() { 
-        locked = false;
-      }
-      function lockModal() {
-        locked = true;
-      } 
-  
-    });//each call
-  }//orbit plugin call
+    return reveal;
+  }());
 
 }(window, jQuery)); // End jQuery extensions
 
+// Reveal Modal jQuery extension
+(function (window, $) {
+  var locked = false
+    , $currentlyOpen = null
+    , $modalBG = null
+    , options = null
+
+  // opts.animationspeed
+  // opts.innerHeight - Function to compute inner height of modal content.
+  $.fn.revealOpen = function (opts) {
+    if (!locked) {
+      lock();
+      options = opts;
+      var $inner = this.children('.inner')
+      if (!$modalBG) {
+        $modalBG = $('.reveal-modal-bg');
+      }
+      if ($.isFunction(opts.innerHeight)) {
+        $inner.height(opts.innerHeight());
+      }
+      $modalBG.fadeIn(opts.animationspeed/2);
+      this
+        .delay(opts.animationspeed/2)
+        .fadeIn(opts.animationspeed, unlock);
+      this.trigger('reveal:open');
+      $currentlyOpen = this;
+    }
+    return;
+  };
+
+  // opts.animationspeed
+  $.fn.revealClose = function () {
+    if(!locked) {
+      lock();
+      var opts = options;
+      options = null;
+      if (!$modalBG) {
+        $modalBG = $('.reveal-modal-bg');
+      }
+      $modalBG.delay(opts.animationspeed).fadeOut(opts.animationspeed);
+      this.fadeOut(opts.animationspeed/2, unlock);
+      this.trigger('reveal:close');
+      $currentlyOpen = null;
+    }
+    return;
+  };
+
+  $.revealCloseCurrent = function () {
+    if ($currentlyOpen && $currentlyOpen.length) {
+      $currentlyOpen.revealClose();
+    }
+  };
+
+  function unlock() { 
+    locked = false;
+  }
+
+  function lock() {
+    locked = true;
+  } 
+}(window, jQuery)); // End Reveal Modal jQuery extension
+
 // Main program
-(function (window, jQuery, undefined) {
-  var $ = jQuery
-    , _navTiles
+(function (window, $, undefined) {
+  var _navTiles
     , computeBaseUnit = window.computeBaseUnit
     , HEADER_BREAKPOINT = window.HEADER_BREAKPOINT
+    , getLayout = window.getLayout
 
-  jQuery(function ($) {
+  // On document ready (this is the start of the program).
+  // -----------------------------------------------------
+  $(function ($) {
+    // Render the navigation tile grid.
     renderNavTileLayout();
+
+    // Listen for window resize events to re-render the nav tile grid.
     $(window).resize(_.debounce(renderNavTileLayout, 200));
+
+    // Setup the alternate hover state for touch devices.
     if (Modernizr.touch) {
       setupTouchHover();
     }
+
+    // Setup the modal windows.
+    setupModals();
+
+    // Hide base page elements under modal in mobile view.
+    if (getLayout() !== 'full') {
+      $(document).on('reveal:open', function () {
+        $('#site-header').hide();
+        $('nav.main-navigation').hide();
+      }).on('reveal:close', function () {
+        $('#site-header').show();
+        $('nav.main-navigation').show();
+      });
+    }
   });
+
+  function setupModals() {
+    // Setup the window hash history and modals.
+    $(window).on('hashchange', function (ev) {
+      ev.preventDefault();
+      var id = window.location.hash.replace(/^#/, '')
+      if (!id) {
+        $.revealCloseCurrent();
+      } else {
+        $('#'+ id).revealOpen({
+          innerHeight: modalInnerHeight,
+          animationspeed: 400
+        });
+      }
+      return false;
+    });
+
+    function hashHome() {
+      window.location.hash = '';
+    }
+
+    // Setup close triggers
+    $('.reveal-modal-bg').on('click', hashHome);
+    $('.close-reveal-modal').on('click', hashHome);
+    $('body')
+      .on('keyup', function(e) {
+        // 27 is the keycode for the Escape key
+        if(e.which===27){
+          hashHome();
+        }
+      });
+
+    // Get the ball rolling ...
+    $(window).trigger('hashchange');
+  }
 
   function setupTouchHover() {
     var currentHover = null
@@ -358,4 +455,14 @@ window.computeBaseUnit = function () {
       }
     });
   }
-}(window, jQuery));
+
+
+  function modalInnerHeight() {
+    var windowH = $(window).innerHeight()
+      , topMargin = 80
+      , bottomMargin = 120
+      , paddingAndHeader = 100
+
+    return windowH - topMargin - paddingAndHeader - bottomMargin;
+  }
+}(window, jQuery)); // End of main program
