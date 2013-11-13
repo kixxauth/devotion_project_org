@@ -207,9 +207,6 @@ textarea {
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -box-shadow: 0 0 10px rgba(0,0,0,.4);
   }
-  .reveal-modal .inner {
-    overflow-y: scroll;
-  }
 }
 
 .reveal-modal .close-reveal-modal {
@@ -359,6 +356,10 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
 ============================
 Begin custom content editing here: */
 
+section.section.movie .inner-content {
+  color: #fff;
+  background: #000;
+}
 section.section h2 {
   margin: 0;
   font-weight: normal;
