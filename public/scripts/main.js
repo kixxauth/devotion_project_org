@@ -70,6 +70,11 @@ window.TILE_GRID = {
     full: {top: 4, left: 1},
     tablet: {top: 8, left: 2},
     small: {top: 12, left: 0}
+  },
+  'site-container': {
+    full: 6,
+    tablet: 10,
+    small: 14
   }
 };
 
@@ -436,6 +441,8 @@ window.computeBaseUnit = function () {
       , width2 = Math.floor(baseUnit.width * 2)
       , height1 = Math.floor(baseUnit.height)
       , height2 = Math.floor(baseUnit.height * 2)
+
+    $('#site-container').height(getPositionOfTile(baseUnit.layout, 'site-container') * height1);
 
     if (baseUnit.containerWidth >= HEADER_BREAKPOINT) {
       $('#site-header').css({width: width2, height: height2});

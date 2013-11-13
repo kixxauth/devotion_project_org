@@ -287,10 +287,6 @@ header.banner a.social-link.pinterest {
   background-position: right center;
   margin-left: 5px;
 }
-header.banner .legal {
-  margin-top: 2em;
-  font-size: 0.7em;
-}
 @media only screen and (min-width: 512px) {
   header.banner {
     overflow: hidden;
@@ -350,6 +346,15 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   nav.main-navigation>ul {
     position: static;
   }
+}
+
+footer {
+  text-align: center;
+  border: none;
+}
+footer .legal {
+  margin-top: 2em;
+  font-size: 0.8em;
 }
 
 /* Devotion | Content Styles
