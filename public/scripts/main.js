@@ -281,6 +281,8 @@ window.computeBaseUnit = function () {
   // opts.animationspeed
   // opts.innerHeight - Function to compute inner height of modal content.
   $.fn.revealOpen = function (opts) {
+    var h
+
     if (!locked) {
       lock();
       options = opts;
@@ -289,7 +291,9 @@ window.computeBaseUnit = function () {
         $modalBG = $('.reveal-modal-bg');
       }
       if ($.isFunction(opts.innerHeight)) {
-        $inner.height(opts.innerHeight());
+        if (h = opts.innerHeight()) {
+          $inner.height(h);
+        }
       }
       $modalBG.fadeIn(opts.animationspeed/2);
       this
@@ -460,6 +464,9 @@ window.computeBaseUnit = function () {
       , bottomMargin = 200
       , paddingAndHeader = 100
 
+    if (getLayout() !== 'full') {
+      return null;
+    }
     return windowH - topMargin - paddingAndHeader - bottomMargin;
   }
 }(window, jQuery)); // End of main program

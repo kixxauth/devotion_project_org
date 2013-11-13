@@ -176,7 +176,6 @@ textarea {
   position: fixed; 
   height: 100%;
   width: 100%;
-  background: #000;
   background: rgba(0,0,0,.5);
   z-index: 100;
   display: none;
@@ -187,8 +186,8 @@ textarea {
 .reveal-modal {
   display: none;
   background-color: transparent;
-  border: 16px solid rgba(200, 200, 200, 0.2);
   z-index: 101;
+  position: relative;
 }
 .reveal-modal>.inner-content {
   padding: 1em;
@@ -196,12 +195,13 @@ textarea {
   position: relative;
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1025px) {
   .reveal-modal {
     position: absolute;
     top: 140px;
     left: 50%;
     width: 808px;
+    border: 16px solid rgba(200, 200, 200, 0.5);
     margin-left: -404px;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
