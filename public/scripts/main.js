@@ -161,8 +161,8 @@ window.computeBaseUnit = function () {
   function computePosition(baseUnit, id) {
     var position = getPositionOfTile(baseUnit.layout, id);
     return {
-      top: Math.floor(position.top * baseUnit.height)
-    , left: Math.floor(position.left * baseUnit.width)
+      top: Math.round(position.top * baseUnit.height)
+    , left: Math.round(position.left * baseUnit.width)
     };
   }
 
@@ -369,11 +369,9 @@ window.computeBaseUnit = function () {
     // Hide base page elements under modal in mobile view.
     if (getLayout() !== 'full') {
       $(document).on('reveal:open', function () {
-        $('#site-header').hide();
-        $('nav.main-navigation').hide();
+        $('#site-container').hide();
       }).on('reveal:close', function () {
-        $('#site-header').show();
-        $('nav.main-navigation').show();
+        $('#site-container').show();
       });
     }
   });
@@ -437,10 +435,10 @@ window.computeBaseUnit = function () {
 
   function renderNavTileLayout() {
     var baseUnit = computeBaseUnit()
-      , width1 = Math.floor(baseUnit.width)
-      , width2 = Math.floor(baseUnit.width * 2)
-      , height1 = Math.floor(baseUnit.height)
-      , height2 = Math.floor(baseUnit.height * 2)
+      , width1 = Math.ceil(baseUnit.width)
+      , width2 = Math.ceil(baseUnit.width * 2)
+      , height1 = Math.ceil(baseUnit.height)
+      , height2 = Math.ceil(baseUnit.height * 2)
 
     $('#site-container').height(getPositionOfTile(baseUnit.layout, 'site-container') * height1);
 

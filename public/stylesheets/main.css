@@ -189,6 +189,9 @@ textarea {
   z-index: 101;
   position: relative;
 }
+.reveal-modal>.inner-content>.inner {
+  overflow: auto;
+}
 .reveal-modal>.inner-content {
   padding: 1em;
   background-color: #fff;
