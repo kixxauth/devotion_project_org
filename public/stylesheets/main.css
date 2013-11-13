@@ -177,7 +177,7 @@ textarea {
   height: 100%;
   width: 100%;
   background: #000;
-  background: rgba(0,0,0,.8);
+  background: rgba(0,0,0,.5);
   z-index: 100;
   display: none;
   top: 0;
@@ -186,26 +186,28 @@ textarea {
 
 .reveal-modal {
   display: none;
-  background-color: #fff;
-  padding: 1em;
-  position: relative;
+  background-color: transparent;
+  border: 16px solid rgba(200, 200, 200, 0.2);
   z-index: 101;
+}
+.reveal-modal>.inner-content {
+  padding: 1em;
+  background-color: #fff;
+  position: relative;
 }
 
 @media only screen and (min-width: 1024px) {
   .reveal-modal {
-    padding: 16px;
     position: absolute;
-    margin: 0;
-    top: 100px;
+    top: 140px;
     left: 50%;
-    width: 768px;
-    margin-left: -400px;
+    width: 808px;
+    margin-left: -404px;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
     -box-shadow: 0 0 10px rgba(0,0,0,.4);
   }
-  .reveal-modal>.inner {
+  .reveal-modal .inner {
     overflow-y: scroll;
   }
 }
@@ -357,20 +359,23 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
 ============================
 Begin custom content editing here: */
 
-section.section>h2 {
+section.section h2 {
   margin: 0;
   font-weight: normal;
+  font-size: 1.8em;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
-section.section>.subtitle {
+section.section .subtitle {
   margin: 0.5em 0 0;
+  font-size: 1.1em;
   text-transform: uppercase;
 }
-section.section>.inner {
+section.section .inner {
   margin-top: 1em;
   padding-right: 1em;
 }
-section.section>.inner h3 {
+section.section .inner h3 {
   text-transform: uppercase;
   font-weight: normal;
 }

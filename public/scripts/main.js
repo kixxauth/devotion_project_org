@@ -173,9 +173,7 @@ window.computeBaseUnit = function () {
       , $body = null
 
     function reveal(opts) {
-      console.log('REVEAL', opts.close, $currentlyOpen)
       if (opts.close && $currentlyOpen) {
-        console.log('currentlyOpen', $currentlyOpen.length)
         $currentlyOpen.trigger('reveal.close');
         return this;
       }
@@ -232,7 +230,6 @@ window.computeBaseUnit = function () {
         }
 
         function close() {
-          console.log('CLOSING', locked)
           if(!locked) {
             lock();
             $modalBG.delay(opts.animationspeed).fadeOut(opts.animationspeed);
@@ -287,7 +284,7 @@ window.computeBaseUnit = function () {
     if (!locked) {
       lock();
       options = opts;
-      var $inner = this.children('.inner')
+      var $inner = this.find('.inner')
       if (!$modalBG) {
         $modalBG = $('.reveal-modal-bg');
       }
@@ -459,8 +456,8 @@ window.computeBaseUnit = function () {
 
   function modalInnerHeight() {
     var windowH = $(window).innerHeight()
-      , topMargin = 80
-      , bottomMargin = 120
+      , topMargin = 120
+      , bottomMargin = 200
       , paddingAndHeader = 100
 
     return windowH - topMargin - paddingAndHeader - bottomMargin;
