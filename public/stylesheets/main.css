@@ -384,6 +384,9 @@ section.section .inner {
   margin-top: 1em;
   padding-right: 1em;
 }
+#portraits section.section .inner {
+  padding-right: 0;
+}
 section.section .inner h3 {
   text-transform: uppercase;
   font-weight: normal;

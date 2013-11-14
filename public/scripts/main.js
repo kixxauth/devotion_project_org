@@ -166,114 +166,6 @@ window.computeBaseUnit = function () {
     };
   }
 
-  // opts.animationspeed
-  // opts.innerHeight - Function to compute inner height of modal content.
-  // opts.open
-  // opts.close
-  // opts.callback
-  $.fn.reveal = (function () {
-    var $currentlyOpen = null
-      , $modalBG = null
-      , $closeButtons = null
-      , $body = null
-
-    function reveal(opts) {
-      if (opts.close && $currentlyOpen) {
-        $currentlyOpen.trigger('reveal.close');
-        return this;
-      }
-
-      if (!$modalBG) {
-        $modalBG = $('.reveal-modal-bg')
-          .on('click.modalEvent', function () {
-            if ($currentlyOpen) {
-              $(document).trigger('reveal:doclose');
-            }
-          });
-      }
-      if (!$closeButtons) {
-        $closeButtons = $('.close-reveal-modal')
-          .on('click.modalEvent', function () {
-            if ($currentlyOpen) {
-              $(document).trigger('reveal:doclose');
-            }
-          });
-      }
-      if (!$body) {
-        $modal = $('body')
-          .on('keyup:modalEvent', function(e) {
-            // 27 is the keycode for the Escape key
-            if(e.which===27){
-              if ($currentlyOpen) {
-                $(document).trigger('reveal:doclose');
-              }
-            }
-          });
-      }
-
-      this.each(function () {
-        var $modal = $(this)
-          , $inner = $modal.children('.inner')
-          , locked = false
-
-        function open() {
-          $modal.off('reveal:open');
-
-          if (!locked) {
-            lock();
-            if ($.isFunction(opts.innerHeight)) {
-              $inner.height(opts.innerHeight());
-            }
-            $modalBG.fadeIn(opts.animationspeed/2);
-            $modal
-              .delay(opts.animationspeed/2)
-              .fadeIn(opts.animationspeed, unlock);
-            $currentlyOpen = $modal;
-            $currentlyOpen.on('reveal:close', close);
-          }
-          return;
-        }
-
-        function close() {
-          if(!locked) {
-            lock();
-            $modalBG.delay(opts.animationspeed).fadeOut(opts.animationspeed);
-            $modal.fadeOut(opts.animationspeed/2, unlock);
-            $currentlyOpen = null;
-          }
-          return;
-        }
-
-        $modal.on('reveal:open', function (ev) {
-          if ($currentlyOpen) {
-            var options = $.extend({}, opts)
-            options.callback = open;
-            options.open = false;
-            options.close = true;
-            $currentlyOpen.reveal(options);
-          } else {
-            open();
-          }
-        });
-
-        $modal.trigger('reveal:open');
-    
-        function unlock() { 
-          locked = false;
-          if ($.isFunction(opts.callback)) {
-            opts.callback();
-          }
-        }
-        function lock() {
-          locked = true;
-        } 
-      }); // $.each
-      return this;
-    }
-
-    return reveal;
-  }());
-
 }(window, jQuery)); // End jQuery extensions
 
 // Reveal Modal jQuery extension
@@ -286,7 +178,7 @@ window.computeBaseUnit = function () {
   // opts.animationspeed
   // opts.innerHeight - Function to compute inner height of modal content.
   $.fn.revealOpen = function (opts) {
-    var h
+    var h, self = this
 
     if (!locked) {
       lock();
@@ -303,7 +195,10 @@ window.computeBaseUnit = function () {
       $modalBG.fadeIn(opts.animationspeed/2);
       this
         .delay(opts.animationspeed/2)
-        .fadeIn(opts.animationspeed, unlock);
+        .fadeIn(opts.animationspeed, function () {
+          self.trigger('reveal:opened');
+          unlock();
+        });
       this.trigger('reveal:open');
       $currentlyOpen = this;
     }
@@ -374,6 +269,10 @@ window.computeBaseUnit = function () {
         $('#site-container').show();
       });
     }
+
+    $('#portraits').on('reveal:opened', function (ev) {
+      setupSlideShows();
+    });
   });
 
   function setupModals() {
@@ -462,6 +361,12 @@ window.computeBaseUnit = function () {
     });
   }
 
+  function setupSlideShows() {
+    $('#slides-a').slidesjs({
+      width: 776,
+      height: 582
+    });
+  }
 
   function modalInnerHeight() {
     var windowH = $(window).innerHeight()
