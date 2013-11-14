@@ -360,6 +360,20 @@ footer .legal {
   font-size: 0.8em;
 }
 
+/* Slide Show */
+section.slideshow ul.thumbs {
+  overflow: hidden;
+}
+section.slideshow li.thumb {
+  float: left;
+  width: 80px;
+  text-align: center;
+  overflow: hidden;
+}
+section.slideshow li.thumb img {
+  width: 100%;
+}
+
 /* Devotion | Content Styles
 ============================
 Begin custom content editing here: */
@@ -384,6 +398,7 @@ section.section .inner {
   margin-top: 1em;
   padding-right: 1em;
 }
+/* special for slide show */
 #portraits section.section .inner {
   padding-right: 0;
 }
