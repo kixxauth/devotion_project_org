@@ -432,7 +432,11 @@ section.section img[align="left"] {
 }
 
 section.section.slideshow .inner-content,
-section.section.movie .inner-content {
+section.section.movie .inner-content,
+section.section.slideshow .inner-content a,
+section.section.movie .inner-content a,
+section.section.slideshow .inner-content a:hover,
+section.section.movie .inner-content a:hover {
   color: #fff;
   background: #000;
 }
