@@ -388,6 +388,7 @@ section.slideshow li.thumb h5 {
   text-transform: uppercase;
   margin: 0 0 0.3em 0;
   line-height: 1.2;
+  height: 3em;
 }
 section.slideshow .slide-wrapper {
   margin-top: 15px;
