@@ -177,8 +177,15 @@ window.computeBaseUnit = function () {
 
   // opts.animationspeed
   // opts.innerHeight - Function to compute inner height of modal content.
-  $.fn.revealOpen = function (opts) {
+  $.fn.revealOpen = function (opts, callback) {
     var h, self = this
+
+    if ($currentlyOpen && $currentlyOpen.prop('id') == this.prop('id')) {
+      if (_.isFunction(callback)) {
+        callback();
+      }
+      return this;
+    }
 
     if (!locked) {
       lock();
@@ -197,12 +204,15 @@ window.computeBaseUnit = function () {
         .delay(opts.animationspeed/2)
         .fadeIn(opts.animationspeed, function () {
           self.trigger('reveal:opened');
+          if (_.isFunction(callback)) {
+            callback();
+          }
           unlock();
         });
       this.trigger('reveal:open');
       $currentlyOpen = this;
     }
-    return;
+    return this;
   };
 
   // opts.animationspeed
@@ -219,7 +229,7 @@ window.computeBaseUnit = function () {
       this.trigger('reveal:close');
       $currentlyOpen = null;
     }
-    return;
+    return this;
   };
 
   $.revealCloseCurrent = function () {
@@ -269,10 +279,6 @@ window.computeBaseUnit = function () {
         $('#site-container').show();
       });
     }
-
-    $('#portraits').on('reveal:opened', function (ev) {
-      setupSlideShows();
-    });
   });
 
   function setupModals() {
@@ -283,9 +289,11 @@ window.computeBaseUnit = function () {
       if (!id) {
         $.revealCloseCurrent();
       } else {
-        $('#'+ id).revealOpen({
-          innerHeight: modalInnerHeight,
-          animationspeed: 400
+        var parts = id.split('/')
+        openModal(parts[0], function () {
+          if (parts.length >= 2) {
+            openChildModal(parts[0], parts[1]);
+          }
         });
       }
       return false;
@@ -328,6 +336,44 @@ window.computeBaseUnit = function () {
     });
   }
 
+  function openModal(id, callback) {
+    $('#'+ id).revealOpen({
+      innerHeight: modalInnerHeight,
+      animationspeed: 400
+    }, callback);
+  }
+
+  function openChildModal(parentId, id) {
+    if (parentId === 'portraits') {
+      openSlideShow(id);
+    }
+  }
+
+  var openSlideShow = (function () {
+    var slideShows = {}
+      , $current = null
+
+    function open(id) {
+      var $next
+
+      if ($current) {
+        $current.hide();
+      }
+
+      if ($next = slideShows[id]) {
+        $current = $next.show();
+      } else {
+        $current = slideShows[id] = $('#'+ id).show().slidesjs({
+          width: 746,
+          height: 582,
+          navigation: {active: false},
+          pagination: {active: false}
+        });
+      }
+    }
+    return open;
+  }());
+
   function $navTiles() {
     return _navTiles || (_navTiles = $('.nav-tile'));
   }
@@ -358,15 +404,6 @@ window.computeBaseUnit = function () {
       } else if (aspectRatio === '2x2') {
         $el.sizeAndPosition(baseUnit, width2, height2);
       }
-    });
-  }
-
-  function setupSlideShows() {
-    $('#slides-a').slidesjs({
-      width: 746,
-      height: 582,
-      navigation: {active: false},
-      pagination: {active: false}
     });
   }
 

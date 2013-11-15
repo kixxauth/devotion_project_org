@@ -393,6 +393,7 @@ section.slideshow .slide-wrapper {
   margin-top: 15px;
 }
 section.slideshow .slide-container {
+  display: none;
   position: relative;
   width: 746px;
   margin: 0 auto;
