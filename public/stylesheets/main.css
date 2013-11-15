@@ -227,7 +227,7 @@ textarea {
    Devotion Project custom styles
    ========================================================================== */
 
-body {
+body, a, a:hover, a:active, a:visited {
   font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
   color: #312a6a;
 }
@@ -422,6 +422,14 @@ section.slideshow .slide-container>a.slidesjs-next {
 /* Devotion | Content Styles
 ============================
 Begin custom content editing here: */
+
+
+section.section img[align="right"] {
+  margin-left: 1em;
+}
+section.section img[align="left"] {
+  margin-right: 1em;
+}
 
 section.section.slideshow .inner-content,
 section.section.movie .inner-content {
