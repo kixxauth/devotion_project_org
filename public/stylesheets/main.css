@@ -419,6 +419,50 @@ section.slideshow .slide-container>a.slidesjs-next {
   background-position: -22px center;
 }
 
+#contact .inner-content {
+  padding-bottom: 0;
+}
+#contact .inner {
+  position: relative;
+}
+#contact .picture {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#contact .form {
+  float: right;
+  width: 432px;
+}
+#contact .form label {
+  display: block;
+}
+#contact .form input,
+#contact .form textarea {
+  width: 95%;
+  background-color: #d0ccd7;
+  border: none;
+  padding: 0.3em 0.5em;
+}
+#contact .submit input {
+  display: inline-block;
+  padding: 0 1em;
+  margin: 0;
+  height: 2em;
+  line-height: 2em;
+  border: none;
+  text-transform: uppercase;
+  color: #312a6a;
+  background-color: #d0ccd7;
+}
+#contact .submit .button-container {
+  float: right;
+  margin-right: 1em;
+}
+#contact .submit .button-container:first-child {
+  margin-right: 0;
+}
+
 /* Devotion | Content Styles
 ============================
 Begin custom content editing here: */
