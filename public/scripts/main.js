@@ -363,8 +363,10 @@ window.computeBaseUnit = function () {
 
   function setupSlideShows() {
     $('#slides-a').slidesjs({
-      width: 776,
-      height: 582
+      width: 746,
+      height: 582,
+      navigation: {active: false},
+      pagination: {active: false}
     });
   }
 

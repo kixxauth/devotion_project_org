@@ -363,21 +363,66 @@ footer .legal {
 /* Slide Show */
 section.slideshow ul.thumbs {
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 section.slideshow li.thumb {
   float: left;
-  width: 80px;
+  width: 82px;
+  height: 76px;
   text-align: center;
   overflow: hidden;
+  border: 1px solid #000;
+  margin-left: 12px;
+}
+section.slideshow li.thumb:first-child {
+  margin-left: 0;
 }
 section.slideshow li.thumb img {
   width: 100%;
+}
+section.slideshow li.thumb h5 {
+  font-size: 0.55em;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin: 0 0 0.3em 0;
+  line-height: 1.2;
+}
+section.slideshow .slide-wrapper {
+  margin-top: 15px;
+}
+section.slideshow .slide-container {
+  position: relative;
+  width: 746px;
+  margin: 0 auto;
+}
+section.slideshow .slide-container>a.slidesjs-navigation {
+  display: block;
+  position: absolute;
+  top: 280px;
+  height: 40px;
+  width: 22px;
+  text-indent: -9999px;
+  background-color: #000;
+  background-image: url(./images/slide_nav_sprite.png);
+  background-repeat: no-repeat;
+  z-index: 999;
+}
+section.slideshow .slide-container>a.slidesjs-previous {
+  left: 0;
+  background-position: -3px center;
+}
+section.slideshow .slide-container>a.slidesjs-next {
+  right: 0;
+  background-position: -22px center;
 }
 
 /* Devotion | Content Styles
 ============================
 Begin custom content editing here: */
 
+section.section.slideshow .inner-content,
 section.section.movie .inner-content {
   color: #fff;
   background: #000;
@@ -399,7 +444,7 @@ section.section .inner {
   padding-right: 1em;
 }
 /* special for slide show */
-#portraits section.section .inner {
+section.section.slideshow .inner {
   padding-right: 0;
 }
 section.section .inner h3 {
