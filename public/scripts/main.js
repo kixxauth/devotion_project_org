@@ -1,5 +1,9 @@
 window.HEADER_BREAKPOINT = 512;
 
+window.MODAL_TOP_MARGIN = 80;
+window.MODAL_BOTTOM_MARGIN = 140;
+window.MODAL_HEADER_PADDING = 100;
+
 window.TILE_GRID = {
   'watch-films-tile': {
     full: {top: 2, left: 0},
@@ -291,7 +295,7 @@ window.computeBaseUnit = function () {
       } else {
         var parts = id.split('/')
         openModal(parts[0], function () {
-          if (parts.length >= 2) {
+          if (parts.length >= 2 || id === 'portraits') {
             openChildModal(parts[0], parts[1]);
           }
         });
@@ -354,6 +358,7 @@ window.computeBaseUnit = function () {
       , $current = null
 
     function open(id) {
+      id = id || 'slides-f';
       var $next
 
       if ($current) {
@@ -409,9 +414,9 @@ window.computeBaseUnit = function () {
 
   function modalInnerHeight() {
     var windowH = $(window).innerHeight()
-      , topMargin = 120
-      , bottomMargin = 200
-      , paddingAndHeader = 100
+      , topMargin = window.MODAL_TOP_MARGIN
+      , bottomMargin = window.MODAL_BOTTOM_MARGIN
+      , paddingAndHeader = window.MODAL_HEADER_PADDING
 
     if (getLayout() !== 'full') {
       return null;
