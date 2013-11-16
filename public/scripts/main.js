@@ -220,7 +220,7 @@ window.computeBaseUnit = function () {
         $modalBG = $('.reveal-modal-bg');
       }
       if ($.isFunction(opts.innerHeight)) {
-        if (h = opts.innerHeight()) {
+        if (h = opts.innerHeight.call(self)) {
           $inner.height(h);
         }
       }
@@ -448,6 +448,18 @@ window.computeBaseUnit = function () {
     if (getLayout() !== 'full') {
       return null;
     }
+
+    var $vid = this.find('.videowrapper'), src, $iframe
+    if (src = $vid.data('src')) {
+      $iframe = $vid
+        .append('<iframe src="'+ src +'" width="745" height="419" frameborder="0" allowfullscreen></iframe>')
+        .children('iframe');
+      console.log($iframe)
+      this.one('reveal:close', function (ev) {
+        $iframe.remove();
+      });
+    }
+
     return windowH - topMargin - paddingAndHeader - bottomMargin;
   }
 }(window, jQuery)); // End of main program
