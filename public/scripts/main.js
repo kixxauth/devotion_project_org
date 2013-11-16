@@ -4,6 +4,23 @@ window.MODAL_TOP_MARGIN = 50;
 window.MODAL_BOTTOM_MARGIN = 140;
 window.MODAL_HEADER_PADDING = 100;
 
+window.MODAL_IDS = [
+  'what-is-devotion-project'
+, 'watch-films'
+, 'press'
+, 'portraits'
+, 'bonus-scenes'
+, 'en-portugues'
+, 'in-italiano'
+, 'en-espanol'
+, 'collaborators'
+, 'festivals-and-awards'
+, 'freedom-to-marry'
+, 'donate'
+, 'contact'
+, 'host-a-screening'
+];
+
 window.TILE_GRID = {
   'watch-films-tile': {
     full: {top: 2, left: 0},
@@ -95,6 +112,10 @@ window.getLayout = function (containerWidth) {
     return 'tablet';
   }
   return 'full';
+};
+
+window.isModalId = function (id) {
+  return window.MODAL_IDS.indexOf(id) > -1;
 };
 
 window.computeBaseUnit = function () {
@@ -258,6 +279,7 @@ window.computeBaseUnit = function () {
     , computeBaseUnit = window.computeBaseUnit
     , HEADER_BREAKPOINT = window.HEADER_BREAKPOINT
     , getLayout = window.getLayout
+    , isModalId = window.isModalId
 
   // On document ready (this is the start of the program).
   // -----------------------------------------------------
@@ -289,19 +311,22 @@ window.computeBaseUnit = function () {
   function setupModals() {
     // Setup the window hash history and modals.
     $(window).on('hashchange', function (ev) {
-      ev.preventDefault();
       var id = window.location.hash.replace(/^#/, '')
+
       if (!id) {
         $.revealCloseCurrent();
-      } else {
+      }
+
+      if (isModalId(id)) {
+        ev.preventDefault();
         var parts = id.split('/')
         openModal(parts[0], function () {
           if (parts.length >= 2 || id === 'portraits') {
             openChildModal(parts[0], parts[1]);
           }
         });
+        return false;
       }
-      return false;
     });
 
     function hashHome() {
