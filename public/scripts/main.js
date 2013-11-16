@@ -1,6 +1,6 @@
 window.HEADER_BREAKPOINT = 512;
 
-window.MODAL_TOP_MARGIN = 80;
+window.MODAL_TOP_MARGIN = 50;
 window.MODAL_BOTTOM_MARGIN = 140;
 window.MODAL_HEADER_PADDING = 100;
 
@@ -204,6 +204,7 @@ window.computeBaseUnit = function () {
         }
       }
       $modalBG.fadeIn(opts.animationspeed/2);
+      $(window).scrollTop(0);
       this
         .delay(opts.animationspeed/2)
         .fadeIn(opts.animationspeed, function () {
@@ -369,8 +370,8 @@ window.computeBaseUnit = function () {
         $current = $next.show();
       } else {
         $current = slideShows[id] = $('#'+ id).show().slidesjs({
-          width: 746,
-          height: 582,
+          width: 700,
+          height: 525,
           navigation: {active: false},
           pagination: {active: false}
         });
@@ -413,9 +414,10 @@ window.computeBaseUnit = function () {
   }
 
   function modalInnerHeight() {
-    var windowH = $(window).innerHeight()
+    var H = 900
+      , windowH = $(window).innerHeight()
       , topMargin = window.MODAL_TOP_MARGIN
-      , bottomMargin = window.MODAL_BOTTOM_MARGIN
+      , bottomMargin = (window.MODAL_BOTTOM_MARGIN * windowH) / H
       , paddingAndHeader = window.MODAL_HEADER_PADDING
 
     if (getLayout() !== 'full') {

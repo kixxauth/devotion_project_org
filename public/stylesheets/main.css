@@ -201,7 +201,7 @@ textarea {
 @media only screen and (min-width: 1025px) {
   .reveal-modal {
     position: absolute;
-    top: 80px;
+    top: 50px;
     left: 50%;
     width: 808px;
     border: 16px solid rgba(200, 200, 200, 0.5);
@@ -396,13 +396,13 @@ section.slideshow .slide-wrapper {
 section.slideshow .slide-container {
   display: none;
   position: relative;
-  width: 746px;
+  width: 700px;
   margin: 0 auto;
 }
 section.slideshow .slide-container>a.slidesjs-navigation {
   display: block;
   position: absolute;
-  top: 280px;
+  top: 220px;
   height: 40px;
   width: 22px;
   text-indent: -9999px;
@@ -430,10 +430,12 @@ section.slideshow .slide-container>a.slidesjs-next {
   position: absolute;
   bottom: 0;
   left: 0;
+  margin-bottom: -36px;
 }
 #contact .form {
   float: right;
   width: 432px;
+  padding-bottom: 36px;
 }
 #contact .form label {
   display: block;
