@@ -311,7 +311,9 @@ window.computeBaseUnit = function () {
   function setupModals() {
     // Setup the window hash history and modals.
     $(window).on('hashchange', function (ev) {
-      var id = window.location.hash.replace(/^#/, '')
+      var parts = window.location.hash.replace(/^#/, '').split('/')
+        , id = parts[0]
+        , sub = parts[1]
 
       if (!id) {
         $.revealCloseCurrent();
@@ -319,10 +321,9 @@ window.computeBaseUnit = function () {
 
       if (isModalId(id)) {
         ev.preventDefault();
-        var parts = id.split('/')
-        openModal(parts[0], function () {
-          if (parts.length >= 2 || id === 'portraits') {
-            openChildModal(parts[0], parts[1]);
+        openModal(id, function () {
+          if (sub || id === 'portraits') {
+            openChildModal(id, sub);
           }
         });
         return false;
