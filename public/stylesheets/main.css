@@ -427,15 +427,11 @@ section.slideshow .slide-container>a.slidesjs-next {
   position: relative;
 }
 #contact .picture {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-bottom: -36px;
+  float: left;
+  width: 313px;
 }
 #contact .form {
-  float: right;
-  width: 432px;
-  padding-bottom: 36px;
+  margin-left: 332px;
 }
 #contact .form label {
   display: block;
