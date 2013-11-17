@@ -174,6 +174,7 @@ textarea {
 
 body, a, a:hover, a:active, a:visited {
   font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
+  font-size: 14px;
   color: #312a6a;
 }
 
@@ -293,8 +294,8 @@ footer {
   border: none;
 }
 footer .legal {
-  margin-top: 2em;
-  font-size: 0.8em;
+  margin-top: 1em;
+  font-size: 0.9em;
 }
 
 /* Sections */
@@ -331,7 +332,7 @@ footer .legal {
   overflow-y: auto;
 }
 .reveal-modal .close-modal {
-  font-size: 1.5em;
+  font-size: 1.6em;
   line-height: .5;
   position: absolute;
   top: 0.5em;
@@ -369,7 +370,7 @@ section.slideshow li.thumb img {
   width: 100%;
 }
 section.slideshow li.thumb h5 {
-  font-size: 0.55em;
+  font-size: 0.7em;
   font-weight: normal;
   text-transform: uppercase;
   margin: 0 0 0.3em 0;
