@@ -224,7 +224,19 @@ window.Modals = {
 
     this.deck = $.kixxModal.createDeck();
 
-    this.deck.on('kixx-modal:opening', function () {
+    this.deck.on('kixx-modal:opening', function (ev, el) {
+      var $modal = $(el)
+        , $vid = $modal.find('.videowrapper')
+
+      if ($vid.length) {
+        var src = $vid.data('src'), $iframe
+        $iframe = $vid.append('<iframe src="'+ src +'" width="700" height="394" frameborder="0" allowfullscreen></iframe>')
+                    .children('iframe');
+        $modal.one('kixx-modal:closed', function (ev) {
+          $iframe.remove();
+        });
+      }
+
       window.clearTimeout(timeout);
     });
 

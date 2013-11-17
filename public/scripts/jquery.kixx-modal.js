@@ -156,6 +156,7 @@
     };
 
     self.open = function (id, opts) {
+      opts = opts || {};
       id = id.toString();
       if (locked || current == id) return this;
 
@@ -172,7 +173,7 @@
           , complete
 
         options = $.extend(options, opts);
-        complete = refunct(opts, 'complete');
+        complete = refunct(options, 'complete');
 
         options.complete = function () {
           current = id;
@@ -233,7 +234,7 @@
 
       $.each(events, function (i, evname) {
         $modal.on(evname, function (ev) {
-          dispatcher.trigger(evname);
+          dispatcher.trigger(evname, [$modal[0]]);
         });
       });
 
