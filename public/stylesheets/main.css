@@ -168,68 +168,18 @@ textarea {
   padding: 0.2em 0;
 }
 
-/*--------------------------------------------------
-  Reveal Modals
--------------------------------------------------- */
-    
-.reveal-modal-bg { 
-  position: fixed; 
-  height: 100%;
-  width: 100%;
-  background: rgba(0,0,0,.5);
-  z-index: 100;
-  display: none;
-  top: 0;
-  left: 0; 
-}
-
-.reveal-modal {
-  display: none;
-  background-color: transparent;
-  z-index: 101;
-  position: relative;
-}
-.reveal-modal>.inner-content>.inner {
-  overflow: auto;
-}
-.reveal-modal>.inner-content {
-  padding: 1em;
-  background-color: #fff;
-  position: relative;
-}
-
-@media only screen and (min-width: 1025px) {
-  .reveal-modal {
-    position: absolute;
-    top: 80px;
-    left: 50%;
-    width: 808px;
-    border: 16px solid rgba(200, 200, 200, 0.5);
-    margin-left: -404px;
-    -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
-    -box-shadow: 0 0 10px rgba(0,0,0,.4);
-  }
-}
-
-.reveal-modal .close-reveal-modal {
-  font-size: 1.5em;
-  line-height: .5;
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-  text-shadow: 0 -1px 1px rbga(0,0,0,.6);
-  font-weight: bold;
-  cursor: pointer;
-} 
-
 /* ==========================================================================
    Devotion Project custom styles
    ========================================================================== */
 
 body, a, a:hover, a:active, a:visited {
   font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
+  font-size: 14px;
   color: #312a6a;
+}
+
+#site-container {
+  position: relative;
 }
 
 header.banner {
@@ -309,7 +259,6 @@ nav.main-navigation>ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  position: relative;
 }
 nav.main-navigation>ul>li.nav-tile {
   position: absolute;
@@ -340,27 +289,65 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   display: none;
 }
 
-@media only screen and (min-width: 768px) {
-  #site-container {
-    position: relative;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-  nav.main-navigation>ul {
-    position: static;
-  }
-}
-
 footer {
   text-align: center;
   border: none;
 }
 footer .legal {
-  margin-top: 2em;
-  font-size: 0.8em;
+  margin-top: 1em;
+  font-size: 0.9em;
 }
 
+/* Sections */
+#kixx-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity: 0.5;
+  z-index: 2;
+}
+.reveal-modal {
+  display: none;
+  width: 808px;
+  background-color: transparent;
+  border: 16px solid rgba(200, 200, 200, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+  box-shadow: 0 0 10px rgba(0,0,0,.4);
+  z-index: 3;
+}
+.reveal-modal>.inner-content {
+  padding: 1em;
+  background-color: #fff;
+  position: relative;
+}
+.reveal-modal .modal-content {
+  overflow-y: auto;
+}
+.reveal-modal .close-modal {
+  font-size: 1.6em;
+  line-height: .5;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+  font-weight: bold;
+  cursor: pointer;
+} 
+
+
 /* Slide Show */
+section.slideshow .inner-content {
+  padding: 8px;
+  position: relative;
+}
 section.slideshow ul.thumbs {
   overflow: hidden;
   margin: 0;
@@ -374,7 +361,7 @@ section.slideshow li.thumb {
   text-align: center;
   overflow: hidden;
   border: 1px solid #000;
-  margin-left: 12px;
+  margin-left: 9px;
 }
 section.slideshow li.thumb:first-child {
   margin-left: 0;
@@ -383,7 +370,7 @@ section.slideshow li.thumb img {
   width: 100%;
 }
 section.slideshow li.thumb h5 {
-  font-size: 0.55em;
+  font-size: 0.7em;
   font-weight: normal;
   text-transform: uppercase;
   margin: 0 0 0.3em 0;
@@ -393,59 +380,54 @@ section.slideshow li.thumb h5 {
 section.slideshow .slide-wrapper {
   margin-top: 15px;
 }
-section.slideshow .slide-container {
-  display: none;
-  position: relative;
-  width: 746px;
+#portrait-slide-show {
+  width: 600px;
   margin: 0 auto;
 }
-section.slideshow .slide-container>a.slidesjs-navigation {
+section.slideshow a.slide-navigation {
   display: block;
   position: absolute;
-  top: 280px;
+  top: 306px;
   height: 40px;
   width: 22px;
   text-indent: -9999px;
   background-color: #000;
   background-image: url(./images/slide_nav_sprite.png);
   background-repeat: no-repeat;
-  z-index: 999;
 }
-section.slideshow .slide-container>a.slidesjs-previous {
-  left: 0;
+section.slideshow a.trigger-previous-slide {
+  left: 34px;
   background-position: -3px center;
 }
-section.slideshow .slide-container>a.slidesjs-next {
-  right: 0;
+section.slideshow a.trigger-next-slide {
+  right: 34px;
   background-position: -22px center;
 }
 
-#contact .inner-content {
+#section-contact .inner-content {
   padding-bottom: 0;
 }
-#contact .inner {
+#section-contact .modal-content {
   position: relative;
 }
-#contact .picture {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+#section-contact .picture {
+  float: left;
+  width: 313px;
 }
-#contact .form {
-  float: right;
-  width: 432px;
+#section-contact .form {
+  margin-left: 332px;
 }
-#contact .form label {
+#section-contact .form label {
   display: block;
 }
-#contact .form input,
-#contact .form textarea {
+#section-contact .form input,
+#section-contact .form textarea {
   width: 95%;
   background-color: #d0ccd7;
   border: none;
   padding: 0.3em 0.5em;
 }
-#contact .submit input {
+#section-contact .submit input {
   display: inline-block;
   padding: 0 1em;
   margin: 0;
@@ -456,11 +438,11 @@ section.slideshow .slide-container>a.slidesjs-next {
   color: #312a6a;
   background-color: #d0ccd7;
 }
-#contact .submit .button-container {
+#section-contact .submit .button-container {
   float: right;
   margin-right: 1em;
 }
-#contact .submit .button-container:first-child {
+#section-contact .submit .button-container:first-child {
   margin-right: 0;
 }
 
