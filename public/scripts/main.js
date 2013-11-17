@@ -1,8 +1,9 @@
 window.HEADER_BREAKPOINT = 512;
+window.SMALL_LAYOUT = 767;
+window.TABLET_LAYOUT = 1024;
 
-window.MODAL_TOP_MARGIN = 50;
-window.MODAL_BOTTOM_MARGIN = 140;
-window.MODAL_HEADER_PADDING = 100;
+window.MODAL_TOP_MARGIN = 50; // Based on 900px height
+window.MODAL_BOTTOM_MARGIN = 140; // Based on 900px height
 
 window.MODAL_IDS = [
   'what-is-devotion-project'
@@ -92,11 +93,6 @@ window.TILE_GRID = {
     tablet: {top: 8, left: 2},
     small: {top: 12, left: 0}
   },
-  'site-container': {
-    full: 6,
-    tablet: 10,
-    small: 14
-  }
 };
 
 window.getPositionOfTile = function (layout, id) {
@@ -118,41 +114,128 @@ window.isModalId = function (id) {
   return window.MODAL_IDS.indexOf(id) > -1;
 };
 
-window.computeBaseUnit = function () {
-  var containerWidth = $('#site-container').innerWidth()
-    , layout = window.getLayout(containerWidth)
-    , width
-    , height
-    , q
+window.Router = Backbone.Router.extend({
+  routes: {
+    '': 'home'
+  , 'section/portraits/:photo': 'portraits'
+  , 'section/:section': 'section'
+  },
 
-  if (layout === 'small') {
-    width = containerWidth / 2;
-  } else if (layout === 'tablet') {
-    width = containerWidth / 3;
-  } else {
-    width = containerWidth / 5;
+  home: function () {
+    console.log('HOME');
+  },
+
+  portraits: function (id) {
+    console.log('PORT', id);
+  },
+
+  section: function (id) {
+    console.log('SECTION', id)
   }
+});
 
-  q = width / 320;
-  height = q * 150;
+window.TileGrid = {
+  layout: null,
+  base: {height: null, width: null},
+  containerWidth: null,
+  _navTiles: null,
 
-  return {
-    containerWidth: containerWidth,
-    width: width,
-    height: height,
-    layout: layout
-  };
+  render: function () {
+    var self = this
+      , comp = this.compute();
+
+    $('#site-container').css({
+      width: this.containerWidth
+    , height: comp.containerHeight
+    , marginLeft: comp.marginLeft
+    });
+
+    if (this.containerWidth >= HEADER_BREAKPOINT) {
+      $('#site-header').css({
+        width: Math.ceil(this.base.width * 2)
+      , height: Math.ceil(this.base.height * 2)
+      });
+    } else {
+      $('#site-header').css({width: '100%', height: 'auto'});
+    }
+
+    this.$navTiles().each(function (i, el) {
+      self.sizeAndPositionTile($(this));
+    });
+  },
+
+  compute: function () {
+    var $win = $(window)
+      , parentW = $win.innerWidth()
+      , parentH = $win.innerHeight()
+      , width = 1600
+      , height = 900
+      , ar = width / height
+      , marginLeft = 0
+
+    if (width > parentW || height > parentH) {
+      if (width/parentW < height/parentH) {
+        height = parentH;
+        width = height * ar;
+      } else {
+        width = parentW;
+        height = width / ar;
+      }
+    }
+
+    if (width < parentW) {
+      marginLeft = (parentW - width) / 2;
+    }
+
+    this.containerWidth = Math.round(width);
+
+    if (width <= window.SMALL_LAYOUT) {
+      this.layout = 'small';
+      this.base.width = width / 2;
+    } else if (width <= window.TABLET_LAYOUT) {
+      this.layout = 'tablet';
+      this.base.width = width / 3;
+    } else {
+      this.layout = 'full';
+      this.base.width = width / 5;
+    }
+
+    this.base.height = (this.base.width / 320) * 150;
+
+    return {
+      marginLeft: marginLeft
+    , base: this.base
+    , containerWidth: this.containerWidth
+    , containerHeight: height
+    , layout: this.layout
+    };
+  },
+
+  sizeAndPositionTile: function ($el) {
+    var position = this.getPositionOfTile($el.prop('id'))
+      , aspect = $el.gridAspect()
+
+    $el.css({
+      width: Math.ceil(aspect.width * this.base.width)
+    , height: Math.ceil(aspect.height * this.base.height)
+    , top: Math.round(position.top * this.base.height)
+    , left: Math.round(position.left * this.base.width)
+    });
+  },
+
+  getPositionOfTile: function (id) {
+    return window.TILE_GRID[id][this.layout];
+  },
+
+  $navTiles: function () {
+    return this._navTiles || (this._navTiles = $('.nav-tile'));
+  }
 };
 
 // jQuery extensions
 (function (window, $, undefined) {
-  var getPositionOfTile = window.getPositionOfTile
 
-  $.fn.aspectRatio = function () {
-    if (this._aspectRatio) {
-      return this._aspectRatio;
-    }
-
+  $.fn.gridAspect = function () {
     var height, width
 
     if (this.hasClass('span1')) {
@@ -167,300 +250,22 @@ window.computeBaseUnit = function () {
       height = 2;
     }
 
-    return width +'x'+ height;
+    return {width: width, height: height};
   };
+}(window, jQuery));
 
-  $.fn.sizeAndPosition = function (baseUnit, width, height) {
-    var position = computePosition(baseUnit, this.prop('id'))
+// Do right now (before document ready):
+(function () {
+  // Build the tile layout.
+  window.TileGrid.render();
 
-    this.css({
-      width: width
-    , height: height
-    , top: position.top
-    , left: position.left
-    });
+  // Listen for window resize events to re-render the nav tile grid.
+  _.bindAll(window.TileGrid, 'render');
+  $(window).resize(_.debounce(window.TileGrid.render, 200));
+}())
 
-    return this;
-  };
-
-  function computePosition(baseUnit, id) {
-    var position = getPositionOfTile(baseUnit.layout, id);
-    return {
-      top: Math.round(position.top * baseUnit.height)
-    , left: Math.round(position.left * baseUnit.width)
-    };
-  }
-
-}(window, jQuery)); // End jQuery extensions
-
-// Reveal Modal jQuery extension
-(function (window, $) {
-  var locked = false
-    , $currentlyOpen = null
-    , $modalBG = null
-    , options = null
-
-  // opts.animationspeed
-  // opts.innerHeight - Function to compute inner height of modal content.
-  $.fn.revealOpen = function (opts, callback) {
-    var h, self = this
-
-    if ($currentlyOpen && $currentlyOpen.prop('id') == this.prop('id')) {
-      if (_.isFunction(callback)) {
-        callback();
-      }
-      return this;
-    }
-
-    if (!locked) {
-      lock();
-      options = opts;
-      var $inner = this.find('.inner')
-      if (!$modalBG) {
-        $modalBG = $('.reveal-modal-bg');
-      }
-      if ($.isFunction(opts.innerHeight)) {
-        if (h = opts.innerHeight.call(self)) {
-          $inner.height(h);
-        }
-      }
-      $modalBG.fadeIn(opts.animationspeed/2);
-      $(window).scrollTop(0);
-      this
-        .delay(opts.animationspeed/2)
-        .fadeIn(opts.animationspeed, function () {
-          self.trigger('reveal:opened');
-          if (_.isFunction(callback)) {
-            callback();
-          }
-          unlock();
-        });
-      this.trigger('reveal:open');
-      $currentlyOpen = this;
-    }
-    return this;
-  };
-
-  // opts.animationspeed
-  $.fn.revealClose = function () {
-    if(!locked) {
-      lock();
-      var opts = options;
-      options = null;
-      if (!$modalBG) {
-        $modalBG = $('.reveal-modal-bg');
-      }
-      $modalBG.delay(opts.animationspeed).fadeOut(opts.animationspeed);
-      this.fadeOut(opts.animationspeed/2, unlock);
-      this.trigger('reveal:close');
-      $currentlyOpen = null;
-    }
-    return this;
-  };
-
-  $.revealCloseCurrent = function () {
-    if ($currentlyOpen && $currentlyOpen.length) {
-      $currentlyOpen.revealClose();
-    }
-  };
-
-  function unlock() { 
-    locked = false;
-  }
-
-  function lock() {
-    locked = true;
-  } 
-}(window, jQuery)); // End Reveal Modal jQuery extension
-
-// Main program
-(function (window, $, undefined) {
-  var _navTiles
-    , computeBaseUnit = window.computeBaseUnit
-    , HEADER_BREAKPOINT = window.HEADER_BREAKPOINT
-    , getLayout = window.getLayout
-    , isModalId = window.isModalId
-
-  // On document ready (this is the start of the program).
-  // -----------------------------------------------------
-  $(function ($) {
-    // Render the navigation tile grid.
-    renderNavTileLayout();
-
-    // Listen for window resize events to re-render the nav tile grid.
-    $(window).resize(_.debounce(renderNavTileLayout, 200));
-
-    // Setup the alternate hover state for touch devices.
-    if (Modernizr.touch) {
-      setupTouchHover();
-    }
-
-    // Setup the modal windows.
-    setupModals();
-
-    // Hide base page elements under modal in mobile view.
-    if (getLayout() !== 'full') {
-      $(document).on('reveal:open', function () {
-        $('#site-container').hide();
-      }).on('reveal:close', function () {
-        $('#site-container').show();
-      });
-    }
-  });
-
-  function setupModals() {
-    // Setup the window hash history and modals.
-    $(window).on('hashchange', function (ev) {
-      var parts = window.location.hash.replace(/^#/, '').split('/')
-        , id = parts[0]
-        , sub = parts[1]
-
-      if (!id) {
-        $.revealCloseCurrent();
-      }
-
-      if (isModalId(id)) {
-        ev.preventDefault();
-        openModal(id, function () {
-          if (sub || id === 'portraits') {
-            openChildModal(id, sub);
-          }
-        });
-        return false;
-      }
-    });
-
-    function hashHome() {
-      window.location.hash = '';
-    }
-
-    // Setup close triggers
-    $('.reveal-modal-bg').on('click', hashHome);
-    $('.close-reveal-modal').on('click', hashHome);
-    $('body')
-      .on('keyup', function(e) {
-        // 27 is the keycode for the Escape key
-        if(e.which===27){
-          hashHome();
-        }
-      });
-
-    // Get the ball rolling ...
-    $(window).trigger('hashchange');
-  }
-
-  function setupTouchHover() {
-    var currentHover = null
-
-    $navTiles().on('click', function (ev) {
-      var $a = $(this), id = $a.attr('href')
-
-      if (currentHover === id) {
-        currentHover = null;
-        $a.removeClass('touch-hover');
-        return;
-      }
-      $('a[href="'+ currentHover +'"]').removeClass('touch-hover');
-      currentHover = id;
-      $a.addClass('touch-hover');
-      return false;
-    });
-  }
-
-  function openModal(id, callback) {
-    $('#'+ id).revealOpen({
-      innerHeight: modalInnerHeight,
-      animationspeed: 400
-    }, callback);
-  }
-
-  function openChildModal(parentId, id) {
-    if (parentId === 'portraits') {
-      openSlideShow(id);
-    }
-  }
-
-  var openSlideShow = (function () {
-    var slideShows = {}
-      , $current = null
-
-    function open(id) {
-      id = id || 'slides-f';
-      var $next
-
-      if ($current) {
-        $current.hide();
-      }
-
-      if ($next = slideShows[id]) {
-        $current = $next.show();
-      } else {
-        $current = slideShows[id] = $('#'+ id).show().slidesjs({
-          width: 700,
-          height: 525,
-          navigation: {active: false},
-          pagination: {active: false}
-        });
-      }
-    }
-    return open;
-  }());
-
-  function $navTiles() {
-    return _navTiles || (_navTiles = $('.nav-tile'));
-  }
-
-  function renderNavTileLayout() {
-    var baseUnit = computeBaseUnit()
-      , width1 = Math.ceil(baseUnit.width)
-      , width2 = Math.ceil(baseUnit.width * 2)
-      , height1 = Math.ceil(baseUnit.height)
-      , height2 = Math.ceil(baseUnit.height * 2)
-
-    $('#site-container').height(getPositionOfTile(baseUnit.layout, 'site-container') * height1);
-
-    if (baseUnit.containerWidth >= HEADER_BREAKPOINT) {
-      $('#site-header').css({width: width2, height: height2});
-    } else {
-      $('#site-header').css({width: '100%', height: 'auto'});
-    }
-
-    $navTiles().each(function (el) {
-      var $el = $(this)
-        , aspectRatio = $el.aspectRatio()
-
-      if (aspectRatio === '1x1') {
-        $el.sizeAndPosition(baseUnit, width1, height1);
-      } else if (aspectRatio === '1x2') {
-        $el.sizeAndPosition(baseUnit, width1, height2);
-      } else if (aspectRatio === '2x2') {
-        $el.sizeAndPosition(baseUnit, width2, height2);
-      }
-    });
-  }
-
-  function modalInnerHeight() {
-    var H = 900
-      , windowH = $(window).innerHeight()
-      , topMargin = window.MODAL_TOP_MARGIN
-      , bottomMargin = (window.MODAL_BOTTOM_MARGIN * windowH) / H
-      , paddingAndHeader = window.MODAL_HEADER_PADDING
-
-    if (getLayout() !== 'full') {
-      return null;
-    }
-
-    var $vid = this.find('.videowrapper'), src, $iframe
-    if (src = $vid.data('src')) {
-      $iframe = $vid
-        .append('<iframe src="'+ src +'" width="745" height="419" frameborder="0" allowfullscreen></iframe>')
-        .children('iframe');
-      console.log($iframe)
-      this.one('reveal:close', function (ev) {
-        $iframe.remove();
-      });
-    }
-
-    return windowH - topMargin - paddingAndHeader - bottomMargin;
-  }
-}(window, jQuery)); // End of main program
+// On document ready:
+$(function ($) {
+  new Router();
+  Backbone.history.start();
+});

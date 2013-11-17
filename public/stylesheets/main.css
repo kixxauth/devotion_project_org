@@ -168,61 +168,6 @@ textarea {
   padding: 0.2em 0;
 }
 
-/*--------------------------------------------------
-  Reveal Modals
--------------------------------------------------- */
-    
-.reveal-modal-bg { 
-  position: fixed; 
-  height: 100%;
-  width: 100%;
-  background: rgba(0,0,0,.5);
-  z-index: 100;
-  display: none;
-  top: 0;
-  left: 0; 
-}
-
-.reveal-modal {
-  display: none;
-  background-color: transparent;
-  z-index: 101;
-  position: relative;
-}
-.reveal-modal>.inner-content>.inner {
-  overflow: auto;
-}
-.reveal-modal>.inner-content {
-  padding: 1em;
-  background-color: #fff;
-  position: relative;
-}
-
-@media only screen and (min-width: 1025px) {
-  .reveal-modal {
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    width: 808px;
-    border: 16px solid rgba(200, 200, 200, 0.5);
-    margin-left: -404px;
-    -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
-    -box-shadow: 0 0 10px rgba(0,0,0,.4);
-  }
-}
-
-.reveal-modal .close-reveal-modal {
-  font-size: 1.5em;
-  line-height: .5;
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-  text-shadow: 0 -1px 1px rbga(0,0,0,.6);
-  font-weight: bold;
-  cursor: pointer;
-} 
-
 /* ==========================================================================
    Devotion Project custom styles
    ========================================================================== */
@@ -230,6 +175,10 @@ textarea {
 body, a, a:hover, a:active, a:visited {
   font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
   color: #312a6a;
+}
+
+#site-container {
+  position: relative;
 }
 
 header.banner {
@@ -309,7 +258,6 @@ nav.main-navigation>ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  position: relative;
 }
 nav.main-navigation>ul>li.nav-tile {
   position: absolute;
@@ -340,17 +288,6 @@ nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
   display: none;
 }
 
-@media only screen and (min-width: 768px) {
-  #site-container {
-    position: relative;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-  nav.main-navigation>ul {
-    position: static;
-  }
-}
-
 footer {
   text-align: center;
   border: none;
@@ -359,6 +296,12 @@ footer .legal {
   margin-top: 2em;
   font-size: 0.8em;
 }
+
+/* Sections */
+.reveal-modal {
+  display: none;
+}
+
 
 /* Slide Show */
 section.slideshow ul.thumbs {
