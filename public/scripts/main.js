@@ -1,4 +1,3 @@
-window.HEADER_BREAKPOINT = 512;
 window.SMALL_LAYOUT = 767;
 window.TABLET_LAYOUT = 1024;
 
@@ -95,45 +94,7 @@ window.TILE_GRID = {
   },
 };
 
-window.getPositionOfTile = function (layout, id) {
-  return window.TILE_GRID[id][layout];
-};
-
-window.getLayout = function (containerWidth) {
-  containerWidth = containerWidth || $(window).innerWidth();
-  if (containerWidth < 768) {
-    return 'small';
-  }
-  if (containerWidth < 1025) {
-    return 'tablet';
-  }
-  return 'full';
-};
-
-window.isModalId = function (id) {
-  return window.MODAL_IDS.indexOf(id) > -1;
-};
-
-window.Router = Backbone.Router.extend({
-  routes: {
-    '': 'home'
-  , 'section/portraits/:photo': 'portraits'
-  , 'section/:section': 'section'
-  },
-
-  home: function () {
-    console.log('HOME');
-  },
-
-  portraits: function (id) {
-    console.log('PORT', id);
-  },
-
-  section: function (id) {
-    console.log('SECTION', id)
-  }
-});
-
+// The tile grid computation singleton:
 window.TileGrid = {
   layout: null,
   base: {height: null, width: null},
@@ -150,13 +111,13 @@ window.TileGrid = {
     , marginLeft: comp.marginLeft
     });
 
-    if (this.containerWidth >= HEADER_BREAKPOINT) {
+    if (this.layout === 'small') {
+      $('#site-header').css({width: '100%', height: 'auto'});
+    } else {
       $('#site-header').css({
         width: Math.ceil(this.base.width * 2)
       , height: Math.ceil(this.base.height * 2)
       });
-    } else {
-      $('#site-header').css({width: '100%', height: 'auto'});
     }
 
     this.$navTiles().each(function (i, el) {
@@ -232,6 +193,35 @@ window.TileGrid = {
   }
 };
 
+// Modal window controller:
+window.Modals = {
+  deck: null,
+
+  initialize: function () {
+    var timeout
+
+    this.deck = $.kixxModal.createDeck();
+
+    this.deck.on('kixx-modal:opening', function () {
+      window.clearTimeout(timeout);
+    });
+
+    this.deck.on('kixx-modal:closed', function () {
+      timeout = window.setTimeout(function () {
+        window.location.hash = '';
+      }, 30);
+    });
+  },
+
+  open: function (id) {
+    this.deck.open('section-'+ id);
+  },
+
+  close: function (id) {
+    this.deck.close();
+  }
+};
+
 // jQuery extensions
 (function (window, $, undefined) {
 
@@ -254,10 +244,33 @@ window.TileGrid = {
   };
 }(window, jQuery));
 
+// Setup the window hashchange router:
+window.Router = Backbone.Router.extend({
+  routes: {
+    '': 'home'
+  , 'section/portraits/:photo': 'portraits'
+  , 'section/:section': 'section'
+  },
+
+  home: function () {
+    Modals.close();
+  },
+
+  portraits: function (id) {
+    console.log('PORT', id);
+  },
+
+  section: function (id) {
+    Modals.open(id);
+  }
+});
+
 // Do right now (before document ready):
 (function () {
   // Build the tile layout.
   window.TileGrid.render();
+
+  window.Modals.initialize();
 
   // Listen for window resize events to re-render the nav tile grid.
   _.bindAll(window.TileGrid, 'render');
