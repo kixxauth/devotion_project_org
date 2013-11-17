@@ -403,30 +403,30 @@ section.slideshow a.trigger-next-slide {
   background-position: -22px center;
 }
 
-#contact .inner-content {
+#section-contact .inner-content {
   padding-bottom: 0;
 }
-#contact .inner {
+#section-contact .modal-content {
   position: relative;
 }
-#contact .picture {
+#section-contact .picture {
   float: left;
   width: 313px;
 }
-#contact .form {
+#section-contact .form {
   margin-left: 332px;
 }
-#contact .form label {
+#section-contact .form label {
   display: block;
 }
-#contact .form input,
-#contact .form textarea {
+#section-contact .form input,
+#section-contact .form textarea {
   width: 95%;
   background-color: #d0ccd7;
   border: none;
   padding: 0.3em 0.5em;
 }
-#contact .submit input {
+#section-contact .submit input {
   display: inline-block;
   padding: 0 1em;
   margin: 0;
@@ -437,11 +437,11 @@ section.slideshow a.trigger-next-slide {
   color: #312a6a;
   background-color: #d0ccd7;
 }
-#contact .submit .button-container {
+#section-contact .submit .button-container {
   float: right;
   margin-right: 1em;
 }
-#contact .submit .button-container:first-child {
+#section-contact .submit .button-container:first-child {
   margin-right: 0;
 }
 
