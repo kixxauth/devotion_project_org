@@ -314,7 +314,7 @@ footer .legal {
 }
 .reveal-modal {
   display: none;
-  width: 800px;
+  width: 808px;
   background-color: transparent;
   border: 16px solid rgba(200, 200, 200, 0.5);
   -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
@@ -343,6 +343,10 @@ footer .legal {
 
 
 /* Slide Show */
+section.slideshow .inner-content {
+  padding: 8px;
+  position: relative;
+}
 section.slideshow ul.thumbs {
   overflow: hidden;
   margin: 0;
@@ -356,7 +360,7 @@ section.slideshow li.thumb {
   text-align: center;
   overflow: hidden;
   border: 1px solid #000;
-  margin-left: 12px;
+  margin-left: 9px;
 }
 section.slideshow li.thumb:first-child {
   margin-left: 0;
@@ -375,30 +379,27 @@ section.slideshow li.thumb h5 {
 section.slideshow .slide-wrapper {
   margin-top: 15px;
 }
-section.slideshow .slide-container {
-  display: none;
-  position: relative;
-  width: 700px;
+#portrait-slide-show {
+  width: 600px;
   margin: 0 auto;
 }
-section.slideshow .slide-container>a.slidesjs-navigation {
+section.slideshow a.slide-navigation {
   display: block;
   position: absolute;
-  top: 220px;
+  top: 306px;
   height: 40px;
   width: 22px;
   text-indent: -9999px;
   background-color: #000;
   background-image: url(./images/slide_nav_sprite.png);
   background-repeat: no-repeat;
-  z-index: 999;
 }
-section.slideshow .slide-container>a.slidesjs-previous {
-  left: 0;
+section.slideshow a.trigger-previous-slide {
+  left: 34px;
   background-position: -3px center;
 }
-section.slideshow .slide-container>a.slidesjs-next {
-  right: 0;
+section.slideshow a.trigger-next-slide {
+  right: 34px;
   background-position: -22px center;
 }
 

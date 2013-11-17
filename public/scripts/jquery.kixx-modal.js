@@ -155,30 +155,33 @@
       return self;
     };
 
-    self.open = function (id, callback) {
+    self.open = function (id, opts) {
       id = id.toString();
       if (locked || current == id) return this;
 
       var el = document.getElementById(id)
       if (!el) return this;
 
-      var $modal = initializeModal(el);
-
       locked = true;
-      callback = refunct(callback);
+
+      var $modal = initializeModal(el)
+        , callback = refunct(opts, 'complete')
 
       function doOpen() {
-        var opts = $.extend({}, openOptions)
-          , complete = refunct(opts, 'complete')
+        var options = $.extend({}, openOptions)
+          , complete
 
-        opts.complete = function () {
+        options = $.extend(options, opts);
+        complete = refunct(opts, 'complete');
+
+        options.complete = function () {
           current = id;
           locked = false;
           complete.call(this);
           callback();
         }
 
-        $modal.kixxModal('open', opts);
+        $modal.kixxModal('open', options);
       }
 
       if (current) {

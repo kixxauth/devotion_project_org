@@ -48,6 +48,11 @@
         , hideDone = false
         , showDone = true
 
+      if ($next.data('kixxSlidesOpen')) {
+        complete(this.$current, this.$current);
+        return;
+      }
+
       this.containSlide($next.show()).css({
         position: 'absolute'
       , top: 0
@@ -64,8 +69,11 @@
         }
 
         if (hideDone && showDone) {
+          var $from = self.$current
+          self.$current.data('kixxSlidesOpen', false);
+          $next.data('kixxSlidesOpen', true);
           self.$current = $next;
-          complete();
+          complete($from, $next);
         }
       }
 
@@ -100,6 +108,11 @@
         , hideDone = false
         , showDone = true
 
+      if ($next.data('kixxSlidesOpen')) {
+        complete(this.$current, this.$current);
+        return;
+      }
+
       this.containSlide($next.show()).css({
         position: 'absolute'
       , top: 0
@@ -116,8 +129,11 @@
         }
 
         if (hideDone && showDone) {
+          var $from = self.$current
+          self.$current.data('kixxSlidesOpen', false);
+          $next.data('kixxSlidesOpen', true);
           self.$current = $next;
-          complete();
+          complete($from, $next);
         }
       }
 
@@ -146,6 +162,12 @@
       var self = this
         , fadeInOpts =  $.extend({}, opts)
         , $next = $('#'+ id)
+        , complete = refunct(opts, 'complete')
+
+      if ($next.data('kixxSlidesOpen')) {
+        complete(this.$current, this.$current);
+        return;
+      }
 
       opts.complete = function () {
         self.containSlide($next).css({
@@ -156,7 +178,13 @@
         , height: self.currentHeight()
         }).fadeIn(fadeInOpts);
 
+        if (self.$current) {
+          self.$current.data('kixxSlidesOpen', false);
+        }
+        $next.data('kixxSlidesOpen', true);
+        var $from = self.$current
         self.$current = $next;
+        complete($from, $next);
       };
 
       if (this.$current) {

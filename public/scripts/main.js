@@ -94,6 +94,28 @@ window.TILE_GRID = {
   },
 };
 
+// jQuery extensions
+(function (window, $, undefined) {
+
+  $.fn.gridAspect = function () {
+    var height, width
+
+    if (this.hasClass('span1')) {
+      width = 1;
+    } else if (this.hasClass('span2')) {
+      width = 2;
+    }
+
+    if (this.hasClass('height1')) {
+      height = 1;
+    } else if (this.hasClass('height2')) {
+      height = 2;
+    }
+
+    return {width: width, height: height};
+  };
+}(window, jQuery));
+
 // The tile grid computation singleton:
 window.TileGrid = {
   layout: null,
@@ -213,8 +235,8 @@ window.Modals = {
     });
   },
 
-  open: function (id) {
-    this.deck.open('section-'+ id);
+  open: function (id, opts) {
+    this.deck.open('section-'+ id, opts);
   },
 
   close: function (id) {
@@ -222,27 +244,53 @@ window.Modals = {
   }
 };
 
-// jQuery extensions
-(function (window, $, undefined) {
+// Portrait slide show controller:
+window.Portraits = {
+  currentId: null,
+  slides: null,
 
-  $.fn.gridAspect = function () {
-    var height, width
+  initialize: function () {
+    var self = this
 
-    if (this.hasClass('span1')) {
-      width = 1;
-    } else if (this.hasClass('span2')) {
-      width = 2;
+    function updateHash($from, $to) {
+      var id = $to.prop('id')
+      if (id) {
+        window.location.hash = 'section/portraits/'+ id;
+      }
     }
 
-    if (this.hasClass('height1')) {
-      height = 1;
-    } else if (this.hasClass('height2')) {
-      height = 2;
-    }
+    $('#section-portraits').on('kixx-modal:opening', function (ev) {
+      self.openSlides();
+    }).on('kixx-modal:closed', function (ev) {
+      self.slides = null;
+    }).find('a.trigger-previous-slide').on('click', function (ev) {
+      ev.preventDefault();
+      self.slides.previous({
+        complete: updateHash
+      });
+      return false;
+    }).end().find('a.trigger-next-slide').on('click', function (ev) {
+      ev.preventDefault();
+      self.slides.next({
+        complete: updateHash
+      });
+      return false;
+    });
+  },
 
-    return {width: width, height: height};
-  };
-}(window, jQuery));
+  open: function (id) {
+    this.currentId = id;
+    if (this.slides) {
+      this.slides.show(id);
+    }
+    Modals.open('portraits', {topMargin: 0.02, bottomMargin: 0.02});
+  },
+
+  openSlides: function () {
+    this.slides = $('#portrait-slide-show').kixxSlides({aspectRatio: 1.5})
+    this.slides.show(this.currentId || 'slide-show-slide-f-1');
+  }
+};
 
 // Setup the window hashchange router:
 window.Router = Backbone.Router.extend({
@@ -257,11 +305,15 @@ window.Router = Backbone.Router.extend({
   },
 
   portraits: function (id) {
-    console.log('PORT', id);
+    Portraits.open(id);
   },
 
   section: function (id) {
-    Modals.open(id);
+    if (id === 'portraits') {
+      Portraits.open();
+    } else {
+      Modals.open(id);
+    }
   }
 });
 
@@ -271,6 +323,7 @@ window.Router = Backbone.Router.extend({
   window.TileGrid.render();
 
   window.Modals.initialize();
+  window.Portraits.initialize();
 
   // Listen for window resize events to re-render the nav tile grid.
   _.bindAll(window.TileGrid, 'render');
