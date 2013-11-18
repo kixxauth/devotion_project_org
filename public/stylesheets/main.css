@@ -177,6 +177,9 @@ body, a, a:hover, a:active, a:visited {
   font-size: 14px;
   color: #312a6a;
 }
+a:target {
+  text-decoration: none;
+}
 
 #site-container {
   position: relative;
