@@ -173,7 +173,7 @@ textarea {
    ========================================================================== */
 
 body, a, a:hover, a:active, a:visited {
-  font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", LucidaGrande, sans-serif;
+  font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", sans-serif;
   font-size: 14px;
   color: #312a6a;
 }
@@ -475,7 +475,6 @@ section.section h2 {
   font-weight: normal;
   font-size: 1.8em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 section.section .subtitle {
   margin: 0.5em 0 0;
