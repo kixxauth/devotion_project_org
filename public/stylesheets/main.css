@@ -327,7 +327,7 @@ footer .legal {
   z-index: 3;
 }
 .reveal-modal>.inner-content {
-  padding: 1em;
+  padding: 2em;
   background-color: #fff;
   position: relative;
 }
@@ -480,6 +480,9 @@ section.section .subtitle {
   margin: 0.5em 0 0;
   font-size: 1.1em;
   text-transform: uppercase;
+}
+section.section a.content-link.active {
+  text-decoration: none;
 }
 section.section .inner {
   margin-top: 1em;

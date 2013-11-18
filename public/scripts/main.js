@@ -304,6 +304,27 @@ window.Portraits = {
   }
 };
 
+// Setup the internal content links
+window.ContentLinks = {
+  initialize: function () {
+    var $links = $('a.content-link')
+
+    $links.on('click', function (ev) {
+      ev.preventDefault();
+
+      var $el = $(this)
+        , id = $el.attr('href').replace(/^#/, '')
+        , $target = $('#'+ id)
+        , loc = $target.position().top - 24
+
+      $links.removeClass('active');
+      $target.closest('.modal-content').scrollTop(loc);
+      $el.addClass('active');
+      return false;
+    });
+  }
+};
+
 // Setup the window hashchange router:
 window.Router = Backbone.Router.extend({
   routes: {
@@ -336,6 +357,7 @@ window.Router = Backbone.Router.extend({
 
   window.Modals.initialize();
   window.Portraits.initialize();
+  window.ContentLinks.initialize();
 
   // Listen for window resize events to re-render the nav tile grid.
   _.bindAll(window.TileGrid, 'render');
