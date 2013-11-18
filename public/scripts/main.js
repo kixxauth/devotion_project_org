@@ -325,6 +325,86 @@ window.ContentLinks = {
   }
 };
 
+window.ShareLinks = {
+  baseURL: encodeURIComponent('http://www.thedevotionproject.org/'),
+
+  initialize: function () {
+    $('ul.social-share-actions').each(function (i, el) {
+      window.ShareLinks.buildButtons($(this));
+    })
+  },
+
+  buildButtons: function ($container) {
+    var title = encodeURIComponent($container.data('title'))
+      , description = encodeURIComponent($container.data('description'))
+      , picture = encodeURIComponent($container.data('picture'))
+      , path = encodeURIComponent($container.data('path').replace('^/', ''))
+      , url = this.baseURL + path
+
+    $container.append(this.buildTumblr({
+      title: title
+    , description: description
+    , picture: picture
+    , url: url
+    }));
+
+    $container.append(this.buildFacebook({
+      title: title
+    , description: description
+    , picture: picture
+    , url: url
+    }));
+
+    $container.append(this.buildTwitter({
+      title: title
+    , description: description
+    , picture: picture
+    , url: url
+    }));
+
+    $container.append(this.buildPinterest({
+      title: title
+    , description: description
+    , picture: picture
+    , url: url
+    }));
+  },
+
+  buildTumblr: function (opts) {
+    var url = 'http://www.tumblr.com/share/link?url='
+    url += opts.url
+    url += '&name='+ opts.title
+    url += '&description'+ opts.description
+    return this.createButton(url, 'Tumblr');
+  },
+
+  buildFacebook: function (opts) {
+    var url = 'https://www.facebook.com/sharer.php?app_id=113869198637480&sdk=joey&u='
+    url += opts.url
+    url += '&display=popup'
+    return this.createButton(url, 'Facebook');
+  },
+
+  buildTwitter: function (opts) {
+    var url = 'http://twitter.com/share?url='
+    url += opts.url
+    url += '&text='+ opts.description
+    return this.createButton(url, 'Twitter');
+  },
+
+  buildPinterest: function (opts) {
+    var url = '//www.pinterest.com/pin/create/button/?url='
+    url += opts.url
+    url += '&media='+ opts.picture
+    url += '&description'+ opts.description
+    return this.createButton(url, 'Pinterest');
+  },
+
+  createButton: function (url, name) {
+    return $('<li class="'+ name.toLowerCase() +'"><a href="'+ url +'" target="_blank">'+ name +'</a></li>');
+  }
+}
+
 // Setup the window hashchange router:
 window.Router = Backbone.Router.extend({
   routes: {
@@ -358,6 +438,7 @@ window.Router = Backbone.Router.extend({
   window.Modals.initialize();
   window.Portraits.initialize();
   window.ContentLinks.initialize();
+  window.ShareLinks.initialize();
 
   // Listen for window resize events to re-render the nav tile grid.
   _.bindAll(window.TileGrid, 'render');
