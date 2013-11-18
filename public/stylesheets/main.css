@@ -522,6 +522,7 @@ Begin custom content editing here: */
 
 section.section img[align="right"] {
   margin-left: 1em;
+  margin-right: 2em;
 }
 section.section img[align="left"] {
   margin-right: 1em;
