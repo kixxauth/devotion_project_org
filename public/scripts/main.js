@@ -230,7 +230,12 @@ window.Modals = {
 
       if ($vid.length) {
         var src = $vid.data('src'), $iframe
-        $iframe = $vid.append('<iframe src="'+ src +'?autoplay=1" width="660" height="371" frameborder="0" allowfullscreen></iframe>')
+        if (src.indexOf('?') > -1) {
+          src += '&autoplay=1';
+        } else {
+          src += '?autoplay=1';
+        }
+        $iframe = $vid.append('<iframe src="'+ src +'" width="660" height="371" frameborder="0" allowfullscreen></iframe>')
                     .children('iframe');
         $modal.one('kixx-modal:closed', function (ev) {
           $iframe.remove();
@@ -295,7 +300,7 @@ window.Portraits = {
     if (this.slides) {
       this.slides.show(id);
     }
-    Modals.open('portraits', {topMargin: 0.02, bottomMargin: 0.02});
+    Modals.open('portraits', {topMargin: 0.1, bottomMargin: 0.02});
   },
 
   openSlides: function () {

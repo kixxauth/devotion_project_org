@@ -31,7 +31,6 @@
       , overflow: 'hidden'
       , listStyleType: 'none'
       , padding: 0
-      , height: height
       })
     },
 
@@ -222,11 +221,18 @@
       var $inner = $slide.find('img')
         , width = this.currentWidth()
         , height = this.currentHeight()
+        , usedHeight = 0
         , w = +$inner.attr('width')
         , h = +$inner.attr('height')
         , ar = w / h
         , marginLeft = 0
         , marginTop = 0
+
+      $inner.siblings().each(function () {
+        usedHeight += $(this).outerHeight();
+      });
+
+      height = height - usedHeight;
 
       if ((w - width) > 0 || (h - height) > 0) {
         if (w/width < h/height) {

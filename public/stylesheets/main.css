@@ -438,6 +438,7 @@ section.slideshow .slide-wrapper {
 }
 #portrait-slide-show {
   width: 600px;
+  height: 500px;
   margin: 0 auto;
 }
 section.slideshow a.slide-navigation {
@@ -458,6 +459,18 @@ section.slideshow a.trigger-previous-slide {
 section.slideshow a.trigger-next-slide {
   right: 34px;
   background-position: -22px center;
+}
+#portrait-slide-show .slide-footer {
+  overflow: hidden;
+}
+#portrait-slide-show .social-share-actions {
+  float: left;
+}
+#portrait-slide-show .photo-credit {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  float: right;
+  margin: 0.8em 0;
 }
 
 #section-contact .inner-content {
