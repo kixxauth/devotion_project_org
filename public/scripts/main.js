@@ -230,7 +230,7 @@ window.Modals = {
 
       if ($vid.length) {
         var src = $vid.data('src'), $iframe
-        $iframe = $vid.append('<iframe src="'+ src +'?autoplay=1" width="700" height="394" frameborder="0" allowfullscreen></iframe>')
+        $iframe = $vid.append('<iframe src="'+ src +'?autoplay=1" width="660" height="371" frameborder="0" allowfullscreen></iframe>')
                     .children('iframe');
         $modal.one('kixx-modal:closed', function (ev) {
           $iframe.remove();
