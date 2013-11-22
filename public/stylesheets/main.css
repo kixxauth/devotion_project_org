@@ -250,6 +250,7 @@ section.section>.inner-content img {
 }
 
 #section_portraits ul.thumbs {
+  font-size: 2em;
   list-style-type: none;
   padding: 0;
   text-align: center;
