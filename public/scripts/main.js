@@ -123,27 +123,52 @@ window.TileGrid = {
   containerWidth: null,
   _navTiles: null,
 
+  initialize: _.once(function () {
+    // Listen for window resize events to re-render the nav tile grid.
+    _.bindAll(window.TileGrid, 'render');
+    $(window).resize(_.debounce(window.TileGrid.render, 200));
+
+    // Render for the first time.
+    window.TileGrid.render();
+  }),
+
   render: function () {
     var self = this
-      , comp = this.compute();
+      , comp = this.compute()
+      , containerHeight = 0
 
-    $('#site-container').css({
-      width: this.containerWidth
-    , height: comp.containerHeight
-    , marginLeft: comp.marginLeft
-    });
-
-    if (this.layout === 'small') {
-      $('#site-header').css({width: '100%', height: 'auto'});
-    } else {
+    if (comp.layout === 'small') {
+      $('body').addClass('small');
       $('#site-header').css({
-        width: Math.ceil(this.base.width * 2)
-      , height: Math.ceil(this.base.height * 2)
+        width: '100%'
+      , height: 'auto'
+      , position: 'static'
+      });
+    } else {
+      $('body').removeClass('small');
+      $('#site-header').css({
+        width: Math.ceil(comp.base.width * 2)
+      , height: Math.ceil(comp.base.height * 2)
+      , position: 'absolute'
+      , top: 0
+      , left: 0
       });
     }
 
     this.$navTiles().each(function (i, el) {
-      self.sizeAndPositionTile($(this));
+      var settings = self.sizeAndPositionTile($(this))
+        , vpos = settings.top + settings.height
+
+      if (vpos > containerHeight) {
+        containerHeight = vpos;
+      }
+    });
+
+    console.log(comp)
+    $('#main-navigation').css({
+      width: comp.containerWidth
+    , height: containerHeight
+    , marginLeft: comp.marginLeft
     });
   },
 
@@ -197,13 +222,15 @@ window.TileGrid = {
   sizeAndPositionTile: function ($el) {
     var position = this.getPositionOfTile($el.prop('id'))
       , aspect = $el.gridAspect()
+      , settings = {
+          width: Math.ceil(aspect.width * this.base.width)
+        , height: Math.ceil(aspect.height * this.base.height)
+        , top: Math.round(position.top * this.base.height)
+        , left: Math.round(position.left * this.base.width)
+        }
 
-    $el.css({
-      width: Math.ceil(aspect.width * this.base.width)
-    , height: Math.ceil(aspect.height * this.base.height)
-    , top: Math.round(position.top * this.base.height)
-    , left: Math.round(position.left * this.base.width)
-    });
+    $el.css(settings);
+    return settings;
   },
 
   getPositionOfTile: function (id) {
@@ -437,21 +464,26 @@ window.Router = Backbone.Router.extend({
 
 // Do right now (before document ready):
 (function () {
-  // Build the tile layout.
-  //window.TileGrid.render();
+  var initialize
 
-  //window.Modals.initialize();
-  //window.Portraits.initialize();
-  //window.ContentLinks.initialize();
-  //window.ShareLinks.initialize();
+  // Initialize Backbone.js hash router
+  new Router();
 
-  // Listen for window resize events to re-render the nav tile grid.
-  //_.bindAll(window.TileGrid, 'render');
-  //$(window).resize(_.debounce(window.TileGrid.render, 200));
+  // Initialize the page after window load and 600ms.
+  initialize = _.after(2, function () {
+    window.TileGrid.initialize();
+
+    $('body').addClass('initialized');
+    $('.init-hidden').fadeIn();
+
+    //window.Modals.initialize();
+    //window.Portraits.initialize();
+    //window.ContentLinks.initialize();
+    //window.ShareLinks.initialize();
+    //Backbone.history.start();
+  });
+
+  // Initialize the page after *both* these events have been detected.
+  $(window).on('load', initialize);
+  window.setTimeout(initialize, 1200);
 }())
-
-// On document ready:
-$(function ($) {
-  //new Router();
-  //Backbone.history.start();
-});

@@ -202,9 +202,18 @@ a.close-modal {
   display: none;
 }
 
+html.js .init-hidden {
+  display: none;
+}
+
 #site-header {
   text-align: center;
   font-size: 1.5em;
+  overflow: hidden;
+}
+#site-header .page-title>img {
+  width: 228px;
+  height: 231px;
 }
 #site-header ul.social-links {
   list-style-type: none;
@@ -219,11 +228,12 @@ a.close-modal {
 
 #main-navigation {
   font-size: 1.5em;
-  margin-top: 3em;
+  margin-top: 2em;
 }
 #main-navigation ul.main-navigation {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 #main-navigation img {
   max-width: 100%;
@@ -240,6 +250,16 @@ a.close-modal {
 #main-navigation a.section-link:hover>img.init {
   display: none;
 }
+html.js #main-navigation {
+  position: relative;
+  margin-top: 0;
+}
+html.js body.small #main-navigation {
+  margin-top: 2em;
+}
+html.js #main-navigation ul.main-navigation>li {
+  position: absolute;
+}
 
 section.section>.inner-content {
   padding: 3%;
@@ -247,6 +267,9 @@ section.section>.inner-content {
 }
 section.section>.inner-content img {
   max-width: 100%;
+}
+html.js section.section {
+  display: none;
 }
 
 #section_portraits ul.thumbs {
