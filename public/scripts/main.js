@@ -1,8 +1,6 @@
 window.SMALL_LAYOUT = 767;
 window.TABLET_LAYOUT = 1024;
-
-window.MODAL_TOP_MARGIN = 50; // Based on 900px height
-window.MODAL_BOTTOM_MARGIN = 140; // Based on 900px height
+window.STATIC_MODAL_BREAKPOINT = 900;
 
 window.MODAL_IDS = [
   'what-is-devotion-project'
@@ -164,7 +162,6 @@ window.TileGrid = {
       }
     });
 
-    console.log(comp)
     $('#main-navigation').css({
       width: comp.containerWidth
     , height: containerHeight
@@ -246,29 +243,13 @@ window.TileGrid = {
 window.Modals = {
   deck: null,
 
-  initialize: function () {
+  initialize: _.once(function () {
     var timeout
 
     this.deck = $.kixxModal.createDeck();
 
     this.deck.on('kixx-modal:opening', function (ev, el) {
-      var $modal = $(el)
-        , $vid = $modal.find('.videowrapper')
-
-      if ($vid.length) {
-        var src = $vid.data('src'), $iframe
-        if (src.indexOf('?') > -1) {
-          src += '&autoplay=1';
-        } else {
-          src += '?autoplay=1';
-        }
-        $iframe = $vid.append('<iframe src="'+ src +'" width="660" height="371" frameborder="0" allowfullscreen></iframe>')
-                    .children('iframe');
-        $modal.one('kixx-modal:closed', function (ev) {
-          $iframe.remove();
-        });
-      }
-
+      new VideoModal($(el)).insertVideos();
       window.clearTimeout(timeout);
     });
 
@@ -277,14 +258,59 @@ window.Modals = {
         window.location.hash = '';
       }, 30);
     });
-  },
+  }),
 
-  open: function (id, opts) {
-    this.deck.open('section-'+ id, opts);
+  open: function (id, openOptions, closeOptions) {
+    var openOptions = openOptions || {}
+    if ($(window).innerWidth() < window.STATIC_MODAL_BREAKPOINT) {
+      openOptions.staticPosition = {
+        top: $(window).scrollTop()
+      };
+    }
+    this.deck.open(id, openOptions, closeOptions);
   },
 
   close: function (id) {
-    this.deck.close();
+    this.deck.closeAll();
+  }
+};
+
+function VideoModal($modal) {
+  this.$modal = $modal;
+  this.$wrappers = $modal.find('.videowrapper');
+}
+
+VideoModal.prototype = {
+  $wrappers: null,
+
+  insertVideos: function () {
+    var self = this
+
+    this.$wrappers.each(function () {
+      var $wrapper = $(this)
+        , $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
+
+      self.$modal.one('kixx-modal:closed', function () {
+        $iframe.remove();
+      })
+    });
+  },
+
+  iframe: function ($wrapper) {
+    var src = this.srcURL($wrapper)
+    return '<iframe src="'+ src +'" width="660" height="371" frameborder="0" allowfullscreen></iframe>';
+  },
+
+  srcURL: function ($wrapper) {
+    var src = $wrapper.data('src')
+
+    if (src.indexOf('?') > -1) {
+      src += '&autoplay=1';
+    } else {
+      src += '?autoplay=1';
+    }
+
+    return src;
   }
 };
 
@@ -333,27 +359,6 @@ window.Portraits = {
   openSlides: function () {
     this.slides = $('#portrait-slide-show').kixxSlides({aspectRatio: 1.5})
     this.slides.show(this.currentId || 'slide-show-slide-f-1');
-  }
-};
-
-// Setup the internal content links
-window.ContentLinks = {
-  initialize: function () {
-    var $links = $('a.content-link')
-
-    $links.on('click', function (ev) {
-      ev.preventDefault();
-
-      var $el = $(this)
-        , id = $el.attr('href').replace(/^#/, '')
-        , $target = $('#'+ id)
-        , loc = $target.position().top - 24
-
-      $links.removeClass('active');
-      $target.closest('.modal-content').scrollTop(loc);
-      $el.addClass('active');
-      return false;
-    });
   }
 };
 
@@ -438,36 +443,51 @@ window.ShareLinks = {
 }
 
 // Setup the window hashchange router:
-window.Router = Backbone.Router.extend({
-  routes: {
-    '': 'home'
-  , 'section/portraits/:photo': 'portraits'
-  , 'section/:section': 'section'
-  },
+window.HashHistory = {
+  initialize: _.once(function () {
+    $(window).on('hashchange', function () {
+      return window.HashHistory.route(window.location.hash.replace(/^#/, ''));
+    }).trigger('hashchange');
+  }),
 
-  home: function () {
-    Modals.close();
-  },
+  route: function (hash) {
+    var section
 
-  portraits: function (id) {
-    Portraits.open(id);
-  },
-
-  section: function (id) {
-    if (id === 'portraits') {
-      Portraits.open();
-    } else {
-      Modals.open(id);
+    if (!hash) {
+      return this.goHome();
     }
+    if (section = hash.match(/^(section_[\w\-]+)_sub_([\w\-]+)/)) {
+      return this.openSubSection(section[1], hash);
+    }
+    if (section = hash.match(/^section_portraits/)) {
+      return this.openPortraitSlide(/slide-show-slide/.test(hash) ? hash : null);
+    }
+    return this.openWindow(hash);
+  },
+
+  goHome: function () {
+    window.Modals.close();
+  },
+
+  openWindow: function (id) {
+    window.Modals.open(id);
+    return false;
+  },
+
+  openPortraitSlide: function (slide) {
+    console.log('OPENSLIDE', slide);
+    return false;
+  },
+
+  openSubSection: function (section, id) {
+    window.Modals.open(section);
+    return false;
   }
-});
+};
 
 // Do right now (before document ready):
 (function () {
   var initialize
-
-  // Initialize Backbone.js hash router
-  new Router();
 
   // Initialize the page after window load and 600ms.
   initialize = _.after(2, function () {
@@ -476,11 +496,13 @@ window.Router = Backbone.Router.extend({
     $('body').addClass('initialized');
     $('.init-hidden').fadeIn();
 
-    //window.Modals.initialize();
+    window.Modals.initialize();
     //window.Portraits.initialize();
     //window.ContentLinks.initialize();
     //window.ShareLinks.initialize();
-    //Backbone.history.start();
+
+    // Begin interacting with the page:
+    window.HashHistory.initialize();
   });
 
   // Initialize the page after *both* these events have been detected.

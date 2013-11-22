@@ -198,10 +198,6 @@ ul.social-share-actions {
   display: none;
 }
 
-a.close-modal {
-  display: none;
-}
-
 html.js .init-hidden {
   display: none;
 }
@@ -261,6 +257,21 @@ html.js #main-navigation ul.main-navigation>li {
   position: absolute;
 }
 
+#kixx-modal-overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+section.section {
+  background-color: #fff;
+  border: 12px solid rgba(200, 200, 200, 0.5);
+  width: 100%;
+  z-index: 3;
+}
 section.section>.inner-content {
   padding: 3%;
   font-size: 1.5em;
@@ -268,8 +279,19 @@ section.section>.inner-content {
 section.section>.inner-content img {
   max-width: 100%;
 }
-html.js section.section {
+html.no-js section.section.reveal-modal a.close-modal {
   display: none;
+}
+section.section.reveal-modal a.close-modal.close-button {
+  display: none;
+}
+section.section.reveal-modal a.close-modal.button {
+  text-align: center;
+  margin-top: 1em;
+}
+html.js section.section.reveal-modal {
+  display: none;
+  position: absolute;
 }
 
 #section_portraits ul.thumbs {
@@ -311,17 +333,6 @@ html.js section.section {
 #section_contact .button-container {
   margin-top: 1.5em;
 }
-#section_contact .submit input {
-  display: inline-block;
-  padding: 0 1em;
-  margin: 0;
-  height: 2em;
-  line-height: 2em;
-  border: none;
-  text-transform: uppercase;
-  color: #312a6a;
-  background-color: #d0ccd7;
-}
 
 footer .legal {
   text-align: center;
@@ -345,6 +356,33 @@ a:target {
 }
 ul {
   padding-left: 1.5em;
+}
+.button {
+  display: inline-block;
+  padding: 0 1em;
+  margin: 0;
+  height: 2em;
+  line-height: 2em;
+  border: none;
+  text-transform: uppercase;
+  color: #312a6a;
+  background-color: #d0ccd7;
+  cursor: pointer;
+}
+
+#kixx-modal-overlay {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity: 0.5;
+}
+
+section.section {
+  background-color: #fff;
+  border: 12px solid rgba(200, 200, 200, 0.5);
+}
+section.section.movie {
+  background-color: #000;
+  color: #fff;
 }
 
 /* =============================
