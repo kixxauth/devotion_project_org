@@ -438,20 +438,20 @@ window.Router = Backbone.Router.extend({
 // Do right now (before document ready):
 (function () {
   // Build the tile layout.
-  window.TileGrid.render();
+  //window.TileGrid.render();
 
-  window.Modals.initialize();
-  window.Portraits.initialize();
-  window.ContentLinks.initialize();
-  window.ShareLinks.initialize();
+  //window.Modals.initialize();
+  //window.Portraits.initialize();
+  //window.ContentLinks.initialize();
+  //window.ShareLinks.initialize();
 
   // Listen for window resize events to re-render the nav tile grid.
-  _.bindAll(window.TileGrid, 'render');
-  $(window).resize(_.debounce(window.TileGrid.render, 200));
+  //_.bindAll(window.TileGrid, 'render');
+  //$(window).resize(_.debounce(window.TileGrid.render, 200));
 }())
 
 // On document ready:
 $(function ($) {
-  new Router();
-  Backbone.history.start();
+  //new Router();
+  //Backbone.history.start();
 });

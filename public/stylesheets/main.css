@@ -168,335 +168,126 @@ textarea {
   padding: 0.2em 0;
 }
 
-/* ==========================================================================
-   Devotion Project custom styles
-   ========================================================================== */
-
-body, a, a:hover, a:active, a:visited {
-  font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", sans-serif;
-  font-size: 14px;
-  color: #312a6a;
-}
-a:target {
-  text-decoration: none;
+/* Devotion Project | Layout Styles
+=================================== */
+/* http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; 
 }
 
-#site-container {
-  position: relative;
-}
-
-header.banner {
-  text-align: center;
-  padding-bottom: 1em;
-}
-header.banner h1.page-title {
-  margin: 3% 0 0 25%;
-  width: 50%;
-}
-header.banner h1.page-title>img {
-  max-width: 100%;
-}
-header.banner .tagline {
-  margin: 1em 3% 0;
-}
-header.banner ul.social-links {
-  list-style-type: none;
-  padding: 0;
-  overflow: hidden;
-  width: 224px;
-  margin: 1em auto 0;
-}
-header.banner ul.social-links>li {
-  float: left;
-}
-header.banner a.social-link {
-  display: block;
-  background-image: url(./images/social_button_sprite.jpg);
-  background-repeat: no-repeat;
-  text-indent: -9999px;
-  height: 34px;
-}
-header.banner a:hover.social-link {
-  background-image: url(./images/social_button_sprite_hover.jpg);
-}
-header.banner a.social-link.youtube {
-  width: 50px;
-  background-position: left center;
-}
-header.banner a.social-link.tumblr {
-  width: 33px;
-  background-position: -55px center;
-  margin-left: 7px;
-}
-header.banner a.social-link.facebook {
-  width: 30px;
-  background-position: -99px center;
-  margin-left: 13px;
-}
-header.banner a.social-link.twitter {
-  width: 42px;
-  background-position: -139px center;
-  margin-left: 10px;
-}
-header.banner a.social-link.pinterest {
-  width: 34px;
-  background-position: right center;
-  margin-left: 5px;
-}
-@media only screen and (min-width: 512px) {
-  header.banner {
-    overflow: hidden;
-  }
-  header.banner h1.page-title {
-    float: left;
-    width: 33%;
-    margin-left: 5%;
-  }
-  header.banner .site-summary {
-    margin-left: 40%;
-    margin-top: 12%;
-  }
-}
-
-nav.main-navigation>ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-nav.main-navigation>ul>li.nav-tile {
-  position: absolute;
-}
-nav.main-navigation li.nav-tile {
-  overflow: hidden;
-}
-nav.main-navigation li.nav-tile>.inner>a {
-  display: block;
-}
-nav.main-navigation li.nav-tile>.inner,
-nav.main-navigation li.nav-tile>.inner>a,
-nav.main-navigation li.nav-tile>.inner>a>img {
+html.js .videowrapper {
+  float: none;
+  clear: both;
   width: 100%;
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
 }
-nav.main-navigation li.nav-tile>.inner>a>img.init {
-  display: inline-block;
-}
-nav.main-navigation li.nav-tile>.inner>a>img.hover {
-  display: none;
-}
-nav.main-navigation li.nav-tile>.inner>a.touch-hover>img.hover,
-nav.main-navigation li.nav-tile>.inner>a:hover>img.hover {
-  display: inline-block;
-}
-nav.main-navigation li.nav-tile>.inner>a.touch-hover>img.init,
-nav.main-navigation li.nav-tile>.inner>a:hover>img.init {
-  display: none;
-}
-
-footer {
-  text-align: center;
-  border: none;
-}
-footer .legal {
-  margin-top: 1em;
-  font-size: 0.9em;
-}
-
-/* Sections */
-#kixx-modal-overlay {
-  display: none;
-  position: fixed;
+html.js .videowrapper>iframe {
+  position: absolute;
   top: 0;
   left: 0;
-  margin: 0;
-  padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #000;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  opacity: 0.5;
-  z-index: 2;
 }
-.reveal-modal {
-  display: none;
-  width: 808px;
-  background-color: transparent;
-  border: 16px solid rgba(200, 200, 200, 0.5);
-  -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
-  -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
-  box-shadow: 0 0 10px rgba(0,0,0,.4);
-  z-index: 3;
-}
-.reveal-modal>.inner-content {
-  padding: 2em;
-  background-color: #fff;
-  position: relative;
-}
-.reveal-modal .modal-content {
-  overflow-y: auto;
-}
-.reveal-modal .close-modal {
-  font-size: 1.6em;
-  line-height: .5;
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-  text-shadow: 0 -1px 1px rbga(0,0,0,.6);
-  font-weight: bold;
-  cursor: pointer;
-} 
 
-
-/* Social Sharing Buttons */
 ul.social-share-actions {
-  margin: 0.5em 0 0;
-  padding: 0;
-  list-style-type: none;
-  overflow: hidden;
-}
-ul.social-share-actions li {
-  float: left;
-  margin-left: 0.5em;
-}
-ul.social-share-actions li:first-child {
-  margin-left: 0;
-}
-ul.social-share-actions li.title {
-  font-weight: bold;
-}
-ul.social-share-actions li>a {
-  display: block;
-  text-indent: -99999px;
-  width: 20px;
-  height: 20px;
-  background-repeat: no-repeat;
-  background-image: url(./images/content_social_sprite.png);
-}
-ul.social-share-actions.light li>a {
-  background-image: url(./images/content_social_sprite_light.png);
-}
-ul.social-share-actions li.tumblr>a {
-  background-position: 0px -3px;
-}
-ul.social-share-actions li.facebook>a {
-  background-position: -25px -3px;
-}
-ul.social-share-actions li.twitter>a {
-  background-position: -51px -3px;
-}
-ul.social-share-actions li.pinterest>a {
-  background-position: -73px -3px;
-}
-ul.social-share-actions.light li.tumblr>a {
-  background-position: 0px 0px;
-}
-ul.social-share-actions.light li.facebook>a {
-  background-position: -24px 0px;
-}
-ul.social-share-actions.light li.twitter>a {
-  background-position: -48px 0px;
-}
-ul.social-share-actions.light li.pinterest>a {
-  background-position: -70px 0px;
+  display: none;
 }
 
-/* Slide Show */
-section.slideshow .inner-content {
-  padding: 8px;
-  position: relative;
+a.close-modal {
+  display: none;
 }
-section.slideshow ul.thumbs {
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-section.slideshow li.thumb {
-  float: left;
-  width: 82px;
-  height: 76px;
+
+#site-header {
   text-align: center;
-  overflow: hidden;
-  border: 1px solid #000;
-  margin-left: 9px;
+  font-size: 1.5em;
 }
-section.slideshow li.thumb:first-child {
-  margin-left: 0;
+#site-header ul.social-links {
+  list-style-type: none;
+  padding: 0;
 }
-section.slideshow li.thumb img {
-  width: 100%;
+#site-header ul.social-links>li {
+  margin-top: 0.8em;
 }
-section.slideshow li.thumb h5 {
-  font-size: 0.7em;
-  font-weight: normal;
-  text-transform: uppercase;
-  margin: 0 0 0.3em 0;
-  line-height: 1.2;
-  height: 3em;
+#site-header ul.social-links>li:first-child {
+  margin-top: 0;
 }
-section.slideshow .slide-wrapper {
-  margin-top: 15px;
+
+#main-navigation {
+  font-size: 1.5em;
+  margin-top: 3em;
+}
+#main-navigation ul.main-navigation {
+  list-style-type: none;
+  padding: 0;
+}
+#main-navigation img {
+  max-width: 100%;
+}
+#main-navigation a.section-link>img.init {
+  display: block;
+}
+#main-navigation a.section-link>img.hover {
+  display: none;
+}
+#main-navigation a.section-link:hover>img.hover {
+  display: block;
+}
+#main-navigation a.section-link:hover>img.init {
+  display: none;
+}
+
+section.section>.inner-content {
+  padding: 3%;
+  font-size: 1.5em;
+}
+section.section>.inner-content img {
+  max-width: 100%;
+}
+
+#section_portraits ul.thumbs {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+#section_portraits li.thumb {
+  margin-top: 1em;
+}
+#section_portraits li.thumb:first-child {
+  margin-top: 0;
+}
+#section_portraits ul.thumbs img {
+  display: none;
 }
 #portrait-slide-show {
-  width: 600px;
-  height: 500px;
-  margin: 0 auto;
+  list-style-type: none;
+  padding: 0;
 }
-section.slideshow a.slide-navigation {
-  display: block;
-  position: absolute;
-  top: 306px;
-  height: 40px;
-  width: 22px;
-  text-indent: -9999px;
-  background-color: #000;
-  background-image: url(./images/slide_nav_sprite.png);
-  background-repeat: no-repeat;
+#portrait-slide-show>li {
+  margin-top: 1em;
 }
-section.slideshow a.trigger-previous-slide {
-  left: 34px;
-  background-position: -3px center;
-}
-section.slideshow a.trigger-next-slide {
-  right: 34px;
-  background-position: -22px center;
-}
-#portrait-slide-show .slide-footer {
-  overflow: hidden;
-}
-#portrait-slide-show .social-share-actions {
-  float: left;
-}
-#portrait-slide-show .photo-credit {
-  font-size: 0.8em;
-  text-transform: uppercase;
-  float: right;
-  margin: 0.8em 0;
+#section_portraits .slide-navigation {
+  display: none;
 }
 
-#section-contact .inner-content {
-  padding-bottom: 0;
-}
-#section-contact .modal-content {
-  position: relative;
-}
-#section-contact .picture {
-  float: left;
-  width: 313px;
-}
-#section-contact .form {
-  margin-left: 332px;
-}
-#section-contact .form label {
+#section_contact .form label {
   display: block;
 }
-#section-contact .form input,
-#section-contact .form textarea {
-  width: 95%;
+#section_contact .form input,
+#section_contact .form textarea {
+  width: 100%;
   background-color: #d0ccd7;
   border: none;
   padding: 0.3em 0.5em;
 }
-#section-contact .submit input {
+#section_contact .button-container {
+  margin-top: 1.5em;
+}
+#section_contact .submit input {
   display: inline-block;
   padding: 0 1em;
   margin: 0;
@@ -507,93 +298,33 @@ section.slideshow a.trigger-next-slide {
   color: #312a6a;
   background-color: #d0ccd7;
 }
-#section-contact .submit .button-container {
-  float: right;
-  margin-right: 1em;
-}
-#section-contact .submit .button-container:first-child {
-  margin-right: 0;
+
+footer .legal {
+  text-align: center;
 }
 
-/* Devotion | Content Styles
+
+/* Devotion Project | Content Styles
 ============================
 Begin custom content editing here: */
 
 
-section.section img[align="right"] {
-  margin-left: 1em;
-  margin-right: 2em;
+body {
+  font-size: 62.5%;
 }
-section.section img[align="left"] {
-  margin-right: 1em;
+body, a, a:hover, a:active, a:visited {
+  font-family: "Century Gothic", Corbel, "Apple Gothic", "URW Gothic L", sans-serif;
+  color: #312a6a;
 }
-
-section.section.slideshow .inner-content,
-section.section.movie .inner-content,
-section.section.slideshow .inner-content a,
-section.section.movie .inner-content a,
-section.section.slideshow .inner-content a:hover,
-section.section.movie .inner-content a:hover {
-  color: #fff;
-  background-color: #000;
-}
-section.section h2 {
-  margin: 0;
-  font-weight: normal;
-  font-size: 1.8em;
-  text-transform: uppercase;
-}
-section.section .subtitle {
-  margin: 0.5em 0 0;
-  font-size: 1.1em;
-  text-transform: uppercase;
-}
-section.section a.content-link.active {
+a:target {
   text-decoration: none;
 }
-section.section .inner {
-  margin-top: 1em;
-  padding-right: 1em;
-}
-/* special for slide show */
-section.section.slideshow .inner {
-  padding-right: 0;
-}
-section.section .inner h3 {
-  text-transform: uppercase;
-  font-weight: normal;
-}
-
-#synopses {
-  margin-top: 3.5em;
-}
-
-.videowrapper {
-  margin-top: 1em;
+ul {
+  padding-left: 1.5em;
 }
 
 /* =============================
-   END Devotion | Content Styles
-*/
-
-@media only screen and (max-width: 1025px) {
-  .videowrapper {
-    float: none;
-    clear: both;
-    width: 100%;
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-top: 25px;
-    height: 0;
-  }
-  .videowrapper>iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
+   END Devotion Project | Content Styles */
 
 
 /* ==========================================================================
