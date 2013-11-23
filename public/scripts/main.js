@@ -353,7 +353,11 @@ window.Portraits = {
   open: function (id) {
     if (!id || this.currentId !== id) {
       this.currentId = id;
-      window.Modals.open('section_portraits');
+      if (this.slideshow) {
+        this.slideshow.show(id);
+      } else {
+        window.Modals.open('section_portraits');
+      }
     }
   },
 
