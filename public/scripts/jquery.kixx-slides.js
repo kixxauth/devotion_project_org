@@ -245,6 +245,12 @@
         , marginLeft = 0
         , marginTop = 0
 
+      if ($inner.data('kixxSlidesContainerWidth') == width || $inner.data('kixxSlidesContainerHeight') == height) {
+        return $slide;
+      }
+      $inner.data('kixxSlidesContainerWidth', width);
+      $inner.data('kixxSlidesContainerHeight', height);
+
       $inner.siblings().each(function () {
         usedHeight += $(this).outerHeight(true);
       });
