@@ -1,5 +1,5 @@
 window.SMALL_LAYOUT = 767;
-window.TABLET_LAYOUT = 1024;
+window.TABLET_LAYOUT = 940;
 window.STATIC_MODAL_BREAKPOINT = 900;
 
 window.MODAL_IDS = [
@@ -365,7 +365,7 @@ window.Portraits = {
     id = id || this.currentId || 'section_portraits_slide-show-slide-f-1';
     this.slideshow = $('#portrait-slide-show').kixxSlides({
       initial: id
-    , aspectRatio: 0.5
+    , aspectRatio: 1
     });
     this.currentId = id;
     return this.slideshow;

@@ -266,15 +266,14 @@ html.js #main-navigation ul.main-navigation>li {
   left: 0;
   z-index: 2;
 }
-section.section {
-  background-color: #fff;
-  border: 12px solid rgba(200, 200, 200, 0.5);
+section.section.reveal-modal {
   width: 100%;
   z-index: 3;
 }
 section.section>.inner-content {
   padding: 3%;
   font-size: 1.5em;
+  position: relative;
 }
 section.section>.inner-content img {
   max-width: 100%;
@@ -292,6 +291,24 @@ section.section.reveal-modal a.close-modal.button {
 html.js section.section.reveal-modal {
   display: none;
   position: absolute;
+}
+@media (min-width: 500px) {
+  section.section.reveal-modal a.close-modal.close-button {
+    display: inline-block;
+    line-height: 0.8;
+    font-size: 1.8em;
+    position: absolute;
+    top: 0.3em;
+    right: 0.5em;
+    text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+@media (min-width: 900px) {
+  section.section.reveal-modal a.close-modal.button {
+    display: none;
+  }
 }
 
 #section_portraits ul.thumbs {
@@ -342,24 +359,6 @@ html.js #section_portraits a.trigger-next-slide {
   background-position: -22px center;
 }
 
-#section_contact .form label {
-  display: block;
-}
-#section_contact .form input,
-#section_contact .form textarea {
-  width: 100%;
-  background-color: #d0ccd7;
-  border: none;
-  padding: 0.3em 0.5em;
-}
-#section_contact .button-container {
-  margin-top: 1.5em;
-}
-
-footer .legal {
-  text-align: center;
-}
-
 
 /* Devotion Project | Content Styles
 ============================
@@ -378,6 +377,14 @@ a:target {
 }
 ul {
   padding-left: 1.5em;
+}
+img.align-right {
+  float: right;
+  margin-left: 1em;
+}
+img.align-left {
+  float: left;
+  margin-right: 1em;
 }
 .button {
   display: inline-block;
@@ -398,12 +405,14 @@ ul {
   opacity: 0.5;
 }
 
-section.section {
-  background-color: #fff;
+section.section.reveal-modal {
   border: 12px solid rgba(200, 200, 200, 0.5);
 }
-section.section.movie,
-section.section.slideshow {
+section.section>.inner-content {
+  background-color: #fff;
+}
+section.section.movie>.inner-content,
+section.section.slideshow>.inner-content {
   background-color: #000;
   color: #fff;
 }
@@ -414,6 +423,49 @@ section.section.slideshow a {
 
 #section_portraits ul.thumbs {
   font-size: 1em;
+}
+
+#section_contact .form label {
+  display: block;
+}
+#section_contact .form input[type="text"],
+#section_contact .form textarea {
+  width: 100%;
+  background-color: #d0ccd7;
+  border: none;
+  padding: 0.3em 0.5em;
+}
+#section_contact .submit {
+  overflow: hidden;
+}
+#section_contact .button-container {
+  float: right;
+  margin-top: 1.5em;
+  margin-right: 1em;
+}
+#section_contact .button-container:first-child {
+  margin-right: 0;
+}
+
+footer .legal {
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  html.js section.section.reveal-modal {
+    position: fixed;
+    border-width: 16px;
+    width: 840px;
+    top: 50%;
+    left: 50%;
+  }
+  section.section .modal-content {
+    max-height: 30em;
+    overflow-y: auto;
+  }
+  section.section.reveal-modal a.close-modal.button {
+    display: none;
+  }
 }
 
 /* =============================
