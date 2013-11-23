@@ -170,6 +170,7 @@ textarea {
 
 /* Devotion Project | Layout Styles
 =================================== */
+
 /* http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
 * {
   -moz-box-sizing: border-box;
@@ -177,6 +178,7 @@ textarea {
   box-sizing: border-box; 
 }
 
+/* The video injection is for JavaScript enabled devices only. */
 html.js .videowrapper {
   float: none;
   clear: both;
@@ -194,38 +196,21 @@ html.js .videowrapper>iframe {
   height: 100%;
 }
 
+/* Hide social sharing by default */
 ul.social-share-actions {
   display: none;
 }
 
+/* Hide initial content when JavaScript is active */
 html.js .init-hidden {
   display: none;
 }
 
 #site-header {
-  text-align: center;
-  font-size: 1.5em;
   overflow: hidden;
 }
-#site-header .page-title>img {
-  width: 228px;
-  height: 231px;
-}
-#site-header ul.social-links {
-  list-style-type: none;
-  padding: 0;
-}
-#site-header ul.social-links>li {
-  margin-top: 0.8em;
-}
-#site-header ul.social-links>li:first-child {
-  margin-top: 0;
-}
 
-#main-navigation {
-  font-size: 1.5em;
-  margin-top: 2em;
-}
+/* The main navigation is composed of image tiles */
 #main-navigation ul.main-navigation {
   list-style-type: none;
   padding: 0;
@@ -250,6 +235,8 @@ html.js #main-navigation {
   position: relative;
   margin-top: 0;
 }
+/* The #site-header and #main-navigation are treated differently
+in the 'small' tile layout */
 html.js body.small #main-navigation {
   margin-top: 2em;
 }
@@ -257,6 +244,7 @@ html.js #main-navigation ul.main-navigation>li {
   position: absolute;
 }
 
+/* The background that appears behind modal windows. */
 #kixx-modal-overlay {
   display: none;
   position: fixed;
@@ -266,33 +254,32 @@ html.js #main-navigation ul.main-navigation>li {
   left: 0;
   z-index: 2;
 }
+
+/* Configure the modal windows */
 section.section.reveal-modal {
-  width: 100%;
+  width: 100%; /* Start full width for small devices */
   z-index: 3;
 }
 section.section>.inner-content {
-  padding: 3%;
-  font-size: 1.5em;
-  position: relative;
+  position: relative; /* Relative position needed to position buttons later */
 }
 section.section>.inner-content img {
   max-width: 100%;
 }
+/* Initially hide close buttons: */
 html.no-js section.section.reveal-modal a.close-modal {
   display: none;
 }
 section.section.reveal-modal a.close-modal.close-button {
   display: none;
 }
-section.section.reveal-modal a.close-modal.button {
-  text-align: center;
-  margin-top: 1em;
-}
+/* Hide the modal windows when JavaScript is active */
 html.js section.section.reveal-modal {
   display: none;
   position: absolute;
 }
 @media (min-width: 500px) {
+  /* Position the top right 'x' close modal button */
   section.section.reveal-modal a.close-modal.close-button {
     display: inline-block;
     line-height: 0.8;
@@ -305,27 +292,12 @@ html.js section.section.reveal-modal {
     cursor: pointer;
   }
 }
-@media (min-width: 900px) {
-  section.section.reveal-modal a.close-modal.button {
-    display: none;
-  }
-}
 
-#section_portraits ul.thumbs {
-  font-size: 2em;
-  list-style-type: none;
-  padding: 0;
-  text-align: center;
-}
-#section_portraits li.thumb {
-  margin-top: 1em;
-}
-#section_portraits li.thumb:first-child {
-  margin-top: 0;
-}
+/* Hide slideshow thumb images by default */
 #section_portraits ul.thumbs img {
   display: none;
 }
+/* Default slide show layout */
 #portrait-slide-show {
   list-style-type: none;
   padding: 0;
@@ -334,14 +306,16 @@ html.js section.section.reveal-modal {
 #portrait-slide-show>li {
   margin-top: 1em;
 }
-html.js #section_portraits .slide-wrapper {
+#section_portraits .slide-wrapper {
   position: relative;
   max-width: 600px;
   margin: 18px auto 0;
 }
+/* Hide slide navigation buttons by default */
 #section_portraits .slide-navigation {
   display: none;
 }
+/* Setup slide navigation button when JavaScript is active */
 html.js #section_portraits .slide-navigation {
   display: block;
   position: absolute;
@@ -361,7 +335,24 @@ html.js #section_portraits a.trigger-next-slide {
   right: 0;
   background-position: -22px center;
 }
+/* Control padding and margin of slide content to accomodate aspect ratio */
+#section_portraits .slide-footer p,
+#section_portraits .slide-footer ul,
+#section_portraits .slide-footer li {
+  margin: 0;
+  padding: 0;
+}
+#section_portraits .slide-footer {
+  overflow: hidden;
+  margin-top: 0.5em;
+}
+
 @media (min-width: 900px) {
+  /* Hide the big close button at the bottom of modals */
+  section.section.reveal-modal a.close-modal.button {
+    display: none;
+  }
+  /* Update the slide navigation buttons for larger screens */
   html.js #section_portraits .slide-navigation {
     top: 0;
     height: 100%;
@@ -373,15 +364,6 @@ html.js #section_portraits a.trigger-next-slide {
     right: -30px;
   }
 }
-#section_portraits .slide-footer p,
-#section_portraits .slide-footer ul,
-#section_portraits .slide-footer li {
-  margin: 0;
-}
-#section_portraits .slide-footer {
-  overflow: hidden;
-  margin-top: 0.5em;
-}
 
 
 /* Devotion Project | Content Styles
@@ -389,6 +371,7 @@ html.js #section_portraits a.trigger-next-slide {
 Begin custom content editing here: */
 
 
+/* Setup default font size and styles */
 body {
   font-size: 62.5%;
 }
@@ -399,9 +382,13 @@ body, a, a:hover, a:active, a:visited {
 a:target {
   text-decoration: none;
 }
+
+/* More general defaults */
 ul {
   padding-left: 1.5em;
 }
+
+/* Utilties to align content images */
 img.align-right {
   float: right;
   margin-left: 1em;
@@ -410,6 +397,8 @@ img.align-left {
   float: left;
   margin-right: 1em;
 }
+
+/* Apply a button anywhere */
 .button {
   display: inline-block;
   padding: 0 1em;
@@ -423,16 +412,46 @@ img.align-left {
   cursor: pointer;
 }
 
+/* Site Branding */
+#site-header {
+  text-align: center;
+  font-size: 1.5em;
+}
+#site-header .page-title>img {
+  width: 228px;
+  height: 231px;
+}
+#site-header ul.social-links {
+  list-style-type: none;
+  padding: 0;
+}
+#site-header ul.social-links>li {
+  margin-top: 0.8em;
+}
+#site-header ul.social-links>li:first-child {
+  margin-top: 0;
+}
+
+/* Defaults for Main Navigation tiles */
+#main-navigation {
+  font-size: 1.5em;
+  margin-top: 2em;
+}
+
+/* Modal window background */
 #kixx-modal-overlay {
   background-color: #000;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   opacity: 0.5;
 }
 
+/* Modal windows */
 section.section.reveal-modal {
   border: 12px solid rgba(200, 200, 200, 0.5);
 }
 section.section>.inner-content {
+  padding: 3%;
+  font-size: 1.5em;
   background-color: #fff;
 }
 section.section.movie>.inner-content,
@@ -444,11 +463,26 @@ section.section.movie a,
 section.section.slideshow a {
   color: #fff;
 }
-
-#section_portraits ul.thumbs {
-  font-size: 1em;
+/* The big close button used in modals on small screens */
+section.section.reveal-modal a.close-modal.button {
+  margin-top: 1em;
 }
 
+/* Slideshow */
+#section_portraits ul.thumbs {
+  font-size: 2em;
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+#section_portraits li.thumb {
+  margin-top: 1em;
+}
+#section_portraits li.thumb:first-child {
+  margin-top: 0;
+}
+
+/* Contact Form */
 #section_contact .form label {
   display: block;
 }
@@ -471,11 +505,14 @@ section.section.slideshow a {
   margin-right: 0;
 }
 
+/* Site Footer */
 footer .legal {
   text-align: center;
 }
 
+/* When the screen is big enough to show modal windows as designed */
 @media (min-width: 900px) {
+  /* General modal window styles */
   html.js section.section.reveal-modal {
     position: fixed;
     border-width: 16px;
@@ -488,10 +525,8 @@ footer .legal {
     overflow-y: auto;
     padding-right: 20px;
   }
-  section.section.reveal-modal a.close-modal.button {
-    display: none;
-  }
 
+  /* Slideshow thumbnails */
   #section_portraits ul.thumbs {
     overflow: hidden;
     margin: 0;
