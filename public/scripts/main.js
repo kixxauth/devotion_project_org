@@ -290,7 +290,7 @@ VideoModal.prototype = {
       var $wrapper = $(this)
         , $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
 
-      self.$modal.one('kixx-modal:closed', function () {
+      self.$modal.one('kixx-modal:closing', function () {
         $iframe.remove();
       })
     });
@@ -316,49 +316,63 @@ VideoModal.prototype = {
 
 // Portrait slide show controller:
 window.Portraits = {
+  slideshow: null,
   currentId: null,
-  slides: null,
 
-  initialize: function () {
-    var self = this
+  initialize: _.once(function () {
+    this.currentId = null;
+    var self = this;
 
-    function updateHash($from, $to) {
+    function onTransition($from, $to) {
       var id = $to.prop('id')
-      if (id) {
-        window.location.hash = 'section/portraits/'+ id;
-      }
+      self.currentId = id;
+      window.location.hash = id;
     }
 
-    $('#section-portraits').on('kixx-modal:opening', function (ev) {
-      self.openSlides();
-    }).on('kixx-modal:closed', function (ev) {
-      self.slides = null;
-    }).find('a.trigger-previous-slide').on('click', function (ev) {
-      ev.preventDefault();
-      self.slides.previous({
-        complete: updateHash
-      });
-      return false;
-    }).end().find('a.trigger-next-slide').on('click', function (ev) {
-      ev.preventDefault();
-      self.slides.next({
-        complete: updateHash
-      });
-      return false;
+    $('#section_portraits').on('kixx-modal:opening', function () {
+      self.initializeSlideShow();
+    }).on('kixx-modal:closed', function () {
+      self.destroySlideShow();
     });
-  },
+
+    $('a.trigger-previous-slide').on('click', function (ev) {
+      ev.preventDefault();
+      if (self.slideshow) {
+        self.slideshow.previous({complete: onTransition});
+      }
+    });
+
+    $('a.trigger-next-slide').on('click', function (ev) {
+      ev.preventDefault();
+      if (self.slideshow) {
+        self.slideshow.next({complete: onTransition});
+      }
+    });
+  }),
 
   open: function (id) {
-    this.currentId = id;
-    if (this.slides) {
-      this.slides.show(id);
+    if (!id || this.currentId !== id) {
+      this.currentId = id;
+      window.Modals.open('section_portraits');
     }
-    Modals.open('portraits', {topMargin: 0.1, bottomMargin: 0.02});
   },
 
-  openSlides: function () {
-    this.slides = $('#portrait-slide-show').kixxSlides({aspectRatio: 1.5})
-    this.slides.show(this.currentId || 'slide-show-slide-f-1');
+  initializeSlideShow: function (id) {
+    id = id || this.currentId || 'section_portraits_slide-show-slide-f-1';
+    this.slideshow = $('#portrait-slide-show').kixxSlides({
+      initial: id
+    , aspectRatio: 0.5
+    });
+    this.currentId = id;
+    return this.slideshow;
+  },
+
+  destroySlideShow: function () {
+    if (this.slideshow) {
+      this.slideshow.destroy();
+      this.slideshow = null;
+      this.currentId = null;
+    }
   }
 };
 
@@ -445,24 +459,22 @@ window.ShareLinks = {
 // Setup the window hashchange router:
 window.HashHistory = {
   initialize: _.once(function () {
-    $(window).on('hashchange', function () {
-      return window.HashHistory.route(window.location.hash.replace(/^#/, ''));
+    $(window).on('hashchange', function (ev) {
+      window.HashHistory.route(ev, window.location.hash.replace(/^#/, ''));
     }).trigger('hashchange');
   }),
 
-  route: function (hash) {
+  route: function (ev, hash) {
     var section
-
     if (!hash) {
-      return this.goHome();
+      this.goHome();
+    } else if (section = hash.match(/^(section_[\w\-]+)_sub_([\w\-]+)/)) {
+      this.openSubSection(section[1], hash);
+    } else if (section = hash.match(/^section_portraits/)) {
+      this.openPortraitSlide(/slide-show-slide/.test(hash) ? hash : null);
+    } else {
+      this.openWindow(hash);
     }
-    if (section = hash.match(/^(section_[\w\-]+)_sub_([\w\-]+)/)) {
-      return this.openSubSection(section[1], hash);
-    }
-    if (section = hash.match(/^section_portraits/)) {
-      return this.openPortraitSlide(/slide-show-slide/.test(hash) ? hash : null);
-    }
-    return this.openWindow(hash);
   },
 
   goHome: function () {
@@ -475,7 +487,7 @@ window.HashHistory = {
   },
 
   openPortraitSlide: function (slide) {
-    console.log('OPENSLIDE', slide);
+    window.Portraits.open(slide);
     return false;
   },
 
@@ -497,7 +509,7 @@ window.HashHistory = {
     $('.init-hidden').fadeIn();
 
     window.Modals.initialize();
-    //window.Portraits.initialize();
+    window.Portraits.initialize();
     //window.ContentLinks.initialize();
     //window.ShareLinks.initialize();
 

@@ -319,6 +319,28 @@ html.js section.section.reveal-modal {
 #section_portraits .slide-navigation {
   display: none;
 }
+html.js #section_portraits .slide-wrapper {
+  position: relative;
+}
+html.js #section_portraits .slide-navigation {
+  display: block;
+  position: absolute;
+  top: 50%;
+  height: 40px;
+  width: 22px;
+  text-indent: -9999px;
+  background-color: #000;
+  background-image: url(./images/slide_nav_sprite.png);
+  background-repeat: no-repeat;
+}
+html.js #section_portraits a.trigger-previous-slide {
+  left: 0;
+  background-position: -3px center;
+}
+html.js #section_portraits a.trigger-next-slide {
+  right: 0;
+  background-position: -22px center;
+}
 
 #section_contact .form label {
   display: block;
@@ -380,9 +402,18 @@ section.section {
   background-color: #fff;
   border: 12px solid rgba(200, 200, 200, 0.5);
 }
-section.section.movie {
+section.section.movie,
+section.section.slideshow {
   background-color: #000;
   color: #fff;
+}
+section.section.movie a,
+section.section.slideshow a {
+  color: #fff;
+}
+
+#section_portraits ul.thumbs {
+  font-size: 1em;
 }
 
 /* =============================
