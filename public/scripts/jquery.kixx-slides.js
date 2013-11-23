@@ -244,7 +244,6 @@
         , ar = w / h
         , marginLeft = 0
         , marginTop = 0
-
       if ($inner.data('kixxSlidesContainerWidth') == width || $inner.data('kixxSlidesContainerHeight') == height) {
         return $slide;
       }

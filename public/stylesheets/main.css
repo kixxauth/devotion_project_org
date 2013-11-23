@@ -329,15 +329,18 @@ html.js section.section.reveal-modal {
 #portrait-slide-show {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 #portrait-slide-show>li {
   margin-top: 1em;
 }
-#section_portraits .slide-navigation {
-  display: none;
-}
 html.js #section_portraits .slide-wrapper {
   position: relative;
+  max-width: 600px;
+  margin: 18px auto 0;
+}
+#section_portraits .slide-navigation {
+  display: none;
 }
 html.js #section_portraits .slide-navigation {
   display: block;
@@ -357,6 +360,27 @@ html.js #section_portraits a.trigger-previous-slide {
 html.js #section_portraits a.trigger-next-slide {
   right: 0;
   background-position: -22px center;
+}
+@media (min-width: 900px) {
+  html.js #section_portraits .slide-navigation {
+    top: 0;
+    height: 100%;
+  }
+  html.js #section_portraits a.trigger-previous-slide {
+    left: -30px;
+  }
+  html.js #section_portraits a.trigger-next-slide {
+    right: -30px;
+  }
+}
+#section_portraits .slide-footer p,
+#section_portraits .slide-footer ul,
+#section_portraits .slide-footer li {
+  margin: 0;
+}
+#section_portraits .slide-footer {
+  overflow: hidden;
+  margin-top: 0.5em;
 }
 
 
@@ -462,9 +486,44 @@ footer .legal {
   section.section .modal-content {
     max-height: 30em;
     overflow-y: auto;
+    padding-right: 20px;
   }
   section.section.reveal-modal a.close-modal.button {
     display: none;
+  }
+
+  #section_portraits ul.thumbs {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  #section_portraits li.thumb {
+    float: left;
+    width: 82px;
+    height: 82px;
+    text-align: center;
+    overflow: hidden;
+    margin-left: 9px;
+    margin-top: 0;
+  }
+  #section_portraits li.thumb:first-child {
+    margin-left: 0;
+  }
+  #section_portraits ul.thumbs img {
+    display: inline-block;
+    border: 1px solid #000;
+  }
+  #section_portraits li.thumb a {
+    text-decoration: none;
+  }
+  #section_portraits li.thumb h5 {
+    font-size: 0.7em;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.2;
+    height: 3em;
   }
 }
 

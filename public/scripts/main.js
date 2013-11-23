@@ -365,7 +365,7 @@ window.Portraits = {
     id = id || this.currentId || 'section_portraits_slide-show-slide-f-1';
     this.slideshow = $('#portrait-slide-show').kixxSlides({
       initial: id
-    , aspectRatio: 1
+    , aspectRatio: 1.4
     });
     this.currentId = id;
     return this.slideshow;
