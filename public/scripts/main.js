@@ -295,8 +295,10 @@ VideoModal.prototype = {
     var self = this
 
     this.$wrappers.each(function () {
-      var $wrapper = $(this)
-        , $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
+      var $wrapper = $(this), $iframe
+
+      $wrapper.empty();
+      $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
 
       self.$modal.one('kixx-modal:closing', function () {
         $iframe.remove();
