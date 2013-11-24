@@ -603,6 +603,14 @@ section.section h2 {
   text-transform: uppercase;
   margin: 0;
 }
+section.section .subtitle>a {
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+section.section .subtitle>a.active {
+  text-decoration: none;
+  cursor: default;
+}
 /* The big close button used in modals on small screens */
 section.section.reveal-modal a.close-modal.button {
   margin-top: 1em;

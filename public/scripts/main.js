@@ -507,6 +507,8 @@ window.HashHistory = {
 
   openSubSection: function (section, id) {
     window.Modals.open(section);
+    $('a.content-link').removeClass('active')
+      .filter('[href="#'+ id +'"]').addClass('active')
     return false;
   }
 };
