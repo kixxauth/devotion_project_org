@@ -315,8 +315,6 @@ html.js section.section.reveal-modal {
 }
 #section_portraits .slide-wrapper {
   position: relative;
-  max-width: 600px;
-  margin: 18px auto 0;
 }
 /* Hide slide navigation buttons by default */
 #section_portraits .slide-navigation {
@@ -349,26 +347,11 @@ html.js #section_portraits a.trigger-next-slide {
   margin: 0;
   padding: 0;
 }
-#section_portraits .slide-footer {
-  overflow: hidden;
-  margin-top: 0.5em;
-}
 
 @media (min-width: 900px) {
   /* Hide the big close button at the bottom of modals */
   section.section.reveal-modal a.close-modal.button {
     display: none;
-  }
-  /* Update the slide navigation buttons for larger screens */
-  html.js #section_portraits .slide-navigation {
-    top: 0;
-    height: 100%;
-  }
-  html.js #section_portraits a.trigger-previous-slide {
-    left: -30px;
-  }
-  html.js #section_portraits a.trigger-next-slide {
-    right: -30px;
   }
 }
 
@@ -631,6 +614,16 @@ section.section.reveal-modal a.close-modal.button {
 #section_portraits li.thumb:first-child {
   margin-top: 0;
 }
+#section_portraits .slide-footer {
+  overflow: hidden;
+  margin-top: 0.5em;
+}
+#section_portraits .slide-footer>.social-share-actions {
+  float: left;
+}
+#section_portraits .slide-footer>.photo-credit {
+  float: right;
+}
 
 /* Contact Form */
 #section_contact .form label {
@@ -722,17 +715,46 @@ footer .legal {
     height: 420px;
   }
 
+  /* Slideshow */
+  #section_portraits {
+    top: 45%;
+  }
+  #section_portraits .modal-content {
+    max-height: 35em;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 0;
+  }
+  #section_portraits .slide-wrapper {
+    max-width: 680px;
+    margin: 18px auto 0;
+  }
+  html.js #portrait-slide-show>li {
+    margin: 0;
+  }
+  /* Update the slide navigation buttons for larger screens */
+  html.js #section_portraits .slide-navigation {
+    top: 0;
+    height: 100%;
+  }
+  html.js #section_portraits a.trigger-previous-slide {
+    left: -30px;
+  }
+  html.js #section_portraits a.trigger-next-slide {
+    right: -30px;
+  }
+
   /* Slideshow thumbnails */
   #section_portraits ul.thumbs {
     overflow: hidden;
-    margin: 0;
+    margin: 0 20px 0 0;
     padding: 0;
     list-style-type: none;
   }
   #section_portraits li.thumb {
     float: left;
-    width: 82px;
-    height: 82px;
+    width: 86px;
+    height: 86px;
     text-align: center;
     overflow: hidden;
     margin-left: 9px;
@@ -741,12 +763,9 @@ footer .legal {
   #section_portraits li.thumb:first-child {
     margin-left: 0;
   }
-  #section_portraits ul.thumbs img {
-    display: inline-block;
-    border: 1px solid #000;
-  }
   #section_portraits li.thumb a {
     text-decoration: none;
+    display: block;
   }
   #section_portraits li.thumb h5 {
     font-size: 0.7em;
@@ -754,7 +773,15 @@ footer .legal {
     text-transform: uppercase;
     margin: 0;
     line-height: 1.2;
-    height: 3em;
+    height: 32px;
+  }
+  #section_portraits ul.thumbs a>img {
+    display: inline-block;
+    height: 50px;
+    border: 1px solid #000;
+  }
+  #section_portraits ul.thumbs a.active>img {
+    border-color: #fff;
   }
 
   #section_contact .inner-content {

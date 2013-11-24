@@ -369,6 +369,13 @@ window.Portraits = {
         window.Modals.open('section_portraits');
       }
     }
+
+    if (id) {
+      var klass = id.match(/^section_portraits_slide-show-slide-([a-z]{1})-/)[1]
+      $('#section_portraits')
+        .find('a.thumb-link').removeClass('active')
+        .filter('.'+ klass).addClass('active');
+    }
   },
 
   initializeSlideShow: function (id) {

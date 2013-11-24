@@ -171,7 +171,6 @@
         , complete = refunct(opts, 'complete')
 
       if ($next.data('kixxSlidesOpen')) {
-        console.log('already open');
         complete(this.$current, this.$current);
         return;
       }
