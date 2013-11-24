@@ -319,7 +319,7 @@ html.js section.section.reveal-modal {
   padding: 0;
   margin: 0;
 }
-#portrait-slide-show>li {
+html.no-js #portrait-slide-show>li {
   margin-top: 1em;
 }
 #section_portraits .slide-wrapper {
@@ -469,7 +469,7 @@ ul.social-share-actions.light li.pinterest>a {
 #site-header {
   text-align: center;
   font-size: 1.5em;
-  margin-top: 10%; /* Before page initialization */
+  margin-top: 6%; /* Before page initialization */
 }
 #site-header h1.page-title {
   height: 231px;
@@ -610,17 +610,15 @@ section.section .subtitle>a.active {
   text-decoration: none;
   cursor: default;
 }
+section.section .modal-content {
+  margin-top: 1em;
+}
 section.section h3 {
   font-weight: normal;
   text-transform: uppercase;
 }
 /* The big close button used in modals on small screens */
 section.section.reveal-modal a.close-modal.button {
-  margin-top: 1em;
-}
-
-/* Intro Modal */
-#section_what-is-devotion-project .modal-content {
   margin-top: 1em;
 }
 
@@ -738,21 +736,14 @@ footer .legal {
   }
 
   /* Slideshow */
-  #section_portraits {
-    top: 45%;
-  }
   #section_portraits .modal-content {
-    max-height: 35em;
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 0;
   }
   #section_portraits .slide-wrapper {
-    max-width: 680px;
+    max-width: 600px;
     margin: 18px auto 0;
-  }
-  html.js #portrait-slide-show>li {
-    margin: 0;
   }
   /* Update the slide navigation buttons for larger screens */
   html.js #section_portraits .slide-navigation {
@@ -819,6 +810,17 @@ footer .legal {
 
   #section_donate .modal-content>.picture {
     max-width: 600px;
+  }
+}
+@media (min-width: 900px) and (min-height: 780px) {
+  #section_portraits {
+    top: 45%;
+  }
+  #section_portraits .modal-content {
+    max-height: 35em;
+  }
+  #section_portraits .slide-wrapper {
+    max-width: 680px;
   }
 }
 
