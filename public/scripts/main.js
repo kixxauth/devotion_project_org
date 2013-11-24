@@ -365,16 +365,10 @@ window.Portraits = {
       this.currentId = id;
       if (this.slideshow) {
         this.slideshow.show(id);
+        this.activateThumbnail();
       } else {
         window.Modals.open('section_portraits');
       }
-    }
-
-    if (id) {
-      var klass = id.match(/^section_portraits_slide-show-slide-([a-z]{1})-/)[1]
-      $('#section_portraits')
-        .find('a.thumb-link').removeClass('active')
-        .filter('.'+ klass).addClass('active');
     }
   },
 
@@ -385,6 +379,7 @@ window.Portraits = {
     , aspectRatio: 1.4
     });
     this.currentId = id;
+    this.activateThumbnail();
     return this.slideshow;
   },
 
@@ -394,6 +389,13 @@ window.Portraits = {
       this.slideshow = null;
       this.currentId = null;
     }
+  },
+
+  activateThumbnail: function () {
+    var klass = this.currentId.match(/^section_portraits_slide-show-slide-([a-z]{1})-/)[1]
+    $('#section_portraits')
+      .find('a.thumb-link').removeClass('active')
+      .filter('.'+ klass).addClass('active');
   }
 };
 
