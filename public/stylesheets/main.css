@@ -597,8 +597,17 @@ section.section .subtitle>a.active {
   text-decoration: none;
   cursor: default;
 }
+section.section h3 {
+  font-weight: normal;
+  text-transform: uppercase;
+}
 /* The big close button used in modals on small screens */
 section.section.reveal-modal a.close-modal.button {
+  margin-top: 1em;
+}
+
+/* Intro Modal */
+#section_what-is-devotion-project .modal-content {
   margin-top: 1em;
 }
 
