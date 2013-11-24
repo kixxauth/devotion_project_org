@@ -32,6 +32,7 @@
       opts = opts || {};
 
       var complete = refunct(opts, 'complete')
+        , position = refunct(opts, 'position')
         , $this = this
 
       if (this.data('kixxModalLocked') || this.data('kixxModalOpen')) {
@@ -88,24 +89,6 @@
       return this;
     }
   };
-
-  function position(opts) {
-    if (opts.staticPosition) {
-      this.css({
-        top: opts.staticPosition.top || 0
-      , marginLeft: opts.staticPosition.marginLeft || 0
-      , marginTop: opts.staticPosition.marginTop || 0
-      });
-    } else {
-      var h = this.outerHeight()
-        , w = this.outerWidth()
-
-      this.css({
-        marginLeft: -(w/2)
-      , marginTop: -(h/2)
-      });
-    }
-  }
 
   kixxModal.createDeck = function (gOpenOptions, gCloseOptions) {
     gOpenOptions = gOpenOptions || {};

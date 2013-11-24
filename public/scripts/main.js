@@ -257,7 +257,8 @@ window.Modals = {
     this.deck = $.kixxModal.createDeck();
 
     this.deck.on('kixx-modal:opening', function (ev, el) {
-      new VideoModal($(el)).insertVideos();
+      var $modal = $(el)
+      new VideoModal($modal).insertVideos();
       window.clearTimeout(timeout);
     });
 
@@ -269,12 +270,25 @@ window.Modals = {
   }),
 
   open: function (id, openOptions, closeOptions) {
-    var openOptions = openOptions || {}
-    if ($(window).innerWidth() < window.STATIC_MODAL_BREAKPOINT) {
-      openOptions.staticPosition = {
-        top: $(window).scrollTop()
-      };
-    }
+    openOptions = openOptions || {}
+
+    openOptions.position = function (opts) {
+      if ($(window).innerWidth() >= window.STATIC_MODAL_BREAKPOINT) {
+        var h = this.outerHeight()
+          , w = this.outerWidth()
+
+        this.css({
+          marginLeft: -(w/2)
+        , marginTop: -(h/2)
+        });
+      } else {
+        this.css({
+          marginLeft: 0
+        , marginTop: $(window).scrollTop() - this.offset().top
+        });
+      }
+    };
+
     this.deck.open(id, openOptions, closeOptions);
   },
 
