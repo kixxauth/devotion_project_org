@@ -201,13 +201,14 @@ html.js .videowrapper>iframe {
   position: relative;
 }
 
-/* Hide social sharing by default */
-ul.social-share-actions {
+/* Hide initial content when JavaScript is active */
+html.js .init-hidden {
   display: none;
 }
 
-/* Hide initial content when JavaScript is active */
-html.js .init-hidden {
+/* Hide social sharing by default */
+html.no-js ul.social-share-actions,
+body.small ul.social-share-actions {
   display: none;
 }
 
@@ -416,6 +417,59 @@ img.align-left {
   color: #312a6a;
   background-color: #d0ccd7;
   cursor: pointer;
+}
+
+/* Social Sharing Buttons */
+ul.social-share-actions {
+  margin: 0.5em 0 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+ul.social-share-actions li {
+  float: left;
+  margin-left: 0.5em;
+}
+ul.social-share-actions li:first-child {
+  margin-left: 0;
+}
+ul.social-share-actions li.title {
+  font-weight: bold;
+}
+ul.social-share-actions li>a {
+  display: block;
+  text-indent: -99999px;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-image: url(./images/content_social_sprite.png);
+}
+ul.social-share-actions.light li>a {
+  background-image: url(./images/content_social_sprite_light.png);
+}
+ul.social-share-actions li.tumblr>a {
+  background-position: 0px -3px;
+}
+ul.social-share-actions li.facebook>a {
+  background-position: -25px -3px;
+}
+ul.social-share-actions li.twitter>a {
+  background-position: -51px -3px;
+}
+ul.social-share-actions li.pinterest>a {
+  background-position: -73px -3px;
+}
+ul.social-share-actions.light li.tumblr>a {
+  background-position: 0px 0px;
+}
+ul.social-share-actions.light li.facebook>a {
+  background-position: -24px 0px;
+}
+ul.social-share-actions.light li.twitter>a {
+  background-position: -48px 0px;
+}
+ul.social-share-actions.light li.pinterest>a {
+  background-position: -70px 0px;
 }
 
 /* Site Branding */

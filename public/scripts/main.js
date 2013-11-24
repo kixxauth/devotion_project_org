@@ -524,8 +524,7 @@ window.HashHistory = {
 
     window.Modals.initialize();
     window.Portraits.initialize();
-    //window.ContentLinks.initialize();
-    //window.ShareLinks.initialize();
+    window.ShareLinks.initialize();
 
     // Begin interacting with the page:
     window.HashHistory.initialize();
