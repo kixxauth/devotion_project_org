@@ -476,12 +476,16 @@ ul.social-share-actions.light li.pinterest>a {
 #site-header {
   text-align: center;
   font-size: 1.5em;
+  margin-top: 10%; /* Before page initialization */
 }
 #site-header ul.social-links {
   list-style-type: none;
   padding: 0;
 }
 /* Adjust site branding after the body is initialized (rendered) */
+body.initialized #site-header {
+  margin-top: 0;
+}
 body.initialized #site-header h1.page-title {
   margin: 5% 0 0 3%;
   float: left;
@@ -593,6 +597,11 @@ section.section.movie a,
 section.section.slideshow a {
   color: #fff;
 }
+section.section h2 {
+  font-weight: normal;
+  text-transform: uppercase;
+  margin: 0;
+}
 /* The big close button used in modals on small screens */
 section.section.reveal-modal a.close-modal.button {
   margin-top: 1em;
@@ -634,6 +643,29 @@ section.section.reveal-modal a.close-modal.button {
   margin-right: 0;
 }
 
+/* Collaborators */
+#section_collaborators ul.collaborators {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style-type: none;
+}
+#section_collaborators ul.collaborators>li.left {
+  clear: both;
+  float: left;
+}
+#section_collaborators ul.collaborators>li.right {
+  float: right;
+}
+#section_collaborators ul.collaborators>li.final-frame {
+  margin-top: -20px;
+}
+#section_collaborators ul.collaborators>li.c-5 {
+  margin-top: -25px;
+}
+#section_collaborators ul.collaborators>li.living-subtitles {
+  margin-top: -15px;
+}
+
 /* Site Footer */
 footer .legal {
   text-align: center;
@@ -648,6 +680,9 @@ footer .legal {
     width: 840px;
     top: 50%;
     left: 50%;
+  }
+  section.section>.inner-content {
+    padding: 1em;
   }
   section.section .modal-content {
     max-height: 30em;
