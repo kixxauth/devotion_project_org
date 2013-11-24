@@ -603,8 +603,11 @@ section.section h2 {
   text-transform: uppercase;
   margin: 0;
 }
-section.section .subtitle>a {
+section.section .subtitle {
+  margin: 0.3em 0 0;
   text-transform: uppercase;
+}
+section.section .subtitle>a {
   text-decoration: underline;
 }
 section.section .subtitle>a.active {
