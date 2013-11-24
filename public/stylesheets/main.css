@@ -724,6 +724,17 @@ footer .legal {
     line-height: 1.2;
     height: 3em;
   }
+
+  #section_contact .inner-content {
+    padding-bottom: 0;
+  }
+  #section_contact .modal-content>.picture {
+    width: 314px;
+    float: left;
+  }
+  #section_contact .modal-content>.form {
+    margin-left: 334px;
+  }
 }
 
 /* =============================
