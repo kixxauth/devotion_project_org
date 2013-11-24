@@ -308,7 +308,7 @@ VideoModal.prototype = {
 
   iframe: function ($wrapper) {
     var src = this.srcURL($wrapper)
-    return '<iframe src="'+ src +'" width="660" height="371" frameborder="0" allowfullscreen></iframe>';
+    return '<iframe src="'+ src +'" width="746" height="420" frameborder="0" allowfullscreen></iframe>';
   },
 
   srcURL: function ($wrapper) {

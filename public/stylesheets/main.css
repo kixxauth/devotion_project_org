@@ -690,6 +690,26 @@ footer .legal {
     overflow-y: auto;
     padding-right: 20px;
   }
+  section.section.movie .modal-content {
+    max-height: 32.5em;
+    overflow: hidden;
+    padding: 20px 0 0;
+  }
+  section.section.movie .modal-content ul.social-share-actions {
+    margin-left: 20px;
+  }
+  html.js section.section .modal-content .videowrapper {
+    width: 746px;
+    height: 420px;
+    margin: 0 auto;
+    padding: 0;
+    position: static;
+  }
+  html.js section.section .modal-content .videowrapper>iframe {
+    position: static;
+    width: 746px;
+    height: 420px;
+  }
 
   /* Slideshow thumbnails */
   #section_portraits ul.thumbs {
