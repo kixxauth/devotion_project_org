@@ -264,6 +264,7 @@ window.Modals = {
 
     this.deck.on('kixx-modal:closed', function () {
       timeout = window.setTimeout(function () {
+        $('#site-container').fadeIn();
         window.location.hash = '';
       }, 30);
     });
@@ -273,7 +274,7 @@ window.Modals = {
     openOptions = openOptions || {}
 
     openOptions.position = function (opts) {
-      if ($(window).innerWidth() >= window.STATIC_MODAL_BREAKPOINT) {
+      if ($(window).innerWidth() >= window.STATIC_MODAL_BREAKPOINT && !Modernizr.touch) {
         var h = this.outerHeight()
           , w = this.outerWidth()
 
@@ -282,9 +283,10 @@ window.Modals = {
         , marginTop: -(h/2)
         });
       } else {
+        $('#site-container').hide();
         this.css({
           marginLeft: 0
-        , marginTop: $(window).scrollTop() - this.offset().top
+        , marginTop: 0
         });
       }
     };

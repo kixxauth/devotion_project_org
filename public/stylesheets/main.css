@@ -293,6 +293,7 @@ section.section.reveal-modal a.close-modal.close-button {
 html.js section.section.reveal-modal {
   display: none;
   position: absolute;
+  top: 0;
 }
 @media (min-width: 500px) {
   /* Position the top right 'x' close modal button */
@@ -304,6 +305,7 @@ html.js section.section.reveal-modal {
     top: 0.3em;
     right: 0.5em;
     text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+    text-decoration: none;
     font-weight: bold;
     cursor: pointer;
   }
@@ -359,7 +361,7 @@ html.js #section_portraits a.trigger-next-slide {
 
 @media (min-width: 900px) {
   /* Hide the big close button at the bottom of modals */
-  section.section.reveal-modal a.close-modal.button {
+  html.no-touch section.section.reveal-modal a.close-modal.button {
     display: none;
   }
 }
@@ -701,7 +703,7 @@ footer .legal {
 /* When the screen is big enough to show modal windows as designed */
 @media (min-width: 900px) {
   /* General modal window styles */
-  html.js section.section.reveal-modal {
+  html.js.no-touch section.section.reveal-modal {
     position: fixed;
     border-width: 16px;
     width: 840px;
@@ -711,12 +713,12 @@ footer .legal {
   section.section>.inner-content {
     padding: 1em;
   }
-  section.section .modal-content {
+  html.no-touch section.section .modal-content {
     max-height: 30em;
     overflow-y: auto;
     padding-right: 20px;
   }
-  section.section.movie .modal-content {
+  html.no-touch section.section.movie .modal-content {
     max-height: 32.5em;
     overflow: hidden;
     padding: 20px 0 0;
@@ -738,7 +740,7 @@ footer .legal {
   }
 
   /* Slideshow */
-  #section_portraits .modal-content {
+  html.no-touch #section_portraits .modal-content {
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 0;
@@ -799,8 +801,12 @@ footer .legal {
     border-color: #fff;
   }
 
-  #section_contact .inner-content {
+  /* Contact form */
+  html.no-touch #section_contact .inner-content {
     padding-bottom: 0;
+  }
+  #section_contact .modal-content {
+    overflow: hidden;
   }
   #section_contact .modal-content>.picture {
     width: 314px;
