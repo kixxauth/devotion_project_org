@@ -91,7 +91,11 @@
 
   function position(opts) {
     if (opts.staticPosition) {
-      this.css(opts.staticPosition);
+      this.css({
+        top: opts.staticPosition.top || 0
+      , marginLeft: opts.staticPosition.marginLeft || 0
+      , marginTop: opts.staticPosition.marginTop || 0
+      });
     } else {
       var h = this.outerHeight()
         , w = this.outerWidth()
