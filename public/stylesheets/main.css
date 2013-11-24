@@ -205,6 +205,15 @@ html.js .videowrapper>iframe {
 html.js .init-hidden {
   display: none;
 }
+html.no-js #site-header .loading-indicator {
+  display: none;
+}
+html.js #site-header .loading-indicator {
+  font-size: 1.5em;
+}
+html.js body.initialized #site-header .loading-indicator {
+  display: none;
+}
 
 /* Hide social sharing by default */
 html.no-js ul.social-share-actions,
