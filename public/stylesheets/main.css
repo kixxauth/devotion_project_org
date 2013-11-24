@@ -471,6 +471,9 @@ ul.social-share-actions.light li.pinterest>a {
   font-size: 1.5em;
   margin-top: 10%; /* Before page initialization */
 }
+#site-header h1.page-title {
+  height: 231px;
+}
 #site-header ul.social-links {
   list-style-type: none;
   padding: 0;
@@ -483,6 +486,7 @@ body.initialized #site-header h1.page-title {
   margin: 5% 0 0 3%;
   float: left;
   width: 30%;
+  height: auto;
 }
 body.initialized #site-header h1.page-title>img {
   max-width: 100%;
