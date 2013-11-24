@@ -619,6 +619,7 @@ section.section h3 {
 }
 /* The big close button used in modals on small screens */
 section.section.reveal-modal a.close-modal.button {
+  clear: both;
   margin-top: 1em;
 }
 
@@ -673,6 +674,7 @@ section.section.reveal-modal a.close-modal.button {
   margin: 20px 0 0;
   padding: 0;
   list-style-type: none;
+  overflow: hidden;
 }
 #section_collaborators ul.collaborators>li.left {
   clear: both;
