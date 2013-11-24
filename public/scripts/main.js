@@ -1,4 +1,4 @@
-window.SMALL_LAYOUT = 767;
+window.SMALL_LAYOUT = 600;
 window.TABLET_LAYOUT = 940;
 window.STATIC_MODAL_BREAKPOINT = 900;
 
@@ -120,6 +120,7 @@ window.TileGrid = {
   base: {height: null, width: null},
   containerWidth: null,
   _navTiles: null,
+  _container: null,
 
   initialize: _.once(function () {
     // Listen for window resize events to re-render the nav tile grid.
@@ -133,17 +134,23 @@ window.TileGrid = {
   render: function () {
     var self = this
       , comp = this.compute()
-      , containerHeight = 0
+      , tileContainerHeight = 0
 
     if (comp.layout === 'small') {
-      $('body').addClass('small');
+      this.$container().css({
+        width: comp.containerWidth
+      });
       $('#site-header').css({
         width: '100%'
       , height: 'auto'
       , position: 'static'
       });
+      $('body').addClass('small');
     } else {
-      $('body').removeClass('small');
+      this.$container().css({
+        width: comp.containerWidth
+      , height: comp.containerHeight
+      });
       $('#site-header').css({
         width: Math.ceil(comp.base.width * 2)
       , height: Math.ceil(comp.base.height * 2)
@@ -151,22 +158,19 @@ window.TileGrid = {
       , top: 0
       , left: 0
       });
+      $('body').removeClass('small');
     }
 
     this.$navTiles().each(function (i, el) {
       var settings = self.sizeAndPositionTile($(this))
-        , vpos = settings.top + settings.height
+        , vpos = settings.height + settings.top
 
-      if (vpos > containerHeight) {
-        containerHeight = vpos;
+      if (vpos > tileContainerHeight) {
+        tileContainerHeight = vpos;
       }
     });
 
-    $('#main-navigation').css({
-      width: comp.containerWidth
-    , height: containerHeight
-    , marginLeft: comp.marginLeft
-    });
+    $('#main-navigation').css({height: tileContainerHeight})
   },
 
   compute: function () {
@@ -232,6 +236,10 @@ window.TileGrid = {
 
   getPositionOfTile: function (id) {
     return window.TILE_GRID[id][this.layout];
+  },
+
+  $container: function () {
+    return this._container || (this._container = $('#site-container'));
   },
 
   $navTiles: function () {
