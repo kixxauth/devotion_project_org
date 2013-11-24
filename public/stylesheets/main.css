@@ -410,10 +410,11 @@ img.align-left {
   display: inline-block;
   padding: 0 1em;
   margin: 0;
-  height: 2em;
-  line-height: 2em;
+  height: 2.5em;
+  line-height: 2.5em;
   border: none;
   text-transform: uppercase;
+  text-decoration: none;
   color: #312a6a;
   background-color: #d0ccd7;
   cursor: pointer;
@@ -734,6 +735,10 @@ footer .legal {
   }
   #section_contact .modal-content>.form {
     margin-left: 334px;
+  }
+
+  #section_donate .modal-content>.picture {
+    max-width: 600px;
   }
 }
 
