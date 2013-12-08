@@ -162,13 +162,18 @@
     },
 
     show: function (id, opts) {
-      id = kixxSlides.hashToId(id);
       opts = opts || {};
 
       var self = this
         , fadeInOpts =  $.extend({}, opts)
-        , $next = $('#'+ id)
+        , $next
         , complete = refunct(opts, 'complete')
+
+      if (typeof id === 'string') {
+        $next = $('#'+ kixxSlides.hashToId(id))
+      } else {
+        $next = $(id);
+      }
 
       if ($next.data('kixxSlidesOpen')) {
         complete(this.$current, this.$current);

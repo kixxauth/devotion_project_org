@@ -1,6 +1,7 @@
 window.SMALL_LAYOUT = 600;
 window.TABLET_LAYOUT = 940;
 window.STATIC_MODAL_BREAKPOINT = 900;
+window.QUOTE_SLIDE_INTERVAL = 4000;
 
 window.MODAL_IDS = [
   'what-is-devotion-project'
@@ -416,6 +417,43 @@ window.Portraits = {
   }
 };
 
+window.Quotes = {
+  initialize: _.once(function () {
+    var self = this
+
+    // Listen for window resize events to re-render the nav tile grid.
+    _.bindAll(window.Quotes, 'render');
+    $(window).resize(_.debounce(window.Quotes.render, 200));
+
+    // Render for the first time.
+    window.Quotes.render();
+
+    window.setInterval(function () {
+      self.transition();
+    }, window.QUOTE_SLIDE_INTERVAL)
+  }),
+
+  render: function () {
+    var $slideshow = $('#quote-slide-show')
+
+    if (this.slideshow) {
+      this.slideshow.destroy();
+    }
+
+    this.slideshow = $slideshow.kixxSlides({
+      initial: $slideshow.children().first()
+    , aspectRatio: 1.89
+    });
+
+  },
+
+  transition: function () {
+    if (this.slideshow) {
+      this.slideshow.next();
+    }
+  }
+};
+
 window.ShareLinks = {
   baseURL: encodeURIComponent('http://www.thedevotionproject.org/'),
 
@@ -550,6 +588,7 @@ window.HashHistory = {
     $('body').addClass('initialized');
     $('.init-hidden').fadeIn();
 
+    window.Quotes.initialize();
     window.Modals.initialize();
     window.Portraits.initialize();
     window.ShareLinks.initialize();
