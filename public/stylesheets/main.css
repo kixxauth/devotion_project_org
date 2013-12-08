@@ -483,29 +483,35 @@ ul.social-share-actions.light li.pinterest>a {
 /* Adjust site branding after the body is initialized (rendered) */
 body.initialized #site-header {
   margin-top: 0;
+  font-size: 1.2em;
+}
+body.initialized #site-header>.site-header {
+  margin-left: 3%;
+  float: left;
+  width: 45%;
 }
 body.initialized #site-header h1.page-title {
-  margin: 5% 0 0 3%;
-  float: left;
-  width: 30%;
+  margin-top: 14%;
   height: auto;
 }
 body.initialized #site-header h1.page-title>img {
-  max-width: 100%;
+  width: 50%;
 }
 body.initialized #site-header .site-summary {
-  margin-left: 35%;
+  margin-left: 50%;
 }
 body.initialized #site-header .tagline {
-  margin-top: 20%;
+  margin-top: 1em;
 }
 @media (min-width: 941px) and (max-width: 1100px) {
   body.initialized #site-header .tagline {
     font-size: 0.8em;
   }
 }
-body.initialized.small #site-header .tagline {
-  margin-top: 1em;
+@media (min-width: 600px) and (max-width: 680px) {
+  body.initialized #site-header .tagline {
+    font-size: 0.8em;
+  }
 }
 body.initialized #site-header ul.social-links {
   width: 160px;
@@ -551,10 +557,19 @@ body.initialized #site-header ul.social-links a.pinterest {
 }
 
 /* Treat branding differently on small devices and/or no JavaScript */
-body.initialized.small #site-header h1.page-title {
+body.initialized.small #site-header {
+  font-size: 1.5em;
+}
+body.initialized.small #site-header>.site-header {
   margin: 14px auto 0;
   float: none;
+  width: auto;
+}
+body.initialized.small #site-header h1.page-title>img {
   width: 228px;
+}
+body.initialized.small #site-header .tagline {
+  margin-top: 1em;
 }
 body.initialized.small #site-header .site-summary {
   margin: 1em 0;
