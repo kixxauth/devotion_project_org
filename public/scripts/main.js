@@ -353,6 +353,7 @@ window.Portraits = {
       var id = $to.prop('id')
       self.currentId = id;
       window.location.hash = id;
+      self.activateThumbnail();
     }
 
     $('#section_portraits').on('kixx-modal:opening', function () {
