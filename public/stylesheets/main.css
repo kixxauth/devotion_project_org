@@ -871,10 +871,6 @@ footer .legal {
   #section_contact .modal-content>.form {
     margin-left: 334px;
   }
-
-  #section_donate .modal-content>.picture {
-    max-width: 600px;
-  }
 }
 @media (min-width: 900px) and (min-height: 780px) {
   #section_portraits {
