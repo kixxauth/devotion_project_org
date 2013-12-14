@@ -82,7 +82,11 @@
         maybeComplete({show: true});
       };
 
-      this.transitionRight($next, inOpts, opts);
+      if (opts.transition === 'fade') {
+        this.transitionFade($next, inOpts, opts);
+      } else {
+        this.transitionRight($next, inOpts, opts);
+      }
     },
 
     next: function (opts) {
@@ -127,7 +131,11 @@
         maybeComplete({show: true});
       };
 
-      this.transitionLeft($next, inOpts, opts);
+      if (opts.transition === 'fade') {
+        this.transitionFade($next, inOpts, opts);
+      } else {
+        this.transitionLeft($next, inOpts, opts);
+      }
     },
 
     show: function (id, opts) {
@@ -137,6 +145,8 @@
         , inOpts =  $.extend({}, opts)
         , $next
         , complete = refunct(opts, 'complete')
+        , hideDone = false
+        , showDone = false
 
       if (typeof id === 'string') {
         $next = $('#'+ kixxSlides.hashToId(id))
@@ -149,18 +159,33 @@
         return;
       }
 
-      opts.complete = function () {
-        var $from = self.$current
-        if (self.$current) {
-          self.$current.data('kixxSlidesOpen', false);
-          self.$current.hide();
+      function maybeComplete(done) {
+        if (done.show) {
+          showDone = true;
+        } else {
+          hideDone = true;
         }
-        $next.data('kixxSlidesOpen', true);
-        self.$current = $next;
-        complete($from, $next);
+
+        if (hideDone && showDone) {
+          var $from = self.$current
+          if (self.$current) {
+            self.$current.data('kixxSlidesOpen', false);
+            self.$current.hide();
+          }
+          $next.data('kixxSlidesOpen', true);
+          self.$current = $next;
+          complete($from, $next);
+        }
       }
 
-      inOpts.complete = kixxSlides.noop;
+      opts.complete = function () {
+        maybeComplete({hide: true});
+      };
+
+      inOpts.complete = function () {
+        maybeComplete({show: true});
+      };
+
       this.transitionFade($next, inOpts, opts);
     },
 

@@ -459,7 +459,7 @@ window.Quotes = {
 
   transition: function () {
     if (this.slideshow) {
-      this.slideshow.next();
+      this.slideshow.next({transition: 'fade'});
     }
   }
 };
