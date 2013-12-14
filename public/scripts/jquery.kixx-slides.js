@@ -44,10 +44,7 @@
       opts = opts || {};
 
       var self = this
-        , width = self.currentWidth()
         , inOpts = $.extend({}, opts)
-        , outProps = opts.outProps || {left: width + 1}
-        , inProps = opts.inProps || {left: 0}
         , complete = refunct(opts, 'complete')
         , $next = this.$previous()
         , hideDone = false
@@ -57,16 +54,6 @@
         complete(this.$current, this.$current);
         return;
       }
-
-      $next.css({
-        position: 'absolute'
-      , top: 0
-      , left: -(width - 1)
-      , width: width
-      , height: self.currentHeight()
-      , display: 'block'
-      });
-      this.containSlide($next);
 
       function maybeComplete(done) {
         if (done.show) {
@@ -79,6 +66,7 @@
           var $from = self.$current
           if (self.$current) {
             self.$current.data('kixxSlidesOpen', false);
+            self.$current.hide();
           }
           $next.data('kixxSlidesOpen', true);
           self.$current = $next;
@@ -87,7 +75,6 @@
       }
 
       opts.complete = function () {
-        self.$current.hide();
         maybeComplete({hide: true});
       };
 
@@ -95,18 +82,14 @@
         maybeComplete({show: true});
       };
 
-      this.$current.animate(outProps, opts);
-      $next.animate(inProps, inOpts);
+      this.transitionRight($next, inOpts, opts);
     },
 
     next: function (opts) {
       opts = opts || {};
 
       var self = this
-        , width = self.currentWidth()
         , inOpts = $.extend({}, opts)
-        , outProps = opts.outProps || {left: -(width - 1)}
-        , inProps = opts.inProps || {left: 0}
         , complete = refunct(opts, 'complete')
         , $next = this.$next()
         , hideDone = false
@@ -117,16 +100,6 @@
         return;
       }
 
-      $next.css({
-        position: 'absolute'
-      , top: 0
-      , left: width + 1
-      , width: width
-      , height: self.currentHeight()
-      , display: 'block'
-      });
-      this.containSlide($next);
-
       function maybeComplete(done) {
         if (done.show) {
           showDone = true;
@@ -136,7 +109,10 @@
 
         if (hideDone && showDone) {
           var $from = self.$current
-          self.$current.data('kixxSlidesOpen', false);
+          if (self.$current) {
+            self.$current.data('kixxSlidesOpen', false);
+            self.$current.hide();
+          }
           $next.data('kixxSlidesOpen', true);
           self.$current = $next;
           complete($from, $next);
@@ -144,7 +120,6 @@
       }
 
       opts.complete = function () {
-        self.$current.hide();
         maybeComplete({hide: true});
       };
 
@@ -152,20 +127,14 @@
         maybeComplete({show: true});
       };
 
-      if (this.$current) {
-        this.$current.animate(outProps, opts);
-      } else {
-        maybeComplete({hide: true});
-      }
-
-      $next.animate(inProps, inOpts);
+      this.transitionLeft($next, inOpts, opts);
     },
 
     show: function (id, opts) {
       opts = opts || {};
 
       var self = this
-        , fadeInOpts =  $.extend({}, opts)
+        , inOpts =  $.extend({}, opts)
         , $next
         , complete = refunct(opts, 'complete')
 
@@ -181,30 +150,86 @@
       }
 
       opts.complete = function () {
+        var $from = self.$current
+        if (self.$current) {
+          self.$current.data('kixxSlidesOpen', false);
+          self.$current.hide();
+        }
+        $next.data('kixxSlidesOpen', true);
+        self.$current = $next;
+        complete($from, $next);
+      }
+
+      inOpts.complete = kixxSlides.noop;
+      this.transitionFade($next, inOpts, opts);
+    },
+
+    transitionFade: function ($next, inOpts, outOpts) {
+      var self = this
+        , outComplete = refunct(outOpts, 'complete')
+
+      outOpts.complete = function () {
         $next.css({
           position: 'absolute'
         , top: 0
         , left: 0
         , width: self.currentWidth()
         , height: self.currentHeight()
-        }).fadeIn(fadeInOpts);
+        }).fadeIn(inOpts);
 
-        self.containSlide($next)
-
-        if (self.$current) {
-          self.$current.data('kixxSlidesOpen', false);
-        }
-        $next.data('kixxSlidesOpen', true);
-        var $from = self.$current
-        self.$current = $next;
-        complete($from, $next);
+        self.containSlide($next);
+        outComplete();
       };
 
       if (this.$current) {
-        this.$current.fadeOut(opts);
+        this.$current.fadeOut(outOpts);
       } else {
-        opts.complete();
+        outOpts.complete();
       }
+    },
+
+    transitionLeft: function ($next, inOpts, outOpts) {
+      var width = this.currentWidth()
+
+      $next.css({
+        position: 'absolute'
+      , top: 0
+      , left: width + 1
+      , width: width
+      , height: this.currentHeight()
+      , display: 'block'
+      });
+
+      this.containSlide($next);
+
+      if (this.$current) {
+        this.$current.animate({left: -(width - 1)}, outOpts);
+      } else if ($.isFunction(outOpts.complete)) {
+        outOpts.complete();
+      }
+      $next.animate({left: 0}, inOpts);
+    },
+
+    transitionRight: function ($next, inOpts, outOpts) {
+      var width = this.currentWidth()
+
+      $next.css({
+        position: 'absolute'
+      , top: 0
+      , left: -(width - 1)
+      , width: width
+      , height: this.currentHeight()
+      , display: 'block'
+      });
+
+      this.containSlide($next);
+
+      if (this.$current) {
+        this.$current.animate({left: width + 1}, outOpts);
+      } else if ($.isFunction(outOpts.complete)) {
+        outOpts.complete();
+      }
+      $next.animate({left: 0}, inOpts);
     },
 
     destroy: function () {
