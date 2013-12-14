@@ -315,6 +315,16 @@ VideoModal.prototype = {
       var $wrapper = $(this), $iframe
 
       $wrapper.empty();
+
+      if (Modernizr.touch && $wrapper.data('noTouch')) {
+        $wrapper.css({width: 0, height: 0, padding: 0, margin: 0});
+        return;
+      }
+      if ($wrapper.data('touchOnly') && !Modernizr.touch) {
+        $wrapper.css({width: 0, height: 0, padding: 0, margin: 0});
+        return;
+      }
+
       $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
 
       self.$modal.one('kixx-modal:closing', function () {
