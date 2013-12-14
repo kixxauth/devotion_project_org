@@ -216,8 +216,7 @@ html.js body.initialized #site-header .loading-indicator {
 }
 
 /* Hide social sharing by default */
-html.no-js ul.social-share-actions,
-body.small ul.social-share-actions {
+html.no-js ul.social-share-actions {
   display: none;
 }
 
@@ -677,11 +676,9 @@ section.section.reveal-modal a.close-modal.button {
   overflow: hidden;
   margin-top: 0.5em;
 }
-#section_portraits .slide-footer>.social-share-actions {
-  float: left;
-}
+#section_portraits .slide-footer>.social-share-actions,
 #section_portraits .slide-footer>.photo-credit {
-  float: right;
+  margin-top: 0.5em;
 }
 
 /* Contact Form */
@@ -788,6 +785,14 @@ footer .legal {
   #section_portraits .slide-wrapper {
     max-width: 600px;
     margin: 18px auto 0;
+  }
+  #section_portraits .slide-footer>.social-share-actions {
+    float: left;
+    margin: 0;
+  }
+  #section_portraits .slide-footer>.photo-credit {
+    float: right;
+    margin: 0;
   }
   /* Update the slide navigation buttons for larger screens */
   html.js #section_portraits .slide-navigation {
