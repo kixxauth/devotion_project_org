@@ -325,7 +325,8 @@ VideoModal.prototype = {
         return;
       }
 
-      $iframe = $wrapper.append(self.iframe($wrapper)).children('iframe')
+      $iframe = self.iframe($wrapper, {autoplay: !Modernizr.touch});
+      $iframe = $wrapper.append($iframe).children('iframe')
 
       self.$modal.one('kixx-modal:closing', function () {
         $iframe.remove();
@@ -333,18 +334,21 @@ VideoModal.prototype = {
     });
   },
 
-  iframe: function ($wrapper) {
-    var src = this.srcURL($wrapper)
+  iframe: function ($wrapper, opts) {
+    var src = this.srcURL($wrapper, opts)
     return '<iframe src="'+ src +'" width="746" height="420" frameborder="0" allowfullscreen></iframe>';
   },
 
-  srcURL: function ($wrapper) {
+  srcURL: function ($wrapper, opts) {
+    opts = opts || {};
     var src = $wrapper.data('src')
 
-    if (src.indexOf('?') > -1) {
-      src += '&autoplay=1';
-    } else {
-      src += '?autoplay=1';
+    if (opts.autoplay) {
+      if (src.indexOf('?') > -1) {
+        src += '&autoplay=1';
+      } else {
+        src += '?autoplay=1';
+      }
     }
 
     return src;

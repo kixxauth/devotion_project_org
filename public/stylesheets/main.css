@@ -654,11 +654,6 @@ section.section h3 {
   font-weight: normal;
   text-transform: uppercase;
 }
-/* The big close button used in modals on small screens */
-section.section.reveal-modal a.close-modal.button {
-  clear: both;
-  margin-top: 1em;
-}
 
 /* Slideshow */
 #section_portraits ul.thumbs {
