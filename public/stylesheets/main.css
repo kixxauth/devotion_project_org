@@ -283,9 +283,6 @@ section.section>.inner-content img {
   max-width: 100%;
 }
 /* Initially hide close buttons: */
-html.no-js section.section.reveal-modal a.close-modal {
-  display: none;
-}
 section.section.reveal-modal a.close-modal.close-button {
   display: none;
 }
@@ -295,20 +292,17 @@ html.js section.section.reveal-modal {
   position: absolute;
   top: 0;
 }
-@media (min-width: 500px) {
-  /* Position the top right 'x' close modal button */
-  section.section.reveal-modal a.close-modal.close-button {
-    display: inline-block;
-    line-height: 0.8;
-    font-size: 1.8em;
-    position: absolute;
-    top: 0.3em;
-    right: 0.5em;
-    text-shadow: 0 -1px 1px rbga(0,0,0,.6);
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
+section.section.reveal-modal a.close-modal.close-button {
+  display: inline-block;
+  line-height: 0.8;
+  font-size: 1.8em;
+  position: absolute;
+  top: 0.2em;
+  right: 0.3em;
+  text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* Hide slideshow thumb images by default */
@@ -359,13 +353,6 @@ html.js #section_portraits a.trigger-next-slide {
 #section_portraits .slide-footer li {
   margin: 0;
   padding: 0;
-}
-
-@media (min-width: 900px) {
-  /* Hide the big close button at the bottom of modals */
-  html.no-touch section.section.reveal-modal a.close-modal.button {
-    display: none;
-  }
 }
 
 
@@ -635,7 +622,7 @@ section.section.reveal-modal {
   border: 12px solid rgba(200, 200, 200, 0.5);
 }
 section.section>.inner-content {
-  padding: 3%;
+  padding: 2em 3%;
   font-size: 1.5em;
   background-color: #fff;
 }
