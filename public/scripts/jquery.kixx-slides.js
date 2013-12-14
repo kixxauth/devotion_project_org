@@ -258,10 +258,8 @@
     },
 
     destroy: function () {
-      if(this.$current) {
-        this.$current.hide().data('kixxSlidesOpen', false);
-        this.$current = null;
-      }
+      this.$current = null;
+      this.$slides.hide().data('kixxSlidesOpen', false);
     },
 
     $next: function () {

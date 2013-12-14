@@ -433,7 +433,7 @@ window.Quotes = {
 
     // Listen for window resize events to re-render the nav tile grid.
     _.bindAll(window.Quotes, 'render');
-    $(window).resize(_.debounce(window.Quotes.render, 200));
+    $(window).resize(_.debounce(window.Quotes.render, 600));
 
     // Render for the first time.
     window.Quotes.render();
@@ -445,6 +445,7 @@ window.Quotes = {
 
   render: function () {
     var $slideshow = $('#quote-slide-show')
+    $slideshow.css('visibility', 'hidden');
 
     if (this.slideshow) {
       this.slideshow.destroy();
@@ -455,6 +456,7 @@ window.Quotes = {
     , aspectRatio: 1.89
     });
 
+    $slideshow.css('visibility', 'visible');
   },
 
   transition: function () {

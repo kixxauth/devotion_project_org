@@ -538,13 +538,18 @@ body.initialized #site-header .tagline {
 }
 @media (min-width: 600px) {
   body.initialized #site-header #quote-slide-show {
-    margin-top: 22%;
+    margin-top: 25%;
   }
 }
 body.initialized #site-header ul.social-links {
   width: 160px;
   overflow: hidden;
   margin: 1em auto 0;
+}
+@media (min-width: 600px) {
+  body.initialized #site-header ul.social-links {
+    margin-top: 17%;
+  }
 }
 body.initialized #site-header ul.social-links>li {
   float: left;
