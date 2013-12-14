@@ -664,9 +664,6 @@ section.section .subtitle>a.active {
   text-decoration: none;
   cursor: default;
 }
-section.section .modal-content {
-  margin-top: 1em;
-}
 section.section h3 {
   font-weight: normal;
   text-transform: uppercase;
