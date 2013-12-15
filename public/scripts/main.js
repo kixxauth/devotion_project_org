@@ -275,7 +275,7 @@ window.Modals = {
     openOptions = openOptions || {}
 
     openOptions.position = function (opts) {
-      if ($(window).innerWidth() >= window.STATIC_MODAL_BREAKPOINT && !Modernizr.touch) {
+      if (Modals.isBigEnough() && Modals.canScroll(this)) {
         var h = this.outerHeight()
           , w = this.outerWidth()
 
@@ -293,6 +293,21 @@ window.Modals = {
     };
 
     this.deck.open(id, openOptions, closeOptions);
+  },
+
+  isBigEnough: function () {
+    if ($(window).innerWidth() >= window.STATIC_MODAL_BREAKPOINT) {
+      return true;
+    }
+    return false;
+  },
+
+  canScroll: function ($modal) {
+    // Touch devices cannot use modal windows because of scrolling problems.
+    if (Modernizr.touch && !$modal.hasClass('no-scroll')) {
+      return false;
+    }
+    return true;
   },
 
   close: function (id) {

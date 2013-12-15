@@ -731,7 +731,9 @@ footer .legal {
 /* When the screen is big enough to show modal windows as designed */
 @media (min-width: 900px) {
   /* General modal window styles */
-  html.js.no-touch section.section.reveal-modal {
+  /* Touch devices cannot use modal windows because of scrolling problems */
+  html.js.no-touch section.section.reveal-modal,
+  html.js.touch section.section.reveal-modal.no-scroll {
     position: fixed;
     border-width: 16px;
     width: 840px;
@@ -745,12 +747,14 @@ footer .legal {
   section.section.slideshow>.inner-content {
     padding: 1em;
   }
-  html.no-touch section.section .modal-content {
+  html.no-touch section.section .modal-content,
+  html.touch section.section .modal-content.no-scroll {
     max-height: 30em;
     overflow-y: auto;
     padding-right: 20px;
   }
-  html.no-touch section.section.movie .modal-content {
+  html.no-touch section.section.movie .modal-content,
+  html.touch section.section.movie .modal-content.no-scroll {
     max-height: 32.5em;
     overflow: hidden;
     padding: 20px 0 0;
@@ -772,7 +776,7 @@ footer .legal {
   }
 
   /* Slideshow */
-  html.no-touch #section_portraits .modal-content {
+  #section_portraits .modal-content {
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 0;
@@ -842,7 +846,7 @@ footer .legal {
   }
 
   /* Contact form */
-  html.no-touch #section_contact .inner-content {
+  #section_contact .inner-content {
     padding-bottom: 0;
   }
   #section_contact .modal-content {
