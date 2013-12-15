@@ -493,8 +493,8 @@ body.initialized #site-header h1.page-title>img {
   width: 55%;
 }
 body.initialized #site-header .site-summary {
-  margin-left: 55%;
-  margin-right: 5%;
+  margin-left: 53%;
+  margin-right: 3%;
 }
 body.initialized #site-header .tagline {
   font-size: 1em;
@@ -527,7 +527,7 @@ body.initialized #site-header .tagline {
 }
 @media (min-width: 600px) {
   body.initialized #site-header #quote-slide-show {
-    margin-top: 25%;
+    margin-top: 22%;
   }
 }
 body.initialized #site-header ul.social-links {
@@ -537,7 +537,7 @@ body.initialized #site-header ul.social-links {
 }
 @media (min-width: 600px) {
   body.initialized #site-header ul.social-links {
-    margin-top: 17%;
+    margin-top: 10%;
   }
 }
 body.initialized #site-header ul.social-links>li {
