@@ -409,6 +409,9 @@ ul.social-share-actions {
   list-style-type: none;
   overflow: hidden;
 }
+html.touch ul.social-share-actions {
+  margin-top: 2em;
+}
 ul.social-share-actions li {
   float: left;
   margin-left: 0.5em;
@@ -640,7 +643,7 @@ section.section h2 {
   margin: 0;
 }
 section.section .subtitle {
-  margin: 0.3em 0 0;
+  margin: 0.3em 0 0.7em;
   text-transform: uppercase;
 }
 section.section .subtitle>a {
@@ -870,6 +873,11 @@ footer .legal {
   #section_portraits .slide-wrapper {
     max-width: 680px;
   }
+}
+
+/* Videos (needs to be added after the media queries) */
+html.js section.section .modal-content .videowrapper[data-touch-only="true"] {
+  margin-top: 4em;
 }
 
 /* =============================
