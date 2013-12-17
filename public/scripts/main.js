@@ -261,12 +261,14 @@ window.Modals = {
       var $modal = $(el)
       new VideoModal($modal).insertVideos();
       window.clearTimeout(timeout);
+      $(window).trigger('modals:open');
     });
 
     this.deck.on('kixx-modal:closed', function () {
       timeout = window.setTimeout(function () {
         $('#site-container').fadeIn();
         window.location.hash = '';
+        $(window).trigger('modals:closed');
       }, 30);
     });
   }),
@@ -447,19 +449,21 @@ window.Portraits = {
 };
 
 window.Quotes = {
+  interval: null,
+
   initialize: _.once(function () {
-    var self = this
 
     // Listen for window resize events to re-render the nav tile grid.
-    _.bindAll(window.Quotes, 'render');
-    $(window).resize(_.debounce(window.Quotes.render, 600));
+    _.bindAll(window.Quotes, 'render', 'start', 'stop');
+
+    $(window)
+      .resize(_.debounce(window.Quotes.render, 600))
+      .on('modals:closed', this.start)
+      .on('modals:open', this.stop)
 
     // Render for the first time.
     window.Quotes.render();
-
-    window.setInterval(function () {
-      self.transition();
-    }, window.QUOTE_SLIDE_INTERVAL)
+    this.start();
   }),
 
   render: function () {
@@ -476,6 +480,19 @@ window.Quotes = {
     });
 
     $slideshow.css('visibility', 'visible');
+  },
+
+  start: function () {
+    var self = this
+
+    this.interval = window.setInterval(function () {
+      self.transition();
+    }, window.QUOTE_SLIDE_INTERVAL)
+  },
+
+  stop: function () {
+    window.clearInterval(this.interval);
+    this.interval = null;
   },
 
   transition: function () {
