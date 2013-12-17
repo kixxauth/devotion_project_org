@@ -709,21 +709,23 @@ section.section h3 {
   list-style-type: none;
   overflow: hidden;
 }
-#section_collaborators ul.collaborators>li.left {
-  clear: both;
-  float: left;
-}
-#section_collaborators ul.collaborators>li.right {
-  float: right;
-}
-#section_collaborators ul.collaborators>li.final-frame {
-  margin-top: -20px;
-}
-#section_collaborators ul.collaborators>li.c-5 {
-  margin-top: -25px;
-}
-#section_collaborators ul.collaborators>li.living-subtitles {
-  margin-top: -15px;
+@media (min-width: 900px) {
+  #section_collaborators ul.collaborators>li.left {
+    clear: both;
+    float: left;
+  }
+  #section_collaborators ul.collaborators>li.right {
+    float: right;
+  }
+  #section_collaborators ul.collaborators>li.final-frame {
+    margin-top: -20px;
+  }
+  #section_collaborators ul.collaborators>li.c-5 {
+    margin-top: -25px;
+  }
+  #section_collaborators ul.collaborators>li.living-subtitles {
+    margin-top: -15px;
+  }
 }
 
 /* Site Footer */
