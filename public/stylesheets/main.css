@@ -390,7 +390,7 @@ img.align-left {
 /* Apply a button anywhere */
 .button {
   display: inline-block;
-  padding: 0 1em;
+  padding: 0 1em 0.5em;
   margin: 0;
   height: 2.5em;
   line-height: 2.5em;
@@ -400,6 +400,11 @@ img.align-left {
   color: #312a6a;
   background-color: #d0ccd7;
   cursor: pointer;
+}
+.button.primary {
+  background-color: #38327d;
+  color: #fff;
+  font-weight: bold;
 }
 
 /* Social Sharing Buttons */
