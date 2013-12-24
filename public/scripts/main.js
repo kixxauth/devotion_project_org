@@ -1,7 +1,7 @@
 window.SMALL_LAYOUT = 600;
 window.TABLET_LAYOUT = 940;
 window.STATIC_MODAL_BREAKPOINT = 900;
-window.QUOTE_SLIDE_INTERVAL = 4000;
+window.QUOTE_SLIDE_INTERVAL = 6000;
 
 window.MODAL_IDS = [
   'what-is-devotion-project'
