@@ -61,7 +61,7 @@ window.TILE_GRID = {
     tablet: {top: 6, left: 1},
     small: {top: 6, left: 1}
   },
-  'collaborators-tile': {
+  'russian-tile': {
     full: {top: 5, left: 3},
     tablet: {top: 7, left: 1},
     small: {top: 7, left: 1}
@@ -79,17 +79,22 @@ window.TILE_GRID = {
   'donate-tile': {
     full: {top: 4, left: 4},
     tablet: {top: 8, left: 0},
-    small: {top: 10, left: 0}
+    small: {top: 11, left: 0}
   },
   'contact-tile': {
     full: {top: 4, left: 0},
     tablet: {top: 8, left: 1},
+    small: {top: 10, left: 0}
+  },
+  'collaborators-tile': {
+    full: {top: 5, left: 0},
+    tablet: {top: 9, left: 1},
     small: {top: 10, left: 1}
   },
   'host-screening-tile': {
     full: {top: 4, left: 1},
     tablet: {top: 8, left: 2},
-    small: {top: 12, left: 0}
+    small: {top: 11, left: 1}
   },
 };
 
