@@ -3,23 +3,6 @@ window.TABLET_LAYOUT = 940;
 window.STATIC_MODAL_BREAKPOINT = 900;
 window.QUOTE_SLIDE_INTERVAL = 6000;
 
-window.MODAL_IDS = [
-  'what-is-devotion-project'
-, 'watch-films'
-, 'press'
-, 'portraits'
-, 'bonus-scenes'
-, 'en-portugues'
-, 'in-italiano'
-, 'en-espanol'
-, 'collaborators'
-, 'festivals-and-awards'
-, 'freedom-to-marry'
-, 'donate'
-, 'contact'
-, 'host-a-screening'
-];
-
 window.TILE_GRID = {
   'watch-films-tile': {
     full: {top: 2, left: 0},
